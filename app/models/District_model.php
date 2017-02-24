@@ -1,6 +1,6 @@
 <?php
 
-class District_model extends CI_Model {
+class District_model extends MY_Model {
 	public function __construct() {
 		parent::__construct();
 	}
@@ -62,15 +62,15 @@ class District_model extends CI_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('district.id, district.title, district.type, city.id city_id, city.title city_title')
-			->from('district')
-			->join('city', 'district.city_id = city.id')
-			->order_by('district.id', 'ASC')
-			->like('LOWER(district.id)', $filter)
-			->or_like('LOWER(district.title)', $filter)
-			->or_like('LOWER(district.type)', $filter)
-			->or_like('LOWER(city.id)', $filter)
-			->or_like('LOWER(city.title)', $filter)
+			->select('d.id, d.title, d.type, c.id city_id, c.title city_title')
+			->from('district d')
+			->join('city c', 'd.city_id = c.id')
+			->order_by('d.id', 'ASC')
+			->like('LOWER(d.id)', $filter)
+			->or_like('LOWER(d.title)', $filter)
+			->or_like('LOWER(d.type)', $filter)
+			->or_like('LOWER(c.id)', $filter)
+			->or_like('LOWER(c.title)', $filter)
 		;
 
 		$total_row = $this->db->count_all_results('', FALSE);

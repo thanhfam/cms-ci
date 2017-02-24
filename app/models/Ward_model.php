@@ -1,6 +1,6 @@
 <?php
 
-class Ward_model extends CI_Model {
+class Ward_model extends MY_Model {
 	public function __construct() {
 		parent::__construct();
 	}
@@ -31,14 +31,17 @@ class Ward_model extends CI_Model {
 		if ($id) {
 			//$this->load->database();
 
-			$query = $this->db
-				->select('*')
-				->where('id', $id)
-				->get('ward')
+			$this->db
+				->select('w.id, w.title, w.type, d.id district_id, d.title district_title, c.id city_id, c.title city_title')
+				->from('ward w')
+				->join('district d', 'w.district_id = d.id')
+				->join('city c', 'd.city_id = c.id')
+				->where('w.id', $id)
 			;
 
 			//echo $this->db->last_query();
 
+			$query = $this->db->get();
 			return $query;
 		}
 		else {
@@ -53,15 +56,18 @@ class Ward_model extends CI_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('ward.id, ward.title, ward.type, district.id district_id, district.title district_title')
-			->from('ward')
-			->join('district', 'ward.district_id = district.id')
-			->order_by('ward.id', 'ASC')
-			->like('LOWER(ward.id)', $filter)
-			->or_like('LOWER(ward.title)', $filter)
-			->or_like('LOWER(ward.type)', $filter)
-			->or_like('LOWER(district.id)', $filter)
-			->or_like('LOWER(district.title)', $filter)
+			->select('w.id, w.title, w.type, d.id district_id, d.title district_title, c.id city_id, c.title city_title')
+			->from('ward w')
+			->join('district d', 'w.district_id = d.id')
+			->join('city c', 'd.city_id = c.id')
+			->order_by('w.id', 'ASC')
+			->like('LOWER(w.id)', $filter)
+			->or_like('LOWER(w.title)', $filter)
+			->or_like('LOWER(w.type)', $filter)
+			->or_like('LOWER(d.id)', $filter)
+			->or_like('LOWER(d.title)', $filter)
+			->or_like('LOWER(c.id)', $filter)
+			->or_like('LOWER(c.title)', $filter)
 		;
 
 		$total_row = $this->db->count_all_results('', FALSE);

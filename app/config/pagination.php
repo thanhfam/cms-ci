@@ -60,7 +60,7 @@ $config = array(
 	// materialize - end
 
 	'uri_segment' => 3,
-	'display_pages' => FALSE,
+	'display_pages' => TRUE,
 	'num_links' => 2,
 	'use_page_numbers' => TRUE,
 	'per_page' => 10,

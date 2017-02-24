@@ -26,6 +26,19 @@
 
 <div class="row">
 	<div class="input-field col m6 s12">
+		<select class="validate <?=(form_error('city_id')?'invalid':'"');?>">
+			<option value="" disabled><?=$lang->line('select_one')?></option>
+			<?php foreach ($list_city as $city) { ?>
+			<option value="<?=$city['id'];?>" <?=(($city['id'] == $item['city_id']) ? 'selected' : '')?>><?=$city['title'];?></option>
+			<?php } ?>
+		</select>
+		<label for="city_id"><?=$lang->line('city')?></label>
+		<?=form_error('city_id');?>
+	</div>
+</div>
+
+<div class="row">
+	<div class="input-field col m6 s12">
 		<select class="validate <?=(form_error('district_id')?'invalid':'"');?>">
 			<option value="" disabled><?=$lang->line('select_one')?></option>
 			<?php foreach ($list_district as $district) { ?>

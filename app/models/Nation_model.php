@@ -1,6 +1,6 @@
 <?php
 
-class Nation_model extends CI_Model {
+class Nation_model extends MY_Model {
 	public function __construct() {
 		parent::__construct();
 	}

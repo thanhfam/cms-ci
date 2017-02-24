@@ -2,7 +2,7 @@
 
 class Ward extends MY_Controller {
 	public function edit($id = -1) {
-		$this->load->model(array('ward_model', 'district_model'));
+		$this->load->model(array('ward_model', 'district_model', 'city_model'));
 		$this->load->helper(array('language', 'form', 'url'));
 		$this->load->library('form_validation');
 
@@ -22,6 +22,7 @@ class Ward extends MY_Controller {
 				'id' => '',
 				'title' => '',
 				'type' => '',
+				'city_id' => '',
 				'district_id' => ''
 			);
 		}
