@@ -1,0 +1,17 @@
+@import url('../uikit/css/uikit.min.css') projection, screen;
+
+.uk-padding-remove-right {
+	padding-right: 0!important;
+}
+
+.uk-padding-remove-left {
+	padding-left: 0!important;
+}
+
+.uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle {
+	height: 42px;
+}
+
+.uk-navbar-item .uk-pagination {
+	margin: 0;
+}
