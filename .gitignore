@@ -6,4 +6,9 @@ app/logs/*
 !app/logs/index.html
 !app/logs/.htaccess
 
-user_guide/*
+guide
+guide/*
+fm
+fm/*
+book
+book/*

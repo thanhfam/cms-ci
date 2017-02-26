@@ -46,13 +46,17 @@ class City_model extends MY_Model {
 		}
 	}
 
-	public function get_list_all() {
-		$query = $this->db
+	public function list_simple($nation_id = NULL) {
+		$this->db
 			->select('id, title')
-			->get('city')
+			->order_by('id', 'ASC')
 		;
 
-		return $query;
+		if ($nation_id) {
+			$this->db->where('nation_id', $nation_id);
+		}
+
+		return $this->db->get('city')->result_array();
 	}
 
 	public function list_all($page = 1, $filter = '', &$pagy_config) {

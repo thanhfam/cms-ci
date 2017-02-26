@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $CI =& get_instance();
 
 $config = array(
-	/* uikit - begin
+	// uikit - begin
 	'full_tag_open' => '<ul class="uk-pagination">',
 	'full_tag_close' => '</ul>',
 
@@ -30,9 +30,9 @@ $config = array(
 
 	'num_tag_open' => '<li>',
 	'num_tag_close' => '</li>',
-	uikit - end */
+	// uikit
 
-	// materialize - begin
+	/* materialize - begin
 	'full_tag_open' => '<ul class="pagination">',
 	'full_tag_close' => '</ul>',
 
@@ -57,7 +57,7 @@ $config = array(
 
 	'num_tag_open' => '<li class="waves-effect">',
 	'num_tag_close' => '</li>',
-	// materialize - end
+	// materialize - end */
 
 	'uri_segment' => 3,
 	'display_pages' => TRUE,

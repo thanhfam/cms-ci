@@ -46,13 +46,17 @@ class District_model extends MY_Model {
 		}
 	}
 
-	public function get_list_all() {
-		$query = $this->db
+	public function list_simple($id = NULL) {
+		$this->db
 			->select('id, title')
-			->get('district')
+			->order_by('id', 'ASC')
 		;
 
-		return $query;
+		if ($id) {
+			$this->db->where('city_id', $id);
+		}
+
+		return $this->db->get('district')->result_array();
 	}
 
 	public function list_all($page = 1, $filter = '', &$pagy_config) {

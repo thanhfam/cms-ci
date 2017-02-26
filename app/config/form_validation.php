@@ -3,35 +3,76 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config = array(
-	array(
-		'field' => 'id',
-		'label' => 'lang:id',
-		'rules' => 'required'
+	'ward_edit' => array(
+		array(
+			'field' => 'code',
+			'label' => 'lang:code',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'title',
+			'label' => 'lang:title',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'type',
+			'label' => 'lang:type',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'district_id',
+			'label' => 'lang:district',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'city_id',
+			'label' => 'lang:city',
+			'rules' => 'required'
+		)
 	),
-	array(
-		'field' => 'title',
-		'label' => 'lang:title',
-		'rules' => 'required'
+	'district_edit' => array(
+		array(
+			'field' => 'code',
+			'label' => 'lang:code',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'title',
+			'label' => 'lang:title',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'type',
+			'label' => 'lang:type',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'city_id',
+			'label' => 'lang:city',
+			'rules' => 'required'
+		)
 	),
-	array(
-		'field' => 'type',
-		'label' => 'lang:type',
-		'rules' => 'required'
-	),
-	array(
-		'field' => 'district_id',
-		'label' => 'lang:district',
-		'rules' => 'required'
-	),
-	array(
-		'field' => 'city_id',
-		'label' => 'lang:city',
-		'rules' => 'required'
-	),
-	array(
-		'field' => 'nation_id',
-		'label' => 'lang:nation',
-		'rules' => 'required'
+	'city_edit' => array(
+		array(
+			'field' => 'code',
+			'label' => 'lang:code',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'title',
+			'label' => 'lang:title',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'type',
+			'label' => 'lang:type',
+			'rules' => 'required'
+		),
+		array(
+			'field' => 'nation_id',
+			'label' => 'lang:nation',
+			'rules' => 'required'
+		)
 	)
 );
 

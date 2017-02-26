@@ -1,8 +1,9 @@
 <?php
 
 $lang = array(
-	'id' => 'Mã',
+	'id' => 'ID',
 	'title' => 'Tiêu đề',
+	'code' => 'Mã',
 	'name' => 'Tên',
 	'type' => 'Loại',
 
@@ -29,6 +30,9 @@ $lang = array(
 	'list_of' => 'Danh sách ',
 	'list' => 'Danh sách',
 
+	'created_at' => 'Tạo: ',
+	'updated_at' => 'Cập nhật: ',
+
 	'first' => 'Đầu',
 	'last' => 'Cuối',
 	'next' => 'Sau',
@@ -38,6 +42,15 @@ $lang = array(
 	'filter' => 'Lọc',
 	'unfilter' => 'Bỏ lọc',
 	'apply' => 'Áp dụng',
+
+	'message' => 'Thông báo',
+	'success' => 'Thành công',
+	'warning' => 'Cảnh báo',
+	'danger' => 'Nguy hiểm',
+
+	'update_success' => 'Dữ liệu cập nhật thành công.',
+	'db_update_danger' => 'Lỗi cập nhật cơ sở dữ liệu.',
+	'input_danger' => 'Lỗi dữ liệu đầu vào. Hãy kiểm tra lại.',
 
 	'are_you_sure_to_remove' => 'Bạn có chắc chắn muốn xoá {param} ?',
 	'no_row' => 'Không có dữ liệu !!!'

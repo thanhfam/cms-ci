@@ -157,6 +157,16 @@ class MY_Model extends CI_Model
 	}
 	
 	// -----------------------------------------------------------------------
+
+	public function get_time($timestamp = NULL ) {
+		if (empty($timestamp)) {
+			$timestamp = time();
+		}
+		else {
+			$timestamp = strtotime($timestamp);
+		}
+		return date(DateTime::COOKIE, $timestamp);
+	}
 }
 
 /* End of file MY_Model.php */

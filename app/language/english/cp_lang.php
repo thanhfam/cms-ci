@@ -3,6 +3,7 @@
 $lang = array(
 	'id' => 'ID',
 	'title' => 'Title',
+	'code' => 'Code',
 	'name' => 'Name',
 	'type' => 'Type',
 
@@ -29,6 +30,9 @@ $lang = array(
 	'list_of' => 'List of ',
 	'list' => 'List',
 
+	'created_at' => 'Created: ',
+	'updated_at' => 'Updated: ',
+
 	'first' => 'First',
 	'last' => 'Last',
 	'next' => 'Next',
@@ -38,6 +42,15 @@ $lang = array(
 	'filter' => 'Filter',
 	'unfilter' => 'Unfilter',
 	'apply' => 'Apply',
+
+	'message' => 'Message',
+	'success' => 'Success',
+	'warning' => 'Warning',
+	'danger' => 'Danger',
+
+	'update_success' => 'Data updated successfully.',
+	'db_update_danger' => 'Database update danger.',
+	'input_danger' => 'Input danger. Please re-check them.',
 
 	'are_you_sure_to_remove' => 'Are your sure to remove {param} ?',
 	'no_row' => "There is no row here !!!'

@@ -10,12 +10,11 @@
 </head>
 
 <body>
-	<header class="page-header">
-		<div class="container">
-		</div>
+	<header class="uk-margin">
+	<?php
+		$this->load->view('inc/nav_header');
+	?>
 	</header>
 
-	<div class="container">
-		<div class="row">
-
-		<h2><?=$title?></h2>
+	<div class="uk-container uk-margin">
+		<h1 class="uk-heading-bullet"><?=$title?></h2>

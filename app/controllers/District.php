@@ -1,6 +1,6 @@
 <?php
 
-class District extends CI_Controller {
+class District extends MY_Controller {
 	public function edit($id = -1) {
 		$this->load->model(array('city_model', 'district_model'));
 		$this->load->helper(array('language', 'form', 'url'));
@@ -69,10 +69,39 @@ class District extends CI_Controller {
 		$this->load->view('inc/footer', $data);
 	}
 
+	public function list_select() {
+		$this->load->model('district_model');
+
+		$city_id = $this->input->get('id');
+		$callback = $this->input->get('callback');
+
+		$list = $this->district_model->list_simple($city_id);
+
+		if ($callback) {
+			$result = $callback . '(' . json_encode($list) . ');';
+		}
+		else {
+			$result = json_encode($list);
+		}
+
+		//json_encode($list->result_array(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+
+		return $this->output
+			->set_content_type('application/json', 'utf-8')
+			->set_status_header(200)
+			->set_output($result)
+		;
+	}
+
 	public function _remap($method, $params = array()) {
 		switch ($method) {
+			case 'index':
 			case 'list':
 				$method = 'list_all';
+			break;
+
+			case 'select':
+				$method = 'list_select';
 			break;
 
 			default:
