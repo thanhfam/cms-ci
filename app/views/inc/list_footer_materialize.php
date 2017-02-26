@@ -1,0 +1,1 @@
+<?=$pagy->create_links();?>
