@@ -5,48 +5,45 @@ class City_model extends MY_Model {
 		parent::__construct();
 	}
 
-	public function set() {
-		//$this->load->database();
+	public function save(&$item) {
+		if (empty($item['id'])) {
+			$result = $this->db->insert('city', $item);
 
-		$id = $this->input->post('id');
-
-		$data = array(
-			'id' => $id,
-			'title' => $this->input->post('title'),
-			'type' => $this->input->post('type'),
-			'nation_id' => $this->input->post('nation_id')
-		);
-
-		if ($id) {
-			$result = $this->db->update('city', $data);
+			$item['id'] = $this->db->insert_id();
+			$item['created'] = $item['updated'] = $this->get_time();
 		}
 		else {
-			$result = $this->db->insert('city', $data);
+			$this->db->where('id', $item['id']);
+			$result = $this->db->update('city', $item);
+
+			$item['created'] = $this->input->post('created');
+			$item['updated'] = $this->get_time();
 		}
 
 		return $result;
 	}
 
-	public function get($id) {
-		if ($id) {
-			//$this->load->database();
-
-			$query = $this->db
-				->select('*')
-				->where('id', $id)
-				->get('city')
-			;
-
-			//echo $this->db->last_query();
-
-			return $query;
-		}
-		else {
+	public function get($id = 0) {
+		if ($id == 0) {
 			return FALSE;
 		}
+
+		$this->db
+			->select('c.id, c.title, c.code, c.type, c.created, c.updated, c.nation_id')
+			->from('city c')
+			->join('nation n', 'c.nation_id = n.id')
+			->where('c.id', $id)
+		;
+
+		$item = $this->db->get()->row_array();
+
+		$item['created'] = $this->get_time($item['created']);
+		$item['updated'] = $this->get_time($item['updated']);
+
+		return $item;
 	}
 
-	public function list_simple($nation_id = NULL) {
+	public function list_simple($nation_id = 0) {
 		$this->db
 			->select('id, title')
 			->order_by('id', 'ASC')
@@ -66,15 +63,15 @@ class City_model extends MY_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('city.id, city.title, city.type, nation.id nation_id, nation.title nation_title')
-			->from('city')
-			->join('nation', 'city.nation_id = nation.id')
-			->order_by('city.id', 'ASC')
-			->like('LOWER(city.id)', $filter)
-			->or_like('LOWER(city.title)', $filter)
-			->or_like('LOWER(city.type)', $filter)
-			->or_like('LOWER(nation.id)', $filter)
-			->or_like('LOWER(nation.title)', $filter)
+			->select('c.id, c.title, c.code, c.type, n.id nation_id, n.title nation_title')
+			->from('city c')
+			->join('nation n', 'c.nation_id = n.id')
+			->order_by('c.id', 'ASC')
+			->like('LOWER(c.id)', $filter)
+			->or_like('LOWER(c.title)', $filter)
+			->or_like('LOWER(c.type)', $filter)
+			->or_like('LOWER(n.id)', $filter)
+			->or_like('LOWER(n.title)', $filter)
 		;
 
 		$total_row = $this->db->count_all_results('', FALSE);
@@ -90,10 +87,9 @@ class City_model extends MY_Model {
 		$from_row = ($page - 1) * $per_page;
 
 		$this->db->limit($per_page, $from_row);
-		$query = $this->db->get();
 
 		//echo $this->db->last_query();
 
-		return $query;
+		return $this->db->get()->result_array();
 	}
 }

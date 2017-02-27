@@ -65,7 +65,7 @@ if (isset($item) && !empty($item['created'])) {
 	<input type="hidden" name="id" value="<?=isset($item) ? $item['id'] : '';?>" />
 	<input type="hidden" name="created" value="<?=isset($item) ? $item['created'] : '';?>" />
 	<button class="uk-button uk-button-primary" type="submit" name="submit" value="save"><?=$lang->line('save');?></button>
-	<button class="uk-button" name="btn-back" type="button" data-back-link="<?=$back_link?>"><?=$lang->line('back');?></button>
+	<a class="uk-button" name="btn-back" href="<?=$link_back;?>"><?=$lang->line('back');?></a>
 </div>
 
 </form>

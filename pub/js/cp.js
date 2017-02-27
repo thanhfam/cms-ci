@@ -17,13 +17,11 @@ $(document).ready(function() {
 	});
 
 	$('[name=btn-back]').click(function(e) {
-		if (url = $(this).attr('data-back-link')) {
-			window.location.href = url;
-		}
-		else {
+		if (!$(this).attr('href')) {
 			back();
+			return false;
 		}
-		return false;
+		
 	});
 });
 

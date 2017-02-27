@@ -5,54 +5,54 @@ class Nation_model extends MY_Model {
 		parent::__construct();
 	}
 
-	public function set() {
-		//$this->load->database();
+	public function save(&$item) {
+		if (empty($item['id'])) {
+			$result = $this->db->insert('nation', $item);
 
-		$id = $this->input->post('id');
-
-		$data = array(
-			'id' => $id,
-			'title' => $this->input->post('title'),
-			'type' => $this->input->post('type'),
-			'continent_id' => $this->input->post('continent_id')
-		);
-
-		if ($id) {
-			$result = $this->db->update('nation', $data);
+			$item['id'] = $this->db->insert_id();
+			$item['created'] = $item['updated'] = $this->get_time();
 		}
 		else {
-			$result = $this->db->insert('nation', $data);
+			$this->db->where('id', $item['id']);
+			$result = $this->db->update('nation', $item);
+
+			$item['created'] = $this->input->post('created');
+			$item['updated'] = $this->get_time();
 		}
 
 		return $result;
 	}
 
-	public function get($id) {
-		if ($id) {
-			//$this->load->database();
-
-			$query = $this->db
-				->select('*')
-				->where('id', $id)
-				->get('nation')
-			;
-
-			//echo $this->db->last_query();
-
-			return $query;
-		}
-		else {
+	public function get($id = 0) {
+		if ($id == 0) {
 			return FALSE;
 		}
-	}
 
-	public function get_list_all() {
-		$query = $this->db
-			->select('id, title')
-			->get('nation')
+		$this->db
+			->select('n.id, n.title, n.code, n.type, n.created, n.updated')
+			->from('nation n')
+			->where('n.id', $id)
 		;
 
-		return $query;
+		$item = $this->db->get()->row_array();
+
+		$item['created'] = $this->get_time($item['created']);
+		$item['updated'] = $this->get_time($item['updated']);
+
+		return $item;
+	}
+
+	public function list_simple($continent_id = 0) {
+		$this->db
+			->select('id, title')
+			->order_by('id', 'ASC')
+		;
+
+		if ($continent_id) {
+			$this->db->where('continent_id', $continent_id);
+		}
+
+		return $this->db->get('nation')->result_array();
 	}
 
 	public function list_all($page = 1, $filter = '', &$pagy_config) {
@@ -62,15 +62,15 @@ class Nation_model extends MY_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('nation.id, nation.title, nation.type, continent.id continent_id, continent.title continent_title')
-			->from('nation')
-			->join('continent', 'nation.continent_id = continent.id')
-			->order_by('nation.id', 'ASC')
-			->like('LOWER(nation.id)', $filter)
-			->or_like('LOWER(nation.title)', $filter)
-			->or_like('LOWER(nation.type)', $filter)
-			->or_like('LOWER(continent.id)', $filter)
-			->or_like('LOWER(continent.title)', $filter)
+			->select('n.id, n.title, n.type, c.id continent_id, c.title continent_title')
+			->from('nation n')
+			->join('continent c', 'n.continent_id = c.id')
+			->order_by('n.id', 'ASC')
+			->like('LOWER(n.id)', $filter)
+			->or_like('LOWER(n.title)', $filter)
+			->or_like('LOWER(n.type)', $filter)
+			->or_like('LOWER(c.id)', $filter)
+			->or_like('LOWER(c.title)', $filter)
 		;
 
 		$total_row = $this->db->count_all_results('', FALSE);
@@ -86,10 +86,9 @@ class Nation_model extends MY_Model {
 		$from_row = ($page - 1) * $per_page;
 
 		$this->db->limit($per_page, $from_row);
-		$query = $this->db->get();
 
 		//echo $this->db->last_query();
 
-		return $query;
+		return $this->db->get()->result_array();
 	}
 }

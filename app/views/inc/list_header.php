@@ -14,7 +14,15 @@
 	</div>
 	<div class="uk-navbar-right">
 		<div class="uk-navbar-item">
-		<?=$pagy->create_links();?>
+		<?php
+			//$pagy->create_links();
+
+			if ($link_create) {
+		?>
+			<a class="uk-button uk-button-primary" href="<?=$link_create;?>"><?=$lang->line('create');?></a>
+		<?php
+			}
+		?>
 		</div>
 	</div>
 </nav>

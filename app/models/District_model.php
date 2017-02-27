@@ -5,55 +5,53 @@ class District_model extends MY_Model {
 		parent::__construct();
 	}
 
-	public function set() {
-		//$this->load->database();
+	public function save(&$item) {
+		if (empty($item['id'])) {
+			$result = $this->db->insert('district', $item);
 
-		$id = $this->input->post('id');
-
-		$data = array(
-			'id' => $id,
-			'title' => $this->input->post('title'),
-			'type' => $this->input->post('type'),
-			'city_id' => $this->input->post('city_id')
-		);
-
-		if ($id) {
-			$result = $this->db->update('district', $data);
+			$item['id'] = $this->db->insert_id();
+			$item['created'] = $item['updated'] = $this->get_time();
 		}
 		else {
-			$result = $this->db->insert('district', $data);
+			$this->db->where('id', $item['id']);
+			$result = $this->db->update('district', $item);
+
+			$item['created'] = $this->input->post('created');
+			$item['updated'] = $this->get_time();
 		}
 
 		return $result;
 	}
 
-	public function get($id) {
-		if ($id) {
-			//$this->load->database();
 
-			$query = $this->db
-				->select('*')
-				->where('id', $id)
-				->get('district')
-			;
-
-			//echo $this->db->last_query();
-
-			return $query;
-		}
-		else {
+	public function get($id = 0) {
+		if ($id == 0) {
 			return FALSE;
 		}
+
+		$this->db
+			->select('d.id, d.title, d.code, d.type, d.created, d.updated, d.city_id')
+			->from('district d')
+			->join('city c', 'd.city_id = c.id')
+			->where('d.id', $id)
+		;
+
+		$item = $this->db->get()->row_array();
+
+		$item['created'] = $this->get_time($item['created']);
+		$item['updated'] = $this->get_time($item['updated']);
+
+		return $item;
 	}
 
-	public function list_simple($id = NULL) {
+	public function list_simple($city_id = 0) {
 		$this->db
 			->select('id, title')
 			->order_by('id', 'ASC')
 		;
 
-		if ($id) {
-			$this->db->where('city_id', $id);
+		if ($city_id) {
+			$this->db->where('city_id', $city_id);
 		}
 
 		return $this->db->get('district')->result_array();
@@ -66,7 +64,7 @@ class District_model extends MY_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('d.id, d.title, d.type, c.id city_id, c.title city_title')
+			->select('d.id, d.title, d.code, d.type, c.id city_id, c.title city_title')
 			->from('district d')
 			->join('city c', 'd.city_id = c.id')
 			->order_by('d.id', 'ASC')
@@ -90,10 +88,9 @@ class District_model extends MY_Model {
 		$from_row = ($page - 1) * $per_page;
 
 		$this->db->limit($per_page, $from_row);
-		$query = $this->db->get();
 
 		//echo $this->db->last_query();
 
-		return $query;
+		return $this->db->get()->result_array();
 	}
 }

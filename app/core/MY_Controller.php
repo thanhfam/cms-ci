@@ -47,22 +47,22 @@ class MY_Controller extends Auth_Controller {
 		switch($message['type']) {
 			case 0: // primary
 				$message['cls'] = 'uk-alert-primary';
-				$message['title'] = $this->lang->line('message');
+				//$message['title'] = $this->lang->line('message');
 			break;
 
 			case 1: // success
 				$message['cls'] = 'uk-alert-success';
-				$message['title'] = $this->lang->line('success');
+				//$message['title'] = $this->lang->line('success');
 			break;
 
 			case 2: // warning
 				$message['cls'] = 'uk-alert-warning';
-				$message['title'] = $this->lang->line('warning');
+				//$message['title'] = $this->lang->line('warning');
 			break;
 
 			case 3: // danger
 				$message['cls'] = 'uk-alert-danger';
-				$message['title'] = $this->lang->line('danger');
+				//$message['title'] = $this->lang->line('danger');
 			break;
 		}
 

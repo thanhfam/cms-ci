@@ -11,9 +11,9 @@
 				</a>
 				<div class="uk-navbar-dropdown">
 					<ul class="uk-nav uk-navbar-dropdown-nav">
-						<li><a href="#">Active</a></li>
-						<li><a href="#">Item</a></li>
-						<li><a href="#">Item</a></li>
+						<li><a href="<?=base_url('city/list');?>"><?=$lang->line('city');?></a></li>
+						<li><a href="<?=base_url('district/list');?>"><?=$lang->line('district');?></a></li>
+						<li><a href="<?=base_url('ward/list');?>"><?=$lang->line('ward');?></a></li>
 					</ul>
 				</div>
 			</li>

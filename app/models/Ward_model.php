@@ -7,18 +7,20 @@ class Ward_model extends MY_Model {
 
 	public function save(&$item) {
 		if (empty($item['id'])) {
-			$query = $this->db->insert('ward', $item);
+			$result = $this->db->insert('ward', $item);
+
 			$item['id'] = $this->db->insert_id();
 			$item['created'] = $item['updated'] = $this->get_time();
 		}
 		else {
 			$this->db->where('id', $item['id']);
-			$query = $this->db->update('ward', $item);
+			$result = $this->db->update('ward', $item);
+
 			$item['created'] = $this->input->post('created');
 			$item['updated'] = $this->get_time();
 		}
 
-		return $query;
+		return $result;
 	}
 
 	public function get($id = 0) {
@@ -42,14 +44,14 @@ class Ward_model extends MY_Model {
 		return $item;
 	}
 
-	public function list_simple($district) {
+	public function list_simple($district_id = 0) {
 		$this->db
 			->select('id, title')
 			->order_by('id', 'ASC')
 		;
 
-		if ($district) {
-			$this->db->where('district_id', $district);
+		if ($district_id) {
+			$this->db->where('district_id', $district_id);
 		}
 
 		return $this->db->get('ward')->result_array();
@@ -95,10 +97,9 @@ class Ward_model extends MY_Model {
 		$from_row = ($page - 1) * $per_page;
 
 		$this->db->limit($per_page, $from_row);
-		$query = $this->db->get();
 
 		//echo $this->db->last_query();
 
-		return $query;
+		return $this->db->get()->result_array();
 	}
 }

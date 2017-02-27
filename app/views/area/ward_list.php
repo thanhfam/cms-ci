@@ -2,13 +2,13 @@
 <table class="uk-table uk-table-small uk-table-hover uk-table-striped">
 <thead>
 <tr>
-	<th data-field="id"><?=$lang->line('id');?></th>
-	<th data-field="title"><?=$lang->line('title');?></th>
-	<th data-field="code"><?=$lang->line('code');?></th>
-	<th data-field="type"><?=$lang->line('type');?></th>
-	<th data-field="district"><?=$lang->line('district');?></th>
-	<th data-field="city"><?=$lang->line('city');?></th>
-	<th data-field="command"><?=$lang->line('command');?></th>
+	<th><?=$lang->line('id');?></th>
+	<th><?=$lang->line('title');?></th>
+	<th><?=$lang->line('code');?></th>
+	<th><?=$lang->line('type');?></th>
+	<th><?=$lang->line('district');?></th>
+	<th><?=$lang->line('city');?></th>
+	<th><?=$lang->line('command');?></th>
 </tr>
 </thead>
 <tbody>

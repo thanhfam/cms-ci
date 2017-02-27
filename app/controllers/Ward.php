@@ -12,7 +12,7 @@ class Ward extends MY_Controller {
 			'lang' => $this->lang,
 			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('ward'),
 			'list_city' => $this->city_model->list_simple(),
-			'back_link' => base_url('ward/list')
+			'link_back' => base_url('ward/list')
 		);
 
 		switch ($submit) {
@@ -24,7 +24,8 @@ class Ward extends MY_Controller {
 						'code' => '',
 						'type' => '',
 						'city_id' => '1',
-						'district_id' => ''
+						'district_id' => '',
+						'created' => ''
 					);
 				}
 				else {
@@ -38,7 +39,7 @@ class Ward extends MY_Controller {
 					'title' => $this->input->post('title'),
 					'code' => $this->input->post('code'),
 					'type' => $this->input->post('type'),
-					'district_id' => $this->input->post('district_id'),
+					'district_id' => $this->input->post('district_id')
 				);
 
 				if ($this->form_validation->run('ward_edit')) {
@@ -60,6 +61,8 @@ class Ward extends MY_Controller {
 							'type' => 3,
 							'content' => $this->lang->line('input_danger')
 						));
+
+						$item['created'] = '';
 				}
 
 				$item['city_id'] = $this->input->post('city_id');
@@ -82,24 +85,23 @@ class Ward extends MY_Controller {
 		$this->load->helper(array('language', 'url'));
 		$this->load->library('pagination');
 
-		//$this->lang->load('label_lang', 'vietnamese');
-		$data['lang'] = $this->lang;
-
-		$data['title'] = $this->lang->line('list_of') . $this->lang->line('ward');
-
 		$filter = $this->input->get('filter');
 		$page = $this->input->get('page');
-
-		$data['filter'] = $filter;
 
 		$pagy_config = array(
 			'base_url' => base_url('ward/list')
 		);
 
-		$data['list'] = $this->ward_model->list_all($page, $filter, $pagy_config)->result_array();
+		$data = array(
+			'lang' => $this->lang,
+			'title' => $this->lang->line('list_of') . $this->lang->line('ward'),
+			'filter' => $filter,
+			'list' => $this->ward_model->list_all($page, $filter, $pagy_config),
+			'pagy' => $this->pagination,
+			'link_create' => base_url('ward/edit')
+		);
 
 		$this->pagination->initialize($pagy_config);
-		$data['pagy'] = $this->pagination;
 
 		$this->set_body(array(
 			'inc/list_header',
