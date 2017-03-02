@@ -15,20 +15,8 @@ $lang = array(
 
 	'password' => 'Password',
 	'password_confỉm' => 'Password confirm',
-	'password_new' => 'New password',
-	'change_password' => 'Change password',
-	'reset_password' => 'Reset password',
 
 	'email' => 'Email',
-	'user' => 'User',
-	'username' => 'Username',
-	'group' => 'Group',
-	'login' => 'Log in',
-	'logout' => 'Log out',
-	'password_recovery' => 'Password recovery',
-	'remember_me' => 'Remember me',
-	'invalid_username_password' => 'Invalid username or password.',
-	'account_locked' => 'Account is locked.',
 
 	'select_one' => 'Select one option',
 	'select_multi' => 'Select multi options',
@@ -44,7 +32,6 @@ $lang = array(
 
 	'created_at' => 'Created: ',
 	'updated_at' => 'Updated: ',
-	'last_login' => 'Last login: ',
 
 	'first' => 'First',
 	'last' => 'Last',

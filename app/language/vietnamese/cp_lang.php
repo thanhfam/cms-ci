@@ -14,9 +14,21 @@ $lang = array(
 	'nation' => 'Quốc gia',
 
 	'password' => 'Mật khẩu',
-	'password_confỉm' => 'Xác nhận mật khẩu',
+	'password_confirm' => 'Xác nhận mật khẩu',
+	'password_new' => 'Mật khẩu mới',
+	'change_password' => 'Đổi mật khẩu',
+	'reset_password' => 'Thiết lập lại mật khẩu',
 
 	'email' => 'Email',
+	'user' => 'Người dùng',
+	'username' => 'Tài khoản',
+	'group' => 'Nhóm',
+	'login' => 'Đăng nhập',
+	'logout' => 'Đăng xuất',
+	'password_recovery' => 'Lấy lại mật khẩu',
+	'remember_me' => 'Nhớ tôi',
+	'invalid_username_password' => 'Tài khoản hoặc mật khẩu không đúng.',
+	'account_locked' => 'Tài khoản bị khoá.',
 
 	'select_one' => 'Chọn một',
 	'select_multi' => 'Chọn nhiều',
@@ -32,6 +44,7 @@ $lang = array(
 
 	'created_at' => 'Tạo: ',
 	'updated_at' => 'Cập nhật: ',
+	'last_login' => 'Đăng nhập lần cuối: ',
 
 	'first' => 'Đầu',
 	'last' => 'Cuối',

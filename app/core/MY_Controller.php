@@ -1,27 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * Community Auth - MY Controller
- *
- * Community Auth is an open source authentication application for CodeIgniter 3
- *
- * @package     Community Auth
- * @author      Robert B Gottier
- * @copyright   Copyright (c) 2011 - 2017, Robert B Gottier. (http://brianswebdesign.com/)
- * @license     BSD - http://www.opensource.org/licenses/BSD-3-Clause
- * @link        http://community-auth.com
- */
+class MY_Controller extends CI_Controller {
+	protected $view_header = 'cp/inc/header';
+	protected $view_header_simple = 'cp/inc/header_simple';
+	protected $view_footer = 'cp/inc/footer';
+	protected $view_footer_simple = 'cp/inc/footer_simple';
+	protected $view_nav = 'cp/inc/nav';
+	protected $view_message = 'cp/inc/message';
 
-require_once APPPATH . 'third_party/community_auth/core/Auth_Controller.php';
-
-class MY_Controller extends Auth_Controller {
-	protected $view_header = 'inc/header';
-	protected $view_footer = 'inc/footer';
-	protected $view_nav = 'inc/nav';
-	protected $view_message = 'inc/message';
+	protected $simple_page = FALSE;
 
 	protected $message;
+
+	protected $data = [];
 
 	public function __construct() {
 		parent::__construct();
@@ -41,6 +33,10 @@ class MY_Controller extends Auth_Controller {
 
 	public function set_footer($footer) {
 		$this->view_footer = $footer;
+	}
+
+	public function set_simple_page() {
+		$this->simple_page = TRUE;
 	}
 
 	public function set_message($message) {
@@ -66,30 +62,39 @@ class MY_Controller extends Auth_Controller {
 			break;
 		}
 
-		$this->message = $message;
+		$this->data['message'] = $message;
 	}
 
 	public function render($data) {
-		$this->load->view($this->view_header, $data);
+		$this->data = array_merge($this->data, $data);
 
-		if (isset($this->message)) {
-			$this->load->view($this->view_message, $this->message);
+		if ($this->simple_page) {
+			$this->load->view($this->view_header_simple, $this->data);
+		}
+		else {
+			$this->load->view($this->view_header, $this->data);
+		}
+
+		if (isset($this->data['message'])) {
+			$this->load->view($this->view_message, $this->data);
 		}
 
 		switch (gettype($this->view_body)) {
 			case 'array':
 				foreach ($this->view_body as $item) {
-					$this->load->view($item, $data);
+					$this->load->view($item, $this->data);
 				}
 			break;
 		
 			default:
-				$this->load->view($this->view_body, $data);
+				$this->load->view($this->view_body, $this->data);
 		}
 		
-		$this->load->view($this->view_footer, $data);
+		if ($this->simple_page) {
+			$this->load->view($this->view_footer_simple, $this->data);
+		}
+		else {
+			$this->load->view($this->view_footer, $this->data);
+		}
 	}
 }
-
-/* End of file MY_Controller.php */
-/* Location: /community_auth/core/MY_Controller.php */

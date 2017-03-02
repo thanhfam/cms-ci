@@ -7,8 +7,8 @@
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	http://codeigniter.com
  */
-
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 $lang['ftp_no_connection']		= 'Không xác định ID kết nối - không hợp lệ, bạn hãy chắc chắn rằng đã kết nối trước khi thực hiện quy trình kết nối.';
 $lang['ftp_unable_to_connect']		= 'Không thể kết nối tới máy chủ, theo thông tin máy chủ bạn cung cấp.';
 $lang['ftp_unable_to_login']		= 'Không thể đăng nhập vào máy chủ. Vui lòng kiểm tra tên đăng nhập và mật khẩu';
