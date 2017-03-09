@@ -1,7 +1,7 @@
 <nav class="uk-navbar-container uk-margin uk-background-primary" uk-navbar>
 	<div class="uk-navbar-left">
 		<a class="uk-navbar-item uk-logo" href="#">
-			<span class="uk-icon uk-margin-small-right" href="#" uk-icon="icon: star"></span>
+			<span class="uk-icon uk-margin-right" href="#" uk-icon="icon: star"></span>
 			CMS
 		</a>
 		<ul class="uk-navbar-nav">

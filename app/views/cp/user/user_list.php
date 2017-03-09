@@ -1,5 +1,5 @@
 <div class="uk-overflow-auto">
-<table class="uk-table uk-table-small uk-table-hover uk-table-striped">
+<table class="uk-table uk-table-hover uk-table-striped">
 <thead>
 <tr>
 	<th><?=$lang->line('id');?></th>

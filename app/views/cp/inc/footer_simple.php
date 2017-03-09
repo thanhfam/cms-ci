@@ -1,7 +1,7 @@
 		</div>
 	</div><!-- of flex -->
 
-	<footer class="uk-margin-small">
+	<footer class="uk-margin">
 	</footer>
 
 	<script type="text/javascript">

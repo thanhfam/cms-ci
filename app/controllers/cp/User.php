@@ -1,18 +1,23 @@
 <?php
 
 class User extends MY_Controller {
+	public function __construct(array $params = []) {
+		parent::__construct($params);
+
+		$this->load->model('user_model');
+	}
+
 	public function change_password($id) {
 		if (empty($id)) {
 			show404();
 		}
-		$this->load->model(array('user_model'));
-		$this->load->helper(array('language', 'form', 'url'));
+
+		$this->load->helper('form');
 		$this->load->library('form_validation');
 
 		$submit = $this->input->post('submit');
 
 		$data = array(
-			'lang' => $this->lang,
 			'title' => $this->lang->line('change_password'),
 			'link_back' => base_url('cp/user/list')
 		);
@@ -72,14 +77,12 @@ class User extends MY_Controller {
 	}
 
 	public function edit($id = 0) {
-		$this->load->model(array('user_model'));
-		$this->load->helper(array('language', 'form', 'url'));
+		$this->load->helper('form');
 		$this->load->library('form_validation');
 
 		$submit = $this->input->post('submit');
 
 		$data = array(
-			'lang' => $this->lang,
 			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('user'),
 			'link_back' => base_url('cp/user/list')
 		);
@@ -142,16 +145,13 @@ class User extends MY_Controller {
 	}
 
 	public function login() {
-		$this->load->model(array('user_model'));
-		$this->load->helper(array('language', 'form', 'url'));
+		$this->load->helper('form');
 		$this->load->library('form_validation');
 
 		$submit = $this->input->post('submit');
 
 		$data = array(
-			'lang' => $this->lang,
-			'title' => $this->lang->line('login'),
-			'width' => 'uk-width-medium'
+			'title' => $this->lang->line('login')
 		);
 
 		switch ($submit) {
@@ -186,6 +186,7 @@ class User extends MY_Controller {
 		));
 
 		$this->set_simple_page();
+		$this->set_msg_notification();
 		$this->set_body(
 			'cp/user/user_login'
 		);
@@ -193,21 +194,16 @@ class User extends MY_Controller {
 	}
 
 	public function list_all() {
-		$this->require_min_level(1);
-
-		$this->load->model('user_model');
-		$this->load->helper(array('language', 'url'));
 		$this->load->library('pagination');
 
 		$filter = $this->input->get('filter');
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
-			'base_url' => base_url('user/list')
+			'base_url' => base_url('cp/user/list')
 		);
 
 		$data = array(
-			'lang' => $this->lang,
 			'title' => $this->lang->line('list_of') . $this->lang->line('user'),
 			'filter' => $filter,
 			'list' => $this->user_model->list_all($page, $filter, $pagy_config),
@@ -227,8 +223,6 @@ class User extends MY_Controller {
 	}
 
 	public function list_select() {
-		$this->load->model('user_model');
-
 		$category = $this->input->get('category');
 		$callback = $this->input->get('callback');
 
@@ -251,14 +245,12 @@ class User extends MY_Controller {
 	}
 
 	public function _remap($method, $params = array()) {
+		$method = str_replace('-', '_', $method);
+		
 		switch ($method) {
 			case 'list':
 			case 'index':
 				$method = 'list_all';
-			break;
-
-			case 'change-password':
-				$method = 'change_password';
 			break;
 
 			case 'select':

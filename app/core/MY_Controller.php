@@ -11,12 +11,18 @@ class MY_Controller extends CI_Controller {
 
 	protected $simple_page = FALSE;
 
-	protected $message;
+	protected $data = [
+		'message_show_type' => 0
+	];
 
-	protected $data = [];
+	public function __construct(array $params = []) {
+		parent::__construct($params);
 
-	public function __construct() {
-		parent::__construct();
+		$this->load->helper([
+			'url'
+		]);
+
+		$this->data['lang'] = $this->lang;
 	}
 
 	public function set_header($header) {
@@ -39,25 +45,37 @@ class MY_Controller extends CI_Controller {
 		$this->simple_page = TRUE;
 	}
 
+	public function set_msg_alert() {
+		$this->data['message_show_type'] = 0;
+	}
+
+	public function set_msg_notification() {
+		$this->data['message_show_type'] = 1;
+	}
+
 	public function set_message($message) {
 		switch($message['type']) {
 			case 0: // primary
 				$message['cls'] = 'uk-alert-primary';
+				$message['status'] = 'primary';
 				//$message['title'] = $this->lang->line('message');
 			break;
 
 			case 1: // success
 				$message['cls'] = 'uk-alert-success';
+				$message['status'] = 'success';
 				//$message['title'] = $this->lang->line('success');
 			break;
 
 			case 2: // warning
 				$message['cls'] = 'uk-alert-warning';
+				$message['status'] = 'warning';
 				//$message['title'] = $this->lang->line('warning');
 			break;
 
 			case 3: // danger
 				$message['cls'] = 'uk-alert-danger';
+				$message['status'] = 'danger';
 				//$message['title'] = $this->lang->line('danger');
 			break;
 		}
@@ -85,16 +103,37 @@ class MY_Controller extends CI_Controller {
 					$this->load->view($item, $this->data);
 				}
 			break;
-		
+
 			default:
 				$this->load->view($this->view_body, $this->data);
 		}
-		
+
 		if ($this->simple_page) {
 			$this->load->view($this->view_footer_simple, $this->data);
 		}
 		else {
 			$this->load->view($this->view_footer, $this->data);
 		}
+	}
+
+	protected function set_userdata() {}
+
+	protected function require_login() {}
+
+	protected function redirect_to_login_page() {
+		// Determine the login redirect
+		$redirect = $this->input->get('redirect')
+			? urlencode( $this->input->get('redirect') )
+			: urlencode( $this->uri->uri_string() );
+
+		// Set the redirect protocol
+		$redirect_protocol = USE_SSL ? 'https' : NULL;
+
+		// Redirect to the login form
+		header(
+			'Location: ' . site_url( LOGIN_PAGE . '?redirect=' . $redirect, $redirect_protocol ),
+			TRUE,
+			302
+		);
 	}
 }

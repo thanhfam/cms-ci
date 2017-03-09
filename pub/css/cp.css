@@ -1,8 +1,7 @@
-@import url('../uikit/css/uikit.min.css') projection, screen;
+@import url('../uikit/css/uikit.theme.css') projection, screen;
 
 .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
 	font-family: Times, "Times New Roman", Georgia, serif;
-	margin-bottom: 10px;
 }
 
 .uk-padding-remove-right {
@@ -14,22 +13,11 @@
 }
 
 .uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle {
-	height: 42px;
+	height: 40px;
 }
 
 .uk-navbar-item .uk-pagination {
 	margin: 0;
-}
-
-.uk-alert {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 10px 25px 10px 10px;
-}
-
-.uk-alert-close {
-	top: 15px;
-	right: 10px;
 }
 
 .input-field-invalid {

@@ -10,9 +10,9 @@
 </head>
 
 <body>
-	<header class="uk-margin-small">
+	<header class="uk-margin">
 	</header>
 
-	<div class="uk-flex uk-margin-small uk-margin-auto">
-		<div class="uk-card uk-card-default uk-align-center uk-padding-small uk-margin-auto uk-margin-auto-vertical">
+	<div class="uk-flex uk-margin uk-margin-auto">
+		<div class="uk-card uk-card-default uk-align-center uk-padding uk-margin-auto uk-margin-auto-vertical">
 		<h2 class="uk-heading-bullet uk-text-primary"><?=$title?></h2>

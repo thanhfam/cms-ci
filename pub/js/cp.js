@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	$('#loader').hide();
 
+	if (notification) {
+		UIkit.notification(notification);
+	}
+
 	$('.filter').click(function() {
 		if (!$(this).parent().children('input:first-child').val()) {
 			return false;
