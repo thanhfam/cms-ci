@@ -12,7 +12,7 @@
 <body>
 	<header class="uk-margin-small">
 	<?php
-		$this->load->view('cp/inc/nav_header');
+		$this->load->view('inc/nav_header');
 	?>
 	</header>
 

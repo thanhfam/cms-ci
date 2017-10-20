@@ -19,7 +19,7 @@ class User extends MY_Controller {
 
 		$data = array(
 			'title' => $this->lang->line('change_password'),
-			'link_back' => base_url('cp/user/list')
+			'link_back' => base_url('user/list')
 		);
 
 		switch ($submit) {
@@ -71,7 +71,7 @@ class User extends MY_Controller {
 		));
 
 		$this->set_body(
-			'cp/user/user_change_password'
+			'user/user_change_password'
 		);
 		$this->render($data);
 	}
@@ -84,7 +84,7 @@ class User extends MY_Controller {
 
 		$data = array(
 			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('user'),
-			'link_back' => base_url('cp/user/list')
+			'link_back' => base_url('user/list')
 		);
 
 		switch ($submit) {
@@ -139,7 +139,7 @@ class User extends MY_Controller {
 		));
 
 		$this->set_body(
-			'cp/user/user_edit'
+			'user/user_edit'
 		);
 		$this->render($data);
 	}
@@ -188,7 +188,7 @@ class User extends MY_Controller {
 		$this->set_simple_page();
 		$this->set_msg_notification();
 		$this->set_body(
-			'cp/user/user_login'
+			'user/user_login'
 		);
 		$this->render($data);
 	}
@@ -200,7 +200,7 @@ class User extends MY_Controller {
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
-			'base_url' => base_url('cp/user/list')
+			'base_url' => base_url('user/list')
 		);
 
 		$data = array(
@@ -208,15 +208,15 @@ class User extends MY_Controller {
 			'filter' => $filter,
 			'list' => $this->user_model->list_all($page, $filter, $pagy_config),
 			'pagy' => $this->pagination,
-			'link_create' => base_url('cp/user/edit')
+			'link_create' => base_url('user/edit')
 		);
 
 		$this->pagination->initialize($pagy_config);
 
 		$this->set_body(array(
-			'cp/inc/list_header',
-			'cp/user/user_list',
-			'cp/inc/list_footer'
+			'inc/list_header',
+			'user/user_list',
+			'inc/list_footer'
 		));
 
 		$this->render($data);

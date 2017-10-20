@@ -2,12 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
-	protected $view_header = 'cp/inc/header';
-	protected $view_header_simple = 'cp/inc/header_simple';
-	protected $view_footer = 'cp/inc/footer';
-	protected $view_footer_simple = 'cp/inc/footer_simple';
-	protected $view_nav = 'cp/inc/nav';
-	protected $view_message = 'cp/inc/message';
+	protected $view_header = 'inc/header';
+	protected $view_header_simple = 'inc/header_simple';
+	protected $view_footer = 'inc/footer';
+	protected $view_footer_simple = 'inc/footer_simple';
+	protected $view_nav = 'inc/nav';
+	protected $view_message = 'inc/message';
 
 	protected $simple_page = FALSE;
 

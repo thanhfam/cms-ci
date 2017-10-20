@@ -75,7 +75,7 @@ class Ward extends MY_Controller {
 		));
 
 		$this->set_body(
-			'cp/area/ward_edit'
+			'area/ward_edit'
 		);
 		$this->render($data);
 	}
@@ -104,9 +104,9 @@ class Ward extends MY_Controller {
 		$this->pagination->initialize($pagy_config);
 
 		$this->set_body(array(
-			'cp/inc/list_header',
-			'cp/area/ward_list',
-			'cp/inc/list_footer'
+			'inc/list_header',
+			'area/ward_list',
+			'inc/list_footer'
 		));
 
 		$this->render($data);
