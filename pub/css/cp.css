@@ -1,7 +1,11 @@
 @import url('../uikit/css/uikit.min.css') projection, screen;
 
+html {
+	font-family: Roboto;
+}
+
 .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
-	font-family: Times, "Times New Roman", Georgia, serif;
+	font-family: Roboto;
 }
 
 .uk-padding-remove-right {
@@ -22,4 +26,8 @@
 
 .input-field-invalid {
 	color: #f0506e;
+}
+
+.uk-form-icon:not(.uk-form-icon-flip) + .uk-input {
+	padding-left: 36px !important;
 }

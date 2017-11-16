@@ -114,6 +114,140 @@ $config = array(
 			'label' => 'lang:nation',
 			'rules' => 'trim|required|max_length[255]'
 		)
+	),
+	'site_edit' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'title',
+			'label' => 'lang:title',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'type',
+			'label' => 'lang:type',
+			'rules' => 'trim|max_length[255]'
+		)
+	),
+	'category_edit' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'title',
+			'label' => 'lang:title',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'subtitle',
+			'label' => 'lang:subtitle',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'lead',
+			'label' => 'lang:lead',
+			'rules' => 'trim'
+		),
+		array(
+			'field' => 'content',
+			'label' => 'lang:content',
+			'rules' => 'trim'
+		)
+	),
+	'menu_edit' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|required|max_length[255]|is_unique[menu.name]'
+		),
+		array(
+			'field' => 'site_id',
+			'label' => 'lang:site',
+			'rules' => 'trim|required|integer'
+		)
+	),
+	'menu_item_edit' => array(
+		array(
+			'field' => 'title',
+			'label' => 'lang:name',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'url',
+			'label' => 'lang:url',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'target',
+			'label' => 'lang:target',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'menu_id',
+			'label' => 'lang:menu',
+			'rules' => 'trim|required|integer'
+		),
+		array(
+			'field' => 'position',
+			'label' => 'lang:position',
+			'rules' => 'trim|required|integer'
+		)
+	),
+	'post_edit' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'title',
+			'label' => 'lang:title',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'subtitle',
+			'label' => 'lang:subtitle',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'lead',
+			'label' => 'lang:lead',
+			'rules' => 'trim'
+		),
+		array(
+			'field' => 'content',
+			'label' => 'lang:content',
+			'rules' => 'trim'
+		)
+	),
+	'state_edit' => array(
+		array(
+			'field' => 'weight',
+			'label' => 'lang:weight',
+			'rules' => 'trim|required|integer'
+		),
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|required|max_length[255]'
+		)
+	),
+	'image_upload' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'content',
+			'label' => 'lang:content',
+			'rules' => 'trim'
+		)
 	)
 );
 

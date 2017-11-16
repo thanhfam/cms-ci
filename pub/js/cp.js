@@ -1,22 +1,22 @@
 $(document).ready(function() {
 	$('#loader').hide();
 
-	if (notification) {
+	if (typeof notification != 'undefined') {
 		UIkit.notification(notification);
 	}
 
-	$('.filter').click(function() {
-		if (!$(this).parent().children('input:first-child').val()) {
+	$('input.filter').click(function() {
+		if (!$(this).parent().find('input.keyword').val()) {
 			return false;
 		}
 	});
 
-	$('.unfilter').click(function() {
-		if (!$(this).parent().children('input:first-child').val()) {
-			return false;
+	$('input.unfilter').click(function() {
+		if ($(this).parent().find('input.keyword').val()) {
+			$(this).parent().find('input.keyword').val('');
 		}
 		else {
-			$(this).parent().children('input:first-child').val('');
+			return false;
 		}
 	});
 
@@ -26,6 +26,17 @@ $(document).ready(function() {
 			return false;
 		}
 		
+	});
+
+	$('a.btn-remove').click(function(e) {
+		e.preventDefault();
+		var msg = $(this).attr('data-msg');
+		var url = $(this).attr('href');
+
+		UIkit.modal.confirm(msg).then(function() {
+			window.location = url;
+		}, function () {
+		});
 	});
 });
 

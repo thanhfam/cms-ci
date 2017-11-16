@@ -30,8 +30,8 @@ $lang = array(
 	'list_of' => 'List of ',
 	'list' => 'List',
 
-	'created_at' => 'Created: ',
-	'updated_at' => 'Updated: ',
+	'created' => 'Created: ',
+	'updated' => 'Updated: ',
 
 	'first' => 'First',
 	'last' => 'Last',

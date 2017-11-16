@@ -1,6 +1,6 @@
 	</div><!-- of container -->
 
-	<footer class="uk-margin">
+	<footer class="uk-margin-small">
 		<nav class="uk-navbar-container" uk-navbar>
 			<div class="uk-navbar-left">
 				<div class="uk-navbar-item">
@@ -16,9 +16,6 @@
 	<script>
 	var base_url = '<?=base_url();?>';
 	</script>
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="<?=base_url('pub/uikit/js/uikit.min.js');?>"></script>
-	<script src="<?=base_url('pub/uikit/js/uikit-icons.min.js');?>"></script>
-	<script src="<?=base_url('pub/js/cp.js');?>js/uikit-icons.min.js"></script>
+	<script src="<?=base_url('pub/js/cp.js');?>"></script>
 </body>
 </html>

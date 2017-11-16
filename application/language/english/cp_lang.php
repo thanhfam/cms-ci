@@ -3,9 +3,31 @@
 $lang = array(
 	'id' => 'ID',
 	'title' => 'Title',
+	'subtitle' => 'Subtitle',
 	'code' => 'Code',
 	'name' => 'Name',
 	'type' => 'Type',
+	'lead' => 'Lead',
+	'content' => 'Content',
+	'tag' => 'Tag',
+	'avatar' => 'Avatar',
+	'image' => 'Image',
+	'video' => 'Video',
+	'audio' => 'Audio',
+	'url' => 'URL',
+	'target' => 'Target',
+	'position' => 'Position',
+	'state' => 'State',
+	'weight' => 'Weight',
+	'language' => 'Language',
+	'facebook' => 'Facebook',
+	'twitter' => 'Twitter',
+	'pinterest' => 'Pinterest',
+	'gplus' => 'Google Plus',
+	'linkedin' => 'Linkedin',
+
+	'created' => 'Created',
+	'updated' => 'Updated',
 
 	'area' => 'Area',
 	'ward' => 'Ward',
@@ -19,6 +41,8 @@ $lang = array(
 	'change_password' => 'Change password',
 	'reset_password' => 'Reset password',
 
+	'insert image' => 'Insert image',
+
 	'email' => 'Email',
 	'user' => 'User',
 	'username' => 'Username',
@@ -30,20 +54,32 @@ $lang = array(
 	'invalid_username_password' => 'Invalid username or password.',
 	'account_locked' => 'Account is locked.',
 
+	'user' => 'User',
+	'admin' => 'Admin',
+
 	'select_one' => 'Select one option',
 	'select_multi' => 'Select multi options',
+	'select_image' => 'Select an image',
+	'select_video' => 'Select a video',
+	'select_file' => 'Select a file',
 
 	'command' => 'Command',
 	'edit' => 'Edit',
+	'change' => 'Change',
+	'use' => 'Use',
 	'create' => 'Create',
+	'add' => 'Add',
 	'save' => 'Save',
 	'remove' => 'Remove',
+	'close' => 'Close',
 	'back' => 'Back',
+	'select' => 'Select',
+	'select' => 'Upload',
 	'list_of' => 'List of ',
 	'list' => 'List',
 
-	'created_at' => 'Created: ',
-	'updated_at' => 'Updated: ',
+	'created_at' => 'Created:',
+	'updated_at' => 'Updated:',
 	'last_login' => 'Last login: ',
 
 	'first' => 'First',
@@ -61,10 +97,23 @@ $lang = array(
 	'warning' => 'Warning',
 	'danger' => 'Danger',
 
+	'site' => 'Site',
+	'post' => 'Post',
+	'category' => 'Category',
+	'menu' => 'Menu',
+	'menu_item' => 'Menu Item',
+	'parent' => 'Parent',
+
+	'inactivated' => 'Inactivated',
+	'activated' => 'Activated',
+	'removed' => 'Removed',
+
 	'update_success' => 'Data updated successfully.',
+	'remove_successfully' => 'Item removed successfully!',
 	'db_update_danger' => 'Database update danger.',
 	'input_danger' => 'Input danger. Please re-check them.',
+	'item_not_found' => 'Item not found.',
 
-	'are_you_sure_to_remove' => 'Are your sure to remove {param} ?',
+	'sure_to_remove' => 'Are your sure to remove this item ?',
 	'no_row' => "There is no row here !!!'
 );

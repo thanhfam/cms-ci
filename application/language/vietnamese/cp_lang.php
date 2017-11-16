@@ -3,11 +3,33 @@
 $lang = array(
 	'id' => 'ID',
 	'title' => 'Tiêu đề',
+	'subtitle' => 'Tiêu đề phụ',
 	'code' => 'Mã',
 	'name' => 'Tên',
 	'type' => 'Loại',
+	'lead' => 'Tóm tắt',
+	'content' => 'Nội dung',
+	'tag' => 'Tag',
+	'avatar' => 'Hình đại diện',
+	'image' => 'Hình ảnh',
+	'video' => 'Video',
+	'audio' => 'Audio',
+	'url' => 'URL',
+	'target' => 'Đích',
+	'position' => 'Vị trí',
+	'state' => 'Trạng thái',
+	'weight' => 'Trọng số',
+	'language' => 'Ngôn ngữ',
+	'facebook' => 'Facebook',
+	'twitter' => 'Twitter',
+	'pinterest' => 'Pinterest',
+	'gplus' => 'Google Plus',
+	'linkedin' => 'Linkedin',
 
-	'area' => 'Area',
+	'created' => 'Tạo',
+	'updated' => 'Cập nhật',
+	
+	'area' => 'Khu vực',
 	'ward' => 'Phường/Xã',
 	'district' => 'Quận/Huyện',
 	'city' => 'Thành/Tỉnh',
@@ -18,6 +40,8 @@ $lang = array(
 	'password_new' => 'Mật khẩu mới',
 	'change_password' => 'Đổi mật khẩu',
 	'reset_password' => 'Thiết lập lại mật khẩu',
+
+	'insert_image' => 'Chèn ảnh',
 
 	'email' => 'Email',
 	'user' => 'Người dùng',
@@ -30,15 +54,27 @@ $lang = array(
 	'invalid_username_password' => 'Tài khoản hoặc mật khẩu không đúng.',
 	'account_locked' => 'Tài khoản bị khoá.',
 
+	'user' => 'Người dùng',
+	'admin' => 'Quản trị',
+
 	'select_one' => 'Chọn một',
 	'select_multi' => 'Chọn nhiều',
+	'select_image' => 'Chọn hình ảnh',
+	'select_video' => 'Chọn video',
+	'select_file' => 'Chọn tập tin',
 
 	'command' => 'Lệnh',
 	'edit' => 'Sửa',
-	'create' => 'Tạo',
+	'change' => 'Đổi',
+	'use' => 'Sử dụng',
+	'create' => 'Tạo mới',
+	'add' => 'Thêm',
 	'save' => 'Lưu',
 	'remove' => 'Xoá',
+	'close' => 'Đóng',
 	'back' => 'Quay lại',
+	'select' => 'Chọn',
+	'upload' => 'Tải lên',
 	'list_of' => 'Danh sách ',
 	'list' => 'Danh sách',
 
@@ -61,10 +97,23 @@ $lang = array(
 	'warning' => 'Cảnh báo',
 	'danger' => 'Nguy hiểm',
 
+	'site' => 'Site',
+	'post' => 'Bài',
+	'category' => 'Mục',
+	'menu' => 'Trình đơn',
+	'menu_item' => 'Mục trình đơn',
+	'parent' => 'Cha',
+
+	'inactivated' => 'Vô hiệu',
+	'activated' => 'Hoạt động',
+	'removed' => 'Bị xoá',
+
 	'update_success' => 'Dữ liệu cập nhật thành công.',
+	'remove_successfully' => 'Xoá thành công.',
 	'db_update_danger' => 'Lỗi cập nhật cơ sở dữ liệu.',
 	'input_danger' => 'Lỗi dữ liệu đầu vào. Hãy kiểm tra lại.',
+	'item_not_found' => 'Không tìm thấy đối tượng.',
 
-	'are_you_sure_to_remove' => 'Bạn có chắc chắn muốn xoá {param} ?',
+	'sure_to_remove' => 'Bạn có chắc chắn muốn xoá đối tượng này ?',
 	'no_row' => 'Không có dữ liệu !!!'
 );
