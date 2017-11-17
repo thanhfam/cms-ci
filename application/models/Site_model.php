@@ -24,10 +24,12 @@ class Site_model extends MY_Model {
 		return $result;
 	}
 
-	public function get($id) {
-		if (!isset($id)) {
+	public function get($id = '') {
+		if (!is_numeric($id)) {
 			return FALSE;
 		}
+
+		$id = intval($id);
 
 		$this->db
 			->select('s.id, s.title, s.name, s.url, s.language, s.facebook, s.twitter, s.pinterest, s.gplus, s.linkedin, s.avatar_id, i.filename avatar_filename, s.created, s.updated')

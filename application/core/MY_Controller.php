@@ -2,14 +2,20 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
+	protected $folder_view = F_CP;
+
 	protected $view_header = 'inc/header';
 	protected $view_header_simple = 'inc/header_simple';
+	protected $view_header_empty= 'inc/header_empty';
 	protected $view_footer = 'inc/footer';
 	protected $view_footer_simple = 'inc/footer_simple';
+	protected $view_footer_empty = 'inc/footer_empty';
 	protected $view_nav = 'inc/nav';
 	protected $view_message = 'inc/message';
 
-	protected $simple_page = FALSE;
+	protected $view_body = NULL;
+
+	protected $page_type = NULL;
 
 	protected $data = [
 		'message_show_type' => 0
@@ -18,11 +24,46 @@ class MY_Controller extends CI_Controller {
 	public function __construct(array $params = []) {
 		parent::__construct($params);
 
+		$this->load->library([
+			'session'
+		]);
+
+		if (($this->router->class != 'user') || ($this->router->method != 'login')) {
+			if ($this->not_logged_in()) {
+				$this->go_to_login();
+			}
+		}
+
 		$this->load->helper([
 			'url'
 		]);
 
 		$this->data['lang'] = $this->lang;
+	}
+
+	public function go_to($address) {
+		redirect($address);
+	}
+
+	public function go_to_dashboard() {
+		$this->go_to(base_url(F_CP .'dashboard'));
+	}
+
+	public function go_to_login() {
+		$this->go_to(base_url(F_CP));
+	}
+
+	public function not_logged_in() {
+		return !$this->is_logged_in();
+	}
+
+	public function is_logged_in() {
+		if (isset($this->session->user)) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
 	}
 
 	public function set_header($header) {
@@ -42,7 +83,11 @@ class MY_Controller extends CI_Controller {
 	}
 
 	public function set_simple_page() {
-		$this->simple_page = TRUE;
+		$this->page_type = 'simple';
+	}
+
+	public function set_empty_page() {
+		$this->page_type = 'empty';
 	}
 
 	public function set_msg_alert() {
@@ -86,54 +131,99 @@ class MY_Controller extends CI_Controller {
 	public function render($data) {
 		$this->data = array_merge($this->data, $data);
 
-		if ($this->simple_page) {
-			$this->load->view($this->view_header_simple, $this->data);
-		}
-		else {
-			$this->load->view($this->view_header, $this->data);
+		switch ($this->page_type) {
+			case 'simple':
+				$this->load->view($this->folder_view .$this->view_header_simple, $this->data);
+			break;
+
+			case 'empty':
+				$this->load->view($this->folder_view .$this->view_header_empty, $this->data);
+			break;
+
+			default:
+				$this->load->view($this->folder_view .$this->view_header, $this->data);
 		}
 
 		if (isset($this->data['message'])) {
-			$this->load->view($this->view_message, $this->data);
+			$this->load->view($this->folder_view .$this->view_message, $this->data);
 		}
 
 		switch (gettype($this->view_body)) {
 			case 'array':
 				foreach ($this->view_body as $item) {
-					$this->load->view($item, $this->data);
+					$this->load->view($this->folder_view .$item, $this->data);
 				}
 			break;
 
+			case 'string':
+				$this->load->view($this->folder_view .$this->view_body, $this->data);
+
 			default:
-				$this->load->view($this->view_body, $this->data);
 		}
 
-		if ($this->simple_page) {
-			$this->load->view($this->view_footer_simple, $this->data);
+		switch ($this->page_type) {
+			case 'simple':
+				$this->load->view($this->folder_view .$this->view_footer_simple, $this->data);
+			break;
+
+			case 'empty':
+				$this->load->view($this->folder_view .$this->view_footer_empty, $this->data);
+			break;
+
+			default:
+				$this->load->view($this->folder_view .$this->view_footer, $this->data);
 		}
-		else {
-			$this->load->view($this->view_footer, $this->data);
-		}
+
+	}
+}
+
+class FP_Controller extends CI_Controller {
+	protected $folder_view = F_FRONT;
+
+	protected $view_header = 'header';
+	protected $view_footer = 'footer';
+	protected $view_body = NULL;
+
+	public function __construct(array $params = []) {
+		parent::__construct($params);
+
+		$this->load->helper([
+			'url'
+		]);
+
+		$this->data['lang'] = $this->lang;
 	}
 
-	protected function set_userdata() {}
+	public function set_header($header) {
+		$this->view_header = $header;
+	}
 
-	protected function require_login() {}
+	public function set_body($body) {
+		$this->view_body = $body;
+	}
 
-	protected function redirect_to_login_page() {
-		// Determine the login redirect
-		$redirect = $this->input->get('redirect')
-			? urlencode( $this->input->get('redirect') )
-			: urlencode( $this->uri->uri_string() );
+	public function set_footer($footer) {
+		$this->view_footer = $footer;
+	}
 
-		// Set the redirect protocol
-		$redirect_protocol = USE_SSL ? 'https' : NULL;
+	public function render($data) {
+		$this->data = array_merge($this->data, $data);
 
-		// Redirect to the login form
-		header(
-			'Location: ' . site_url( LOGIN_PAGE . '?redirect=' . $redirect, $redirect_protocol ),
-			TRUE,
-			302
-		);
+		$this->load->view($this->folder_view .$this->view_header, $this->data);
+
+		switch (gettype($this->view_body)) {
+			case 'array':
+				foreach ($this->view_body as $item) {
+					$this->load->view($this->folder_view .$item, $this->data);
+				}
+			break;
+
+			case 'string':
+				$this->load->view($this->folder_view .$this->view_body, $this->data);
+
+			default:
+		}
+
+		$this->load->view($this->folder_view .$this->view_footer, $this->data);
 	}
 }

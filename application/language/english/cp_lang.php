@@ -6,6 +6,7 @@ $lang = array(
 	'subtitle' => 'Subtitle',
 	'code' => 'Code',
 	'name' => 'Name',
+	'uri' => 'URI',
 	'type' => 'Type',
 	'lead' => 'Lead',
 	'content' => 'Content',
@@ -28,6 +29,7 @@ $lang = array(
 
 	'created' => 'Created',
 	'updated' => 'Updated',
+	'last_login' => 'Last login',
 
 	'area' => 'Area',
 	'ward' => 'Ward',
@@ -36,15 +38,18 @@ $lang = array(
 	'nation' => 'Nation',
 
 	'password' => 'Password',
-	'password_confỉm' => 'Password confirm',
+	'password_new_confirm' => 'Confirm new password',
 	'password_new' => 'New password',
 	'change_password' => 'Change password',
 	'reset_password' => 'Reset password',
+	'new_password_is' => 'The new password is: ',
+	'password_incorrect' => 'The password is not correct!',
 
 	'insert image' => 'Insert image',
 
 	'email' => 'Email',
 	'user' => 'User',
+	'user_group' => 'User Group',
 	'username' => 'Username',
 	'group' => 'Group',
 	'login' => 'Log in',
@@ -70,6 +75,7 @@ $lang = array(
 	'create' => 'Create',
 	'add' => 'Add',
 	'save' => 'Save',
+	'save_back' => 'Save & Back',
 	'remove' => 'Remove',
 	'close' => 'Close',
 	'back' => 'Back',
@@ -80,7 +86,7 @@ $lang = array(
 
 	'created_at' => 'Created:',
 	'updated_at' => 'Updated:',
-	'last_login' => 'Last login: ',
+	'last_login_at' => 'Last login: ',
 
 	'first' => 'First',
 	'last' => 'Last',
@@ -97,7 +103,11 @@ $lang = array(
 	'warning' => 'Warning',
 	'danger' => 'Danger',
 
+	'dashboard' => 'Dashboard',
 	'site' => 'Site',
+	'layout' => 'Layout',
+	'cate_layout' => 'Category layout',
+	'post_layout' => 'Post layout',
 	'post' => 'Post',
 	'category' => 'Category',
 	'menu' => 'Menu',

@@ -6,8 +6,9 @@ $lang = array(
 	'subtitle' => 'Tiêu đề phụ',
 	'code' => 'Mã',
 	'name' => 'Tên',
+	'uri' => 'URI',
 	'type' => 'Loại',
-	'lead' => 'Tóm tắt',
+	'lead' => 'Trích dẫn',
 	'content' => 'Nội dung',
 	'tag' => 'Tag',
 	'avatar' => 'Hình đại diện',
@@ -28,6 +29,7 @@ $lang = array(
 
 	'created' => 'Tạo',
 	'updated' => 'Cập nhật',
+	'last_login' => 'Đăng nhập lần cuối',
 	
 	'area' => 'Khu vực',
 	'ward' => 'Phường/Xã',
@@ -36,15 +38,18 @@ $lang = array(
 	'nation' => 'Quốc gia',
 
 	'password' => 'Mật khẩu',
-	'password_confirm' => 'Xác nhận mật khẩu',
+	'password_new_confirm' => 'Xác nhận mật khẩu mới',
 	'password_new' => 'Mật khẩu mới',
 	'change_password' => 'Đổi mật khẩu',
-	'reset_password' => 'Thiết lập lại mật khẩu',
+	'reset_password' => 'Thiết lập mật khẩu',
+	'new_password_is' => 'Mật khẩu mới là: ',
+	'password_incorrect' => 'Mật khẩu không đúng!',
 
 	'insert_image' => 'Chèn ảnh',
 
 	'email' => 'Email',
 	'user' => 'Người dùng',
+	'user_group' => 'Nhóm người dùng',
 	'username' => 'Tài khoản',
 	'group' => 'Nhóm',
 	'login' => 'Đăng nhập',
@@ -70,6 +75,7 @@ $lang = array(
 	'create' => 'Tạo mới',
 	'add' => 'Thêm',
 	'save' => 'Lưu',
+	'save_back' => 'Lưu & Quay lại',
 	'remove' => 'Xoá',
 	'close' => 'Đóng',
 	'back' => 'Quay lại',
@@ -80,7 +86,7 @@ $lang = array(
 
 	'created_at' => 'Tạo: ',
 	'updated_at' => 'Cập nhật: ',
-	'last_login' => 'Đăng nhập lần cuối: ',
+	'last_login_at' => 'Đăng nhập lần cuối: ',
 
 	'first' => 'Đầu',
 	'last' => 'Cuối',
@@ -97,7 +103,11 @@ $lang = array(
 	'warning' => 'Cảnh báo',
 	'danger' => 'Nguy hiểm',
 
+	'dashboard' => 'Dashboard',
 	'site' => 'Site',
+	'layout' => 'Layout',
+	'cate_layout' => 'Layout mục',
+	'post_layout' => 'Layout bài',
 	'post' => 'Bài',
 	'category' => 'Mục',
 	'menu' => 'Trình đơn',

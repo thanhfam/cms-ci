@@ -3,28 +3,16 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config = array(
-	'user_edit' => array(
-		array(
-			'field' => 'username',
-			'label' => 'lang:username',
-			'rules' => 'trim|required|max_length[255]'
-		),
-		array(
-			'field' => 'email',
-			'label' => 'lang:email',
-			'rules' => 'trim|required|valid_email|max_length[255]'
-		)
-	),
 	'user_login' => array(
 		array(
 			'field' => 'username',
 			'label' => 'lang:username',
-			'rules' => 'trim|required|max_length[255]'
+			'rules' => 'trim|required|min_length[3]|max_length[30]'
 		),
 		array(
 			'field' => 'password',
 			'label' => 'lang:password',
-			'rules' => 'trim|required|max_length[255]'
+			'rules' => 'trim|required|min_length[8]|max_length[255]'
 		)
 	),
 	'user_change_password' => array(
@@ -34,14 +22,14 @@ $config = array(
 			'rules' => 'trim|required|max_length[255]'
 		),
 		array(
-			'field' => 'password_confirm',
-			'label' => 'lang:password_confirm',
-			'rules' => 'trim|required|max_length[255]|matches[password]'
-		),
-		array(
 			'field' => 'password_new',
 			'label' => 'lang:password_new',
 			'rules' => 'trim|required|min_length[8]|max_length[255]'
+		),
+		array(
+			'field' => 'password_new_confirm',
+			'label' => 'lang:password_new_confirm',
+			'rules' => 'trim|required|max_length[255]|matches[password_new]'
 		)
 	),
 	'ward_edit' => array(
@@ -139,6 +127,11 @@ $config = array(
 			'rules' => 'trim|max_length[255]'
 		),
 		array(
+			'field' => 'uri',
+			'label' => 'lang:uri',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
 			'field' => 'title',
 			'label' => 'lang:title',
 			'rules' => 'trim|required|max_length[255]'
@@ -163,7 +156,19 @@ $config = array(
 		array(
 			'field' => 'name',
 			'label' => 'lang:name',
-			'rules' => 'trim|required|max_length[255]|is_unique[menu.name]'
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'site_id',
+			'label' => 'lang:site',
+			'rules' => 'trim|required|integer'
+		)
+	),
+	'layout_edit' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|required|max_length[255]'
 		),
 		array(
 			'field' => 'site_id',
@@ -205,6 +210,11 @@ $config = array(
 			'rules' => 'trim|max_length[255]'
 		),
 		array(
+			'field' => 'uri',
+			'label' => 'lang:uri',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
 			'field' => 'title',
 			'label' => 'lang:title',
 			'rules' => 'trim|required|max_length[255]'
@@ -235,6 +245,35 @@ $config = array(
 			'field' => 'name',
 			'label' => 'lang:name',
 			'rules' => 'trim|required|max_length[255]'
+		)
+	),
+	'user_group_edit' => array(
+		array(
+			'field' => 'title',
+			'label' => 'lang:title',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|max_length[255]'
+		)
+	),
+	'user_edit' => array(
+		array(
+			'field' => 'username',
+			'label' => 'lang:username',
+			'rules' => 'trim|required|min_length[3]|max_length[30]'
+		),
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'email',
+			'label' => 'lang:email',
+			'rules' => 'trim|required|valid_email|max_length[255]'
 		)
 	),
 	'image_upload' => array(

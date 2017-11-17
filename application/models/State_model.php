@@ -37,8 +37,10 @@ class state_model extends MY_Model {
 
 		$item = $this->db->get()->row_array();
 
-		$item['created'] = $this->get_time($item['created']);
-		$item['updated'] = $this->get_time($item['updated']);
+		if ($item) {
+			$item['created'] = $this->get_time($item['created']);
+			$item['updated'] = $this->get_time($item['updated']);
+		}
 
 		return $item;
 	}
@@ -48,6 +50,7 @@ class state_model extends MY_Model {
 
 		$this->db
 			->select('id, name, weight')
+			->where('weight > -1')
 			->order_by('id', 'ASC')
 		;
 

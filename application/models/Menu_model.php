@@ -26,9 +26,11 @@ class Menu_model extends MY_Model {
 	}
 
 	public function get($id = '') {
-		if ($id == '') {
+		if (!is_numeric($id)) {
 			return FALSE;
 		}
+
+		$id = intval($id);
 
 		$this->db
 			->select('m.id, m.name, m.site_id, m.created, m.updated')
@@ -38,8 +40,10 @@ class Menu_model extends MY_Model {
 
 		$item = $this->db->get()->row_array();
 
-		$item['created'] = $this->get_time($item['created']);
-		$item['updated'] = $this->get_time($item['updated']);
+		if ($item) {
+			$item['created'] = $this->get_time($item['created']);
+			$item['updated'] = $this->get_time($item['updated']);
+		}
 
 		return $item;
 	}
@@ -96,6 +100,8 @@ class Menu_model extends MY_Model {
 
 		//echo $this->db->last_query();
 
-		return $this->db->get()->result_array();
+		$result = $this->db->get()->result_array();
+
+		return $result;
 	}
 }

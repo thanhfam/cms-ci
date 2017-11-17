@@ -65,7 +65,6 @@ class Post_model extends MY_Model {
 	}
 
 	public function list_all($page = 1, $filter = '', &$pagy_config) {
-		//$this->load->database();
 		$this->load->library('pagination');
 
 		$filter = strtolower($filter);
@@ -105,5 +104,50 @@ class Post_model extends MY_Model {
 		//echo $this->db->last_query();
 
 		return $this->db->get()->result_array();
+	}
+
+	public function get_activated($cate_id, $page = 1, $filter = '', &$pagy_config) {
+		$this->load->library('pagination');
+
+		$filter = strtolower($filter);
+
+		$this->db
+			->select('p.id, p.subtitle, p.title, p.name, p.lead, p.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated')
+			->from('post p')
+			->where('p.cate_id', intval($cate_id))
+			->where('p.state_weight', S_ACTIVATED)
+			->join('category c', 'p.cate_id = c.id')
+			->join('image i', 'p.avatar_id = i.id', 'left')
+			->order_by('p.id', 'DESC')
+		;
+
+		if ($filter != '') {
+			$this->db->like('LOWER(p.id)', $filter)
+				->or_like('LOWER(p.subtitle)', $filter)
+				->or_like('LOWER(p.title)', $filter)
+				->or_like('LOWER(c.name)', $filter)
+				->or_like('LOWER(c.title)', $filter)
+			;
+		}
+
+		$total_row = $this->db->count_all_results('', FALSE);
+		$pagy_config['total_rows'] = $total_row;
+
+		$per_page = $this->pagination->per_page;
+		$last_page = ceil($total_row / $per_page);
+
+		if (! isset($page)  || (! is_numeric($page)) || ($page < 1) || ($page > $last_page)) {
+			$page = 1;
+		}
+
+		$from_row = ($page - 1) * $per_page;
+
+		$this->db->limit($per_page, $from_row);
+
+		$result = $this->db->get()->result_array();
+
+		//echo $this->db->last_query();
+
+		return $result;
 	}
 }

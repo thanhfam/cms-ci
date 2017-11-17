@@ -25,40 +25,67 @@ class Category_model extends MY_Model {
 		return $result;
 	}
 
-	public function get($id = '') {
-		if ($id == '') {
+	public function get_by_uri($uri = '') {
+		if ($uri == '') {
 			return FALSE;
 		}
 
 		$this->db
-			->select('c1.id, c1.subtitle, c1.title, c1.name, c1.lead, c1.content, c1.site_id, c1.cate_id, c1.state_weight, c1.created, c1.updated')
+			->select('c1.id, c1.subtitle, c1.title, c1.name, c1.uri, c1.lead, c1.content, c1.site_id, c1.cate_id, c1.cate_layout_id, l.content cate_layout_content, c1.state_weight, c1.created, c1.updated')
+			->from('category c1')
+			->where('c1.uri', $uri)
+			->join('layout l', 'c1.cate_layout_id = l.id')
+		;
+
+		$item = $this->db->get()->row_array();
+
+		if ($item) {
+			$item['created'] = $this->get_time($item['created']);
+			$item['updated'] = $this->get_time($item['updated']);
+		}
+
+		return $item;
+	}
+
+	public function get($id = '') {
+		if (!is_numeric($id)) {
+			return FALSE;
+		}
+
+		$id = intval($id);
+
+		$this->db
+			->select('c1.id, c1.subtitle, c1.title, c1.name, c1.uri, c1.lead, c1.content, c1.site_id, c1.cate_id, c1.cate_layout_id, c1.post_layout_id, c1.state_weight, c1.created, c1.updated')
 			->from('category c1')
 			->where('c1.id', $id)
 		;
 
 		$item = $this->db->get()->row_array();
 
-		$item['created'] = $this->get_time($item['created']);
-		$item['updated'] = $this->get_time($item['updated']);
+		if ($item) {
+			$item['created'] = $this->get_time($item['created']);
+			$item['updated'] = $this->get_time($item['updated']);
+		}
 
 		return $item;
 	}
 
 	public function list_simple_for_post() {
 		$this->db
-			->select('id, concat(title, " (", id, ")") title')
-			->order_by('id', 'ASC')
+			->select('id, concat(title, " (", id, ")") title, name')
+			->order_by('title', 'ASC')
 		;
 
 		$result = $this->db->get('category')->result_array();
+
 		return $result;
 	}
 
 
 	public function list_simple($cate_id = '', $site_id = '') {
 		$this->db
-			->select('id, concat(title, " (", id, ")") title')
-			->order_by('id', 'ASC')
+			->select('id, concat(title, " (", id, ")") title, name')
+			->order_by('title', 'ASC')
 		;
 
 		if ($site_id != '') {
@@ -69,7 +96,7 @@ class Category_model extends MY_Model {
 			$this->db->where('id !=', $cate_id);
 		}
 
-		echo $this->db->last_query();
+		//echo $this->db->last_query();
 
 		$result = $this->db->get('category')->result_array();
 		array_unshift($result, array(
@@ -87,7 +114,7 @@ class Category_model extends MY_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('c1.id, c1.subtitle, c1.title, c1.name, si.id site_id, si.title site_title, si.url site_url, st.name state_name, st.weight state_weight, c2.id parent_id, c2.title parent_title, c1.created, c1.updated')
+			->select('c1.id, c1.subtitle, c1.title, c1.name, c1.uri, si.id site_id, si.title site_title, si.url site_url, st.name state_name, st.weight state_weight, c2.id parent_id, c2.title parent_title, c1.created, c1.updated')
 			->from('category c1')
 			->join('state st', 'c1.state_weight = st.weight')
 			->join('site si', 'c1.site_id = si.id')
@@ -120,6 +147,8 @@ class Category_model extends MY_Model {
 
 		//echo $this->db->last_query();
 
-		return $this->db->get()->result_array();
+		$result = $this->db->get()->result_array();
+
+		return $result;
 	}
 }

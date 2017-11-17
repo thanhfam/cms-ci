@@ -6,81 +6,160 @@ class User_model extends MY_Model {
 	}
 
 	public function save_password(&$item) {
-		if (empty($item['user_id'])) {
+		if (empty($item['id'])) {
 			return FALSE;
 		}
 
-		$this->db->where('user_id', $item['user_id']);
+		$this->db->where('id', $item['id']);
+
 		$result = $this->db->update('user', array(
-			'password' => $item['password_new']
+			'password_plain' => $item['password_new'],
+			'password' => $this->hash_password($item['password_new'])
 		));
 
-		$item['modified_at'] = $this->get_time();
+		if ($result) {
+			$message = array(
+				'type' => 1,
+				'content' => $this->lang->line('update_success')
+			);
 
-		return $result;
+			$item['updated'] = $this->get_time();
+		}
+		else {
+			$message = array(
+				'type' => 3,
+				'content' => $this->lang->line('db_update_danger')
+			);
+		}
+
+		return $message;
+	}
+
+	public function change_password(&$item) {
+		if (empty($item['id'])) {
+			return FALSE;
+		}
+
+		$this->db
+			->select('u.id')
+			->from('user u')
+			->where('u.id', $item['id'])
+			->where('u.password', $this->hash_password($item['password']))
+		;
+
+		$this->load->helper(array('language'));
+
+		if ($result = $this->db->get()->row_array()) {
+			$message = $this->save_password($item);
+		}
+		else {
+			$message = array(
+				'type' => 3,
+				'content' => $this->lang->line('password_incorrect')
+			);
+		}
+
+		return $message;
 	}
 
 	public function save(&$item) {
-		if (empty($item['user_id'])) {
+		if (empty($item['id'])) {
 			$result = $this->db->insert('user', $item);
 
-			$item['user_id'] = $this->db->insert_id();
-			$item['created_at'] = $item['modified_at'] = $this->get_time();
+			$item['id'] = $this->db->insert_id();
+			$item['created'] = $item['updated'] = $this->get_time();
 		}
 		else {
-			$this->db->where('user_id', $item['user_id']);
+			$this->db->where('id', $item['id']);
 			$result = $this->db->update('user', $item);
 
-			$item['created_at'] = $this->input->post('created');
-			$item['modified_at'] = $this->get_time();
+			$item['created'] = $this->input->post('created');
+			$item['updated'] = $this->get_time();
 		}
 
 		return $result;
 	}
 
-	public function hash_passwd($item) {
-		return md5($item['username'] . $item['password'] . $item['password']);
+	public function hash_password($password) {
+		return md5($password . SECRET_KEY . $password);
 	}
 
-	public function check_login($item) {
+	public function generate_password() {
+		$seeds = 'abcdefghklmnpqrstuvx123456789';
+		$password = array(); 
+		$alpha_length = strlen($seeds) - 1; 
+
+		for ($i = 0; $i < 8; $i++) {
+			$n = rand(0, $alpha_length);
+			$password[] = $seeds[$n];
+		}
+		return implode($password);
+	}
+
+	public function login($item) {
 		$this->db
-			->select('u.user_id')
+			->select('u.id')
 			->from('user u')
 			->where('u.username', $item['username'])
-			->where('u.passwd', $this->hash_passwd($item))
+			->where('u.password', $this->hash_password($item['password']))
+			->limit(1)
 		;
 
-		$item = $this->db->get()->row_array();
+		if ($item = $this->db->get()->row_array()) {
+			$user = $this->get($item['id']);
 
-		print_r($item);
-
-		return FALSE;
+			return $user;
+		}
+		else {
+			return FALSE;
+		}
 	}
 
-	public function get($id = 0) {
-		if ($id == 0) {
+	public function remove($id = '') {
+		if ($id == '') {
 			return FALSE;
 		}
 
 		$this->db
-			->select('u.user_id, u.username, u.email, u.auth_level, u.last_login, u.created_at, u.modified_at')
+			->where('id', $id)
+			->delete('user');
+
+		$result = $this->db->affected_rows();
+
+		return $result;
+	}
+
+	public function get($id = '') {
+		if (!is_numeric($id)) {
+			return FALSE;
+		}
+
+		$id = intval($id);
+
+		$this->db
+			->select('u.id, u.username, u.name, u.email, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated')
 			->from('user u')
-			->where('u.user_id', $id)
+			->where('u.id', $id)
 		;
 
 		$item = $this->db->get()->row_array();
 
-		$item['last_login'] = $this->get_time($item['last_login']);
-		$item['created_at'] = $this->get_time($item['created_at']);
-		$item['modified_at'] = $this->get_time($item['modified_at']);
+		if ($item) {
+			if ($item['last_login']) {
+				$item['last_login'] = $this->get_time($item['last_login']);
+			}
+
+			$item['created'] = $this->get_time($item['created']);
+			$item['updated'] = $this->get_time($item['updated']);
+		}
 
 		return $item;
 	}
 
 	public function list_simple($category_id = 0) {
 		$this->db
-			->select('user_id, username')
-			->order_by('user_id', 'ASC')
+			->select('id, username, concat(username, " (", id, ")") title')
+			->order_by('username', 'ASC')
 		;
 
 		if ($category_id) {
@@ -91,14 +170,17 @@ class User_model extends MY_Model {
 	}
 
 	public function list_all($page = 1, $filter = '', &$pagy_config) {
-		//$this->load->database();
 		$this->load->library('pagination');
 
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('u.user_id, u.username, u.email, u.auth_level')
+			->select('u.id, u.username, u.email, u.state_weight, s.name state_name, u.last_login, u.user_group_id, ug.title user_group_title')
 			->from('user u')
+			->join('state s', 'u.state_weight = s.weight')
+			->join('user_group ug', 'u.user_group_id = ug.id')
+			->order_by('u.state_weight', 'DESC')
+			->order_by('u.username', 'ASC')
 		;
 
 		$total_row = $this->db->count_all_results('', FALSE);

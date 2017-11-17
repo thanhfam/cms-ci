@@ -36,8 +36,6 @@ class Menu_item_model extends MY_Model {
 
 		$result = $this->db->affected_rows();
 
-		$this->db->close();
-
 		return $result;
 	}
 
@@ -54,10 +52,10 @@ class Menu_item_model extends MY_Model {
 
 		$item = $this->db->get()->row_array();
 
-		$this->db->close();
-
-		$item['created'] = $this->get_time($item['created']);
-		$item['updated'] = $this->get_time($item['updated']);
+		if ($item) {
+			$item['created'] = $this->get_time($item['created']);
+			$item['updated'] = $this->get_time($item['updated']);
+		}
 
 		return $item;
 	}
@@ -99,8 +97,6 @@ class Menu_item_model extends MY_Model {
 
 		$result = $this->db->get()->result_array();
 
-		$this->db->close();
-
 		//echo $this->db->last_query();
 
 		return $result;
@@ -119,8 +115,6 @@ class Menu_item_model extends MY_Model {
 		if ($menu_item_id != '') {
 			$this->db->where('id !=', $menu_item_id);
 		}
-
-		$this->db->close();
 
 		$result = $this->db->get('menu_item')->result_array();
 		array_unshift($result, array(

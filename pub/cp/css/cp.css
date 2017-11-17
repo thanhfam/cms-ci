@@ -1,0 +1,62 @@
+@import url('../uikit/css/uikit.min.css') projection, screen;
+
+html {
+	font-family: Roboto;
+	font-size: 15px;
+}
+
+.uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
+	font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+}
+
+.uk-button-secondary {
+	background-color: #888;
+}
+
+.uk-button-secondary:focus,.uk-button-secondary:hover {
+	background-color: #797979;
+}
+
+.uk-button-secondary.uk-active,.uk-button-secondary:active {
+	background-color: #797979;
+}
+
+.uk-padding-remove-right {
+	padding-right: 0 !important;
+}
+
+.uk-padding-remove-left {
+	padding-left: 0 !important;
+}
+
+.uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle {
+	height: 40px;
+}
+
+.uk-navbar-item .uk-pagination {
+	margin: 0;
+}
+
+.input-field-invalid {
+	color: #f0506e;
+}
+
+.uk-form-icon:not(.uk-form-icon-flip) + .uk-input {
+	padding-left: 36px !important;
+}
+
+.time {
+	font-size: .875rem;
+	font-weight: 300;
+	color: #888;
+}
+
+#user-login {
+	margin: 0 auto;
+	display: block;
+}
+
+#user-login .uk-button {
+	width: 100%;
+}
+
