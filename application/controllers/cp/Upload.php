@@ -110,15 +110,18 @@ class Upload extends MY_Controller {
 	public function _remap($method, $params = array()) {
 		switch ($method) {
 			case 'image':
+				$this->auth_model->require_right('IMAGE_UPLOAD');
 				$method = 'upload_image';
 			break;
 
 			case 'video':
+				$this->auth_model->require_right('VIDEO_UPLOAD');
 				$method = 'upload_video';
 			break;
 
 			case 'index':
 			case 'file':
+				$this->auth_model->require_right('FILE_UPLOAD');
 				$method = 'upload_file';
 			break;
 

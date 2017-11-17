@@ -34,9 +34,22 @@ class User extends MY_Controller {
 
 	}
 
+	public function not_granted() {
+		$data = array(
+			'title' => $this->lang->line('not_granted'),
+		);
+
+		$this->set_message(array(
+			'type' => 3,
+			'content' => $this->lang->line('permission_not_grannted')
+		));
+
+		$this->render($data);
+	}
+
 	public function change_password($id = '') {
 		if ($id == '') {
-			show404();
+			$id = $this->session->user['id'];
 		}
 
 		$this->load->helper('form');
@@ -227,7 +240,6 @@ class User extends MY_Controller {
 	public function login() {
 		if ($this->is_logged_in()) {
 			$this->go_to_dashboard();
-			exit();
 		}
 
 		$this->load->helper('form');
@@ -257,13 +269,13 @@ class User extends MY_Controller {
 
 				if ($this->form_validation->run('user_login')) {
 					if ($user = $this->user_model->login($item)) {
-						$this->session->user = $user;
+						$this->init_session($user);
+
 						if ($item['remember_me']) {
 							$this->session->set_userdata('remember_me', TRUE);
 						}
 
 						$this->go_to_dashboard();
-						exit();
 					}
 					else {
 						$this->set_message(array(
@@ -271,9 +283,6 @@ class User extends MY_Controller {
 							'content' => $this->lang->line('invalid_username_password')
 						));
 					}
-				}
-				else {
-					echo 111;
 				}
 			break;
 		}
@@ -288,6 +297,11 @@ class User extends MY_Controller {
 			'system/user_login'
 		);
 		$this->render($data);
+	}
+
+	public function init_session($user) {
+		$this->session->user = $user;
+		$this->session->menu_data = $this->user_model->get_menu_data($user);
 	}
 
 	public function list_all() {
@@ -347,10 +361,24 @@ class User extends MY_Controller {
 		switch ($method) {
 			case 'list':
 			case 'index':
+				$this->auth_model->require_right('USER_LIST');
 				$method = 'list_all';
 			break;
 
+			case 'remove':
+				$this->auth_model->require_right('USER_REMOVE');
+			break;
+
+			case 'edit':
+				$this->auth_model->require_right('USER_EDIT');
+			break;
+
+			case 'reset_password':
+				$this->auth_model->require_right('USER_RESET_PASSWORD');
+			break;
+
 			case 'select':
+				$this->auth_model->require_right('USER_LIST');
 				$method = 'list_select';
 			break;
 

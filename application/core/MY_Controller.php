@@ -17,9 +17,9 @@ class MY_Controller extends CI_Controller {
 
 	protected $page_type = NULL;
 
-	protected $data = [
+	protected $data = array(
 		'message_show_type' => 0
-	];
+	);
 
 	public function __construct(array $params = []) {
 		parent::__construct($params);
@@ -38,11 +38,44 @@ class MY_Controller extends CI_Controller {
 			'url'
 		]);
 
+		$this->load->model([
+			'user_model',
+			'auth_model'
+		]);
+
 		$this->data['lang'] = $this->lang;
+	}
+
+	public function has_right($item) {
+		if (!isset($this->session->menu_data)) {
+			return FALSE;
+		}
+
+		switch (gettype($item)) {
+			case 'string':
+				if ($pos = strpos($this->session->menu_data, $item) > -1) {
+					return TRUE;
+				}
+			break;
+
+			case 'array':
+				foreach ($item as $str) {
+					if ($pos = strpos($this->session->menu_data, $str) > -1) {
+						return TRUE;
+					}
+				}
+			break;
+		}
+
+
+
+
+		return FALSE;
 	}
 
 	public function go_to($address) {
 		redirect($address);
+		exit(0);
 	}
 
 	public function go_to_dashboard() {
@@ -130,6 +163,14 @@ class MY_Controller extends CI_Controller {
 
 	public function render($data) {
 		$this->data = array_merge($this->data, $data);
+
+		if (isset($this->session->user)) {
+			$this->data['user'] = $this->session->user;
+		}
+
+		if (isset($this->session->menu_data)) {
+			$this->data['menu_data'] = $this->session->menu_data;
+		}
 
 		switch ($this->page_type) {
 			case 'simple':

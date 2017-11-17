@@ -40,8 +40,6 @@ class Site_model extends MY_Model {
 		//echo $this->db->last_query();
 		$item = $this->db->get()->row_array();
 
-		$this->db->close();
-
 		$item['created'] = $this->get_time($item['created']);
 		$item['updated'] = $this->get_time($item['updated']);
 
@@ -55,8 +53,6 @@ class Site_model extends MY_Model {
 		;
 
 		$result = $this->db->get('site')->result_array();
-
-		$this->db->close();
 
 		return $result;
 	}
@@ -85,7 +81,7 @@ class Site_model extends MY_Model {
 		$pagy_config['total_rows'] = $total_row;
 
 		$per_page = $this->pagination->per_page;
-		$last_page = floor($total_row / $per_page);
+		$last_page = ceil($total_row / $per_page);
 
 		if (! isset($page)  || (! is_numeric($page)) || ($page < 1) || ($page > $last_page)) {
 			$page = 1;
@@ -98,8 +94,6 @@ class Site_model extends MY_Model {
 		//echo $this->db->last_query();
 
 		$result = $this->db->get()->result_array();
-
-		$this->db->close();
 
 		return $result;
 	}

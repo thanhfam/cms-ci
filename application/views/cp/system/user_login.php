@@ -24,17 +24,6 @@
 	</div>
 </div>
 
-<!--
-<div class="uk-margin-small">
-	<div class="uk-form-controls">
-		<label class="uk-form-label" for="remember_me">
-			<input class="uk-checkbox" type="checkbox" name="remember_me" id="remember_me" value="1" <?=$item['remember_me'] ? ' checked' : '';?>/>
-			<?=$lang->line('remember_me')?>
-		</label>
-	</div>
-</div>
--->
-
 <div class="uk-margin-small">
 	<div class="uk-form-controls">
 		<button class="uk-button uk-button-small uk-button-primary" type="submit" name="submit" value="login"><?=$lang->line('login');?></button>

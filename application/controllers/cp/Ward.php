@@ -138,13 +138,19 @@ class Ward extends MY_Controller {
 
 	public function _remap($method, $params = array()) {
 		switch ($method) {
-			case 'list':
 			case 'index':
+			case 'list':
+				$this->auth_model->require_right('WARD_LIST');
 				$method = 'list_all';
 			break;
 
+			case 'edit':
+				$this->auth_model->require_right('WARD_EDIT');
+			break;
+
 			case 'select':
-				$method = 'list_select';
+				$this->auth_model->require_right('WARD_LIST');
+				$method = 'select_all';
 			break;
 
 			default:

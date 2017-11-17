@@ -129,6 +129,24 @@ class User_model extends MY_Model {
 		return $result;
 	}
 
+	public function get_menu_data($user) {
+		$this->db
+			->select('r.name')
+			->from('user_group ug')
+			->join('user_group_right ugr', 'ug.id = ugr.user_group_id')
+			->join('right r', 'r.id = ugr.right_id')
+			->where('ug.id', $user['user_group_id'])
+		;
+
+		$item = $this->db->get()->result_array();
+
+		if ($item) {
+			$menu_data = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($item)), 0);
+		}
+
+		return implode('___', $menu_data);
+	}
+
 	public function get($id = '') {
 		if (!is_numeric($id)) {
 			return FALSE;
@@ -187,7 +205,7 @@ class User_model extends MY_Model {
 		$pagy_config['total_rows'] = $total_row;
 
 		$per_page = $this->pagination->per_page;
-		$last_page = floor($total_row / $per_page);
+		$last_page = ceil($total_row / $per_page);
 
 		if (! isset($page)  || (! is_numeric($page)) || ($page < 1) || ($page > $last_page)) {
 			$page = 1;

@@ -85,7 +85,7 @@ class Menu_item_model extends MY_Model {
 		$pagy_config['total_rows'] = $total_row;
 
 		$per_page = $this->pagination->per_page;
-		$last_page = floor($total_row / $per_page);
+		$last_page = ceil($total_row / $per_page);
 
 		if (! isset($page)  || (! is_numeric($page)) || ($page < 1) || ($page > $last_page)) {
 			$page = 1;

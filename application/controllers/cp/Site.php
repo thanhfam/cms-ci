@@ -148,10 +148,16 @@ class Site extends MY_Controller {
 		switch ($method) {
 			case 'index':
 			case 'list':
+				$this->auth_model->require_right('SITE_LIST');
 				$method = 'list_all';
 			break;
 
+			case 'edit':
+				$this->auth_model->require_right('RIGHT_EDIT');
+			break;
+
 			case 'select':
+				$this->auth_model->require_right('SITE_LIST');
 				$method = 'select_all';
 			break;
 

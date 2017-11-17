@@ -135,13 +135,18 @@ class City extends MY_Controller {
 		switch ($method) {
 			case 'index':
 			case 'list':
+				$this->auth_model->require_right('CITY_LIST');
 				$method = 'list_all';
 			break;
 
-			case 'select':
-				$method = 'select_all';
+			case 'edit':
+				$this->auth_model->require_right('CITY_EDIT');
 			break;
 
+			case 'select':
+				$this->auth_model->require_right('CITY_LIST');
+				$method = 'select_all';
+			break;
 			default:
 		}
 

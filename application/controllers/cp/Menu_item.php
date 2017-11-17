@@ -153,7 +153,16 @@ class Menu_item extends MY_Controller {
 		switch ($method) {
 			case 'index':
 			case 'list':
+				$this->auth_model->require_right('MENU_ITEM_LIST');
 				$method = 'list_all';
+			break;
+
+			case 'edit':
+				$this->auth_model->require_right('MENU_ITEM_EDIT');
+			break;
+
+			case 'remove':
+				$this->auth_model->require_right('MENU_ITEM_REMOVE');
 			break;
 
 			default:

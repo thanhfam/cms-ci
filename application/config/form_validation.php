@@ -164,6 +164,13 @@ $config = array(
 			'rules' => 'trim|required|integer'
 		)
 	),
+	'right_edit' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|required|max_length[255]'
+		)
+	),
 	'layout_edit' => array(
 		array(
 			'field' => 'name',

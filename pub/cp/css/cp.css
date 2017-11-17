@@ -7,10 +7,20 @@ html {
 
 .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
 	font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+	margin-bottom: 15px;
 }
 
-.uk-button-secondary {
+.uk-button-secondary,
+.uk-background-secondary {
 	background-color: #888;
+}
+
+.uk-navbar-nav.uk-background-secondary > li > a {
+	color: #fff;
+}
+
+.uk-navbar-nav.uk-background-secondary > li > a:hover {
+	color: #eee;
 }
 
 .uk-button-secondary:focus,.uk-button-secondary:hover {
@@ -37,6 +47,10 @@ html {
 	margin: 0;
 }
 
+.uk-dropdown {
+	padding: 15px;
+}
+
 .input-field-invalid {
 	color: #f0506e;
 }
@@ -60,3 +74,9 @@ html {
 	width: 100%;
 }
 
+.uk-height-viewport {
+	background-image: url(../img/background.jpg);
+	background-position: center center;
+	background-attachment: scroll;
+	background-size: cover;
+}

@@ -19,7 +19,7 @@ class Menu extends MY_Controller {
 			'lang' => $this->lang,
 			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('menu'),
 			'list_site' => $this->site_model->list_simple(),
-			'link_back' => base_url('cp/menu/list')
+			'link_back' => base_url(F_CP .'menu/list')
 		);
 
 		switch ($submit) {
@@ -39,6 +39,7 @@ class Menu extends MY_Controller {
 			break;
 
 			case 'save':
+			case 'save_back':
 				$item = array(
 					'id' => $this->input->post('id'),
 					'name' => $this->input->post('name'),
@@ -57,6 +58,10 @@ class Menu extends MY_Controller {
 							'type' => 1,
 							'content' => $this->lang->line('update_success')
 						));
+
+						if ($submit == 'save_back') {
+							$this->go_to($data['link_back']);
+						}
 					}
 				}
 				else {
@@ -89,7 +94,7 @@ class Menu extends MY_Controller {
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
-			'base_url' => base_url('cp/menu/list')
+			'base_url' => base_url(F_CP .'menu/list')
 		);
 
 		$data = array(
@@ -98,7 +103,7 @@ class Menu extends MY_Controller {
 			'filter' => $filter,
 			'list' => $this->menu_model->list_all($page, $filter, $pagy_config),
 			'pagy' => $this->pagination,
-			'link_create' => base_url('cp/menu/edit')
+			'link_create' => base_url(F_CP .'menu/edit')
 		);
 
 		$this->pagination->initialize($pagy_config);
@@ -136,10 +141,16 @@ class Menu extends MY_Controller {
 		switch ($method) {
 			case 'index':
 			case 'list':
+				$this->auth_model->require_right('MENU_LIST');
 				$method = 'list_all';
 			break;
 
+			case 'edit':
+				$this->auth_model->require_right('MENU_EDIT');
+			break;
+
 			case 'select':
+				$this->auth_model->require_right('MENU_LIST');
 				$method = 'select_all';
 			break;
 
