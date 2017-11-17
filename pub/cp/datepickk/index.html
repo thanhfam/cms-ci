@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:400,100,200,300">
+	<link rel="stylesheet" href="datepickk.min.css">
+
+	<script src="datepickk.min.js"></script>
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		#Datepickk .d-header,
+		#Datepickk .d-table input + label::before {
+			background: #888;
+		}
+		#Datepickk .d-header i#d-next::after {
+			border-left: 7px solid #888;
+		}
+		#Datepickk .d-header i#d-previous::after {
+			border-right: 7px solid #888;
+		}
+		#Datepickk .d-week,
+		#Datepickk .d-table input + label.today text::before {
+			background-color: #1e87f0;
+		}
+		#Datepickk .d-calendar {
+			font-size: 14px;
+		}
+		#Datepickk .d-month-picker,
+		#Datepickk .d-year-picker {
+			background-color: #aaa;
+		}
+		#Datepickk .d-year-picker > div.current,
+		#Datepickk .d-month-picker > div.current {
+			background-color: #69f;
+		}
+		#Datepickk .d-month-picker > div:focus, #Datepickk .d-month-picker > div:hover,
+		#Datepickk .d-year-picker > div:focus, #Datepickk .d-year-picker > div:hover {
+			background-color: #fc6;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="demoPicker" style="height: 280px; width:250px;"></div>
+	<script>
+	var datepicker = new Datepickk({
+		container: document.querySelector('#demoPicker'),
+		inline: true,
+		daynames: true,
+		lang: 'vi',
+		weekStart: 1
+	});
+	</script>
+</body>
+</html>
