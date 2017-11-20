@@ -15,12 +15,12 @@ if (count($list) > 0):
 foreach ($list as $row):
 ?>
 <tr>
-	<td><?=$row['id']?></td>
-	<td>
+	<td class="uk-text-small"><?=$row['id']?></td>
+	<td class="uk-text-small">
 		<a href="<?=base_url(F_CP .'user_group/edit/' . $row['id'])?>" title="<?=$lang->line('edit')?>"><?=$row['title']?></a>
 	</td>
-	<td><?=$row['name']?></td>
-	<td><?=$row['updated']?></td>
+	<td class="uk-text-small"><?=$row['name']?></td>
+	<td class="uk-text-small"><?=$row['updated']?></td>
 	<td class="command">
 		<ul class="uk-iconnav">
 			<li><a href="<?=base_url(F_CP .'user_group/edit/' . $row['id'])?>" uk-icon="icon: file-edit" title="<?=$lang->line('edit')?>"></a></li>
@@ -32,7 +32,7 @@ endforeach;
 else:
 ?>
 <tr>
-	<td colspan="6"><?=$lang->line('no_row')?></td>
+	<td class="uk-text-small" colspan="7"><?=$lang->line('no_row')?></td>
 </tr>
 <?php
 endif;

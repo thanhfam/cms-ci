@@ -8,9 +8,12 @@ $lang = array(
 	'name' => 'Name',
 	'uri' => 'URI',
 	'type' => 'Type',
+	'description' => 'Description',
+	'keywords' => 'Keywords',
 	'lead' => 'Lead',
+	'summary' => 'Summary',
 	'content' => 'Content',
-	'tag' => 'Tag',
+	'tags' => 'Tag(s)',
 	'avatar' => 'Avatar',
 	'image' => 'Image',
 	'video' => 'Video',
@@ -28,7 +31,9 @@ $lang = array(
 	'linkedin' => 'Linkedin',
 
 	'created' => 'Created',
+	'creator' => 'Creator',
 	'updated' => 'Updated',
+	'updater' => 'Updater',
 	'last_login' => 'Last login',
 
 	'area' => 'Area',
@@ -48,6 +53,9 @@ $lang = array(
 	'insert image' => 'Insert image',
 
 	'email' => 'Email',
+	'phone' => 'Phone',
+	'address' => 'Phone',
+	'time' => 'Time',
 	'user' => 'User',
 	'user_group' => 'User Group',
 	'username' => 'Username',
@@ -62,6 +70,7 @@ $lang = array(
 
 	'user' => 'User',
 	'admin' => 'Admin',
+	'system' => 'System',
 
 	'select_one' => 'Select one option',
 	'select_multi' => 'Select multi options',
@@ -107,6 +116,7 @@ $lang = array(
 	'dashboard' => 'Dashboard',
 	'site' => 'Site',
 	'layout' => 'Layout',
+	'view' => 'View',
 	'cate_layout' => 'Category layout',
 	'post_layout' => 'Post layout',
 	'post' => 'Post',
@@ -114,6 +124,17 @@ $lang = array(
 	'menu' => 'Menu',
 	'menu_item' => 'Menu Item',
 	'parent' => 'Parent',
+
+	'client' => 'Client',
+	'appointment' => 'Appointment',
+	'demanded_content' => 'Demanded Content',
+	'consulted_content' => 'Consulted Content',
+
+	'apt_new' => 'New',
+	'apt_confirmed' => 'Confirmed',
+	'apt_phone_consulted' => 'Phone consulted',
+	'apt_f2f_consulted' => 'F2F consulted',
+	'apt_done' => 'Done',
 
 	'inactivated' => 'Inactivated',
 	'activated' => 'Activated',
@@ -124,6 +145,7 @@ $lang = array(
 	'update_success' => 'Data updated successfully.',
 	'remove_successfully' => 'Item removed successfully!',
 	'db_update_danger' => 'Database update danger.',
+	'file_update_danger' => 'File update danger.',
 	'input_danger' => 'Input danger. Please re-check them.',
 	'item_not_found' => 'Item not found.',
 

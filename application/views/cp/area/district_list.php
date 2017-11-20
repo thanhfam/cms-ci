@@ -16,11 +16,11 @@ if (count($list) > 0) {
 foreach ($list as $row) {
 ?>
 <tr>
-	<td><?=$row['id']?></td>
-	<td><a href="<?=base_url('/district/edit/' . $row['id']);?>"><?=$row['title']?></a></td>
-	<td><?=$row['code']?></td>
-	<td><?=$row['type']?></td>
-	<td><a href="<?=base_url('/district/list/?filter=' . $row['city_title']);?>"><?=$row['city_title']?></a></td>
+	<td class="uk-text-small"><?=$row['id']?></td>
+	<td class="uk-text-small"><a href="<?=base_url('/district/edit/' . $row['id']);?>"><?=$row['title']?></a></td>
+	<td class="uk-text-small"><?=$row['code']?></td>
+	<td class="uk-text-small"><?=$row['type']?></td>
+	<td class="uk-text-small"><a href="<?=base_url('/district/list/?filter=' . $row['city_title']);?>"><?=$row['city_title']?></a></td>
 	<td class="command">
 		<ul class="uk-iconnav">
 			<li><a href="<?=base_url('/ward/list/?filter=' . $row['title']);?>" uk-icon="icon: menu" title="<?=$lang->line('list');?>"></a></li>
@@ -35,7 +35,7 @@ foreach ($list as $row) {
 else {
 ?>
 <tr>
-	<td colspan="6"><?=$lang->line('no_row');?></td>
+	<td class="uk-text-small" colspan="6"><?=$lang->line('no_row')?></td>
 </tr>
 <?php
 }

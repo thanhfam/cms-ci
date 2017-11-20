@@ -20,6 +20,7 @@ class state extends MY_Controller {
 					$item = array(
 						'id' => '',
 						'name' => '',
+						'type' => '',
 						'weight' => '',
 						'created' => ''
 					);
@@ -30,10 +31,12 @@ class state extends MY_Controller {
 			break;
 
 			case 'save':
+			case 'save_back':
 				$item = array(
 					'id' => $id,
 					'name' => $this->input->post('name'),
 					'weight' => $this->input->post('weight'),
+					'type' => $this->input->post('type'),
 				);
 
 				if ($this->form_validation->run('state_edit')) {
@@ -48,6 +51,10 @@ class state extends MY_Controller {
 							'type' => 1,
 							'content' => $this->lang->line('update_success')
 						));
+
+						if ($submit == 'save_back') {
+							$this->go_to($data['link_back']);
+						}
 					}
 				}
 				else {

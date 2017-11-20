@@ -6,41 +6,106 @@ class Post_model extends MY_Model {
 	}
 
 	public function save(&$item) {
+		$this->load->model(array('page_model'));
+
+		$uri = empty($item['uri']) ? $this->page_model->generate_uri($item['title']) : $item['uri'];
+		unset($item['uri']);
+
+		$this->db->trans_begin();
+
 		if (empty($item['id'])) {
-			$result = $this->db->insert('post', $item);
+			$this->db->insert('post', $item);
 
 			$item['id'] = $this->db->insert_id();
 			$item['created'] = $item['updated'] = $this->get_time();
+
+			$item_page = array(
+				'content_id' => $item['id'],
+				'content_type' => CT_POST,
+				'uri' => $uri
+			);
+
+			$this->page_model->save($item_page);
 		}
 		else {
 			$this->db->where('id', $item['id']);
-			$result = $this->db->update('post', $item);
+			$this->db->update('post', $item);
 
 			$item['created'] = $this->input->post('created');
 			$item['updated'] = $this->get_time();
+
+			$item_page = $this->page_model->get_by_content($item['id'],  CT_POST);
+
+			if ($uri != $item_page['uri']) {
+				$item_page['uri'] = $uri;
+				//$item_page['content_type'] = CT_POST;
+				//$item_page['content_id'] = $item['id'];
+
+				$this->page_model->save($item_page);
+			}
 		}
 
-		//echo $this->db->last_query();
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
 
-		return $result;
+			return FALSE;
+		}
+		else {
+			$this->db->trans_commit();
+			$item['uri'] = $item_page['uri'];
+
+			return TRUE;
+		}
 	}
 
-	public function get($id = '') {
-		if ($id == '') {
+	public function get_by_uri($uri = '') {
+		if ($uri == '') {
 			return FALSE;
 		}
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.name, p.lead, p.content, p.cate_id, p.avatar_id, i.filename avatar_filename, p.state_weight, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, pg.uri, p.lead, p.content, p.tags, c.site_id, p.cate_id, c.post_layout_id, l.content post_layout_content, p.state_weight, p.created, p.updated')
+			->from('post p')
+			->join('category c', 'c.id = p.cate_id')
+			->join('layout l', 'c.post_layout_id = l.id')
+			->join('page pg', 'p.id = pg.content_id')
+			->where('pg.uri', $uri)
+			->where('p.state_weight', S_ACTIVATED)
+			->where('pg.content_type', CT_POST)
+		;
+
+		$item = $this->db->get()->row_array();
+
+		if ($item) {
+			$item['created'] = $this->get_time($item['created']);
+			$item['updated'] = $this->get_time($item['updated']);
+		}
+
+		return $item;
+	}
+
+	public function get($id = '') {
+		if (!is_numeric($id)) {
+			return FALSE;
+		}
+
+		$id = intval($id);
+
+		$this->db
+			->select('p.id, p.subtitle, p.title, pg.uri, p.lead, p.content, p.tags, p.cate_id, p.avatar_id, i.filename avatar_filename, p.state_weight, p.created, p.updated')
 			->from('post p')
 			->join('image i', 'p.avatar_id = i.id', 'left')
+			->join('page pg', 'p.id = pg.content_id', 'left')
+			->where('pg.content_type', CT_POST)
 			->where('p.id', $id)
 		;
 
 		$item = $this->db->get()->row_array();
 
-		$item['created'] = $this->get_time($item['created']);
-		$item['updated'] = $this->get_time($item['updated']);
+		if ($item) {
+			$item['created'] = $this->get_time($item['created']);
+			$item['updated'] = $this->get_time($item['updated']);
+		}
 
 		return $item;
 	}
@@ -67,23 +132,29 @@ class Post_model extends MY_Model {
 	public function list_all($page = 1, $filter = '', &$pagy_config) {
 		$this->load->library('pagination');
 
-		$filter = strtolower($filter);
-
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.name, si.url site_url, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, pg.uri, si.url site_url, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username, p.updater_id, u2.name updater_name, u2.username updater_username')
 			->from('post p')
+			->join('user u1', 'p.creator_id = u1.id')
+			->join('user u2', 'p.updater_id = u2.id')
 			->join('state s', 'p.state_weight = s.weight')
 			->join('category c', 'p.cate_id = c.id')
 			->join('site si', 'c.site_id = si.id')
+			->join('page pg', 'p.id = pg.content_id', 'left')
+			->where('pg.content_type', CT_POST)
 			->order_by('p.id', 'DESC')
 		;
 
-		if ($filter != '') {
-			$this->db->like('LOWER(p.id)', $filter)
-				->or_like('LOWER(p.subtitle)', $filter)
-				->or_like('LOWER(p.title)', $filter)
-				->or_like('LOWER(c.name)', $filter)
-				->or_like('LOWER(c.title)', $filter)
+		if (isset($filter['cate_id']) && ($filter['cate_id'] != '')) {
+			$this->db->where('p.cate_id', $filter['cate_id']);
+		}
+
+		if (isset($filter['keyword']) && ($filter['keyword'] != '')) {
+			$keyword = $this->to_utf8($filter['keyword']);
+
+			$this->db->like('LOWER(p.id)', $keyword)
+				->or_like('LOWER(p.subtitle)', $keyword)
+				->or_like('LOWER(p.title)', $keyword)
 			;
 		}
 
@@ -106,16 +177,45 @@ class Post_model extends MY_Model {
 		return $this->db->get()->result_array();
 	}
 
+	public function get_top_activated($cate_id, $limit) {
+		$this->db
+			->select('p.id, p.subtitle, p.title, p.lead, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated')
+			->from('post p')
+			->where('p.state_weight', S_ACTIVATED)
+			->join('page pg', 'pg.content_id = p.id')
+			->where('pg.content_type', CT_POST)
+			->join('category c', 'p.cate_id = c.id')
+			->join('image i', 'p.avatar_id = i.id', 'left')
+			->order_by('p.id', 'DESC')
+			->limit($limit)
+		;
+
+		if (gettype($cate_id) == 'array') {
+			$this->db->where_in('p.cate_id', $cate_id);
+		}
+		else {
+			$this->db->where('p.cate_id', intval($cate_id));
+		}
+
+		$result = $this->db->get()->result_array();
+
+		//echo $this->db->last_query();
+
+		return $result;
+	}
+
 	public function get_activated($cate_id, $page = 1, $filter = '', &$pagy_config) {
 		$this->load->library('pagination');
 
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.name, p.lead, p.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, p.lead, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated')
 			->from('post p')
 			->where('p.cate_id', intval($cate_id))
 			->where('p.state_weight', S_ACTIVATED)
+			->join('page pg', 'pg.content_id = p.id')
+			->where('pg.content_type', CT_POST)
 			->join('category c', 'p.cate_id = c.id')
 			->join('image i', 'p.avatar_id = i.id', 'left')
 			->order_by('p.id', 'DESC')
@@ -125,8 +225,8 @@ class Post_model extends MY_Model {
 			$this->db->like('LOWER(p.id)', $filter)
 				->or_like('LOWER(p.subtitle)', $filter)
 				->or_like('LOWER(p.title)', $filter)
-				->or_like('LOWER(c.name)', $filter)
-				->or_like('LOWER(c.title)', $filter)
+				->or_like('LOWER(p.name)', $filter)
+				->or_like('LOWER(p.title)', $filter)
 			;
 		}
 
@@ -146,7 +246,7 @@ class Post_model extends MY_Model {
 
 		$result = $this->db->get()->result_array();
 
-		//echo $this->db->last_query();
+//		echo $this->db->last_query();
 
 		return $result;
 	}

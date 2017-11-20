@@ -1,4 +1,5 @@
-<script src="<?=base_url('pub/ckeditor/ckeditor.js')?>"></script>
+<link href="<?=base_url(F_PUB .F_CP .'alloy-editor/assets/alloy-editor-ocean-min.css')?>" rel="stylesheet">
+<script src="<?=base_url(F_PUB .F_CP .'alloy-editor/alloy-editor-all-min.js')?>"></script>
 
 <?php
 if (isset($item) && !empty($item['created'])):
@@ -46,9 +47,25 @@ endif;
 </div>
 
 <div class="uk-margin-small uk-width-xlarge" >
+	<label class="uk-form-label" for="description"><?=$lang->line('description')?></label>
+	<div class="uk-form-controls">
+		<textarea type="text" name="description" id="description" rows="2" class="uk-text-small uk-textarea <?=(form_error('description') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['description'] : ''?></textarea>
+		<?=form_error('description')?>
+	</div>
+</div>
+
+<div class="uk-margin-small uk-width-xlarge" >
+	<label class="uk-form-label" for="keywords"><?=$lang->line('keywords')?></label>
+	<div class="uk-form-controls">
+		<textarea type="text" name="keywords" id="keywords" rows="2" class="uk-text-small uk-textarea <?=(form_error('keywords') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['keywords'] : ''?></textarea>
+		<?=form_error('keywords')?>
+	</div>
+</div>
+
+<div class="uk-margin-small uk-width-xlarge" >
 	<label class="uk-form-label" for="lead"><?=$lang->line('lead')?></label>
 	<div class="uk-form-controls">
-		<textarea type="text" name="lead" id="lead" rows="3" class="uk-textarea <?=(form_error('lead') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['lead'] : ''?></textarea>
+		<textarea type="text" name="lead" id="lead" rows="5" class="uk-text-small uk-textarea <?=(form_error('lead') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['lead'] : ''?></textarea>
 		<?=form_error('lead')?>
 	</div>
 </div>
@@ -56,15 +73,14 @@ endif;
 <div class="uk-margin-small uk-width-xlarge" >
 	<label class="uk-form-label" for="content"><?=$lang->line('content')?></label>
 	<div class="uk-form-controls">
-		<textarea type="text" name="content" id="content" class="uk-textarea <?=(form_error('content') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['content'] : ''?></textarea>
+		<textarea type="text" name="content" id="content" rows="3" class="uk-text-small uk-textarea <?=(form_error('content') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['content'] : ''?></textarea>
 		<?=form_error('content')?>
 	</div>
 </div>
 
 <script>
-	CKEDITOR.replace( 'content' );
+	AlloyEditor.editable('content');
 </script>
-
 
 <div class="uk-margin-small uk-width-medium">
 	<label class="uk-form-label" for="cate-selector"><?=$lang->line('category')?></label>
@@ -122,6 +138,7 @@ endif;
 	<input type="hidden" name="id" value="<?=isset($item) ? $item['id'] : ''?>" />
 	<input type="hidden" name="created" value="<?=isset($item) ? $item['created'] : ''?>" />
 	<button class="uk-button uk-button-small uk-button-primary" type="submit" name="submit" value="save"><?=$lang->line('save')?></button>
+	<button class="uk-button uk-button-small uk-button-secondary" type="submit" name="submit" value="save_back"><?=$lang->line('save_back')?></button>
 	<a class="uk-button uk-button-small" name="btn-back" href="<?=$link_back?>"><?=$lang->line('back')?></a>
 </div>
 

@@ -27,26 +27,45 @@ $CI =& get_instance();
 				</div>
 			</li>
 			<?php endif; ?>
-			<?php if ($CI->has_right(array('SITE_LIST', 'STATE_LIST', 'LAYOUT_LIST', 'MENU_LIST', 'USER_GROUP_LIST', 'USER_LIST', 'RIGHT_LIST'))): ?>
+			<?php if ($CI->has_right(array('APPOINTMENT_LIST'))): ?>
 			<li>
 				<a href="#">
-					<?=$lang->line('admin')?>
+					<?=$lang->line('client')?>
 				</a>
 				<div class="uk-navbar-dropdown" uk-dropdown="offset: 1">
 					<ul class="uk-nav uk-navbar-dropdown-nav">
+						<?php if ($CI->has_right('APPOINTMENT_LIST')): ?>
+						<li><a href="<?=base_url(F_CP .'appointment')?>"><?=$lang->line('appointment')?></a></li>
+						<?php endif; ?>
+					</ul>
+				</div>
+			</li>
+			<?php endif; ?>
+			<?php if ($CI->has_right(array('SITE_LIST', 'STATE_LIST', 'LAYOUT_LIST', 'MENU_LIST', 'USER_GROUP_LIST', 'USER_LIST', 'RIGHT_LIST'))): ?>
+			<li>
+				<a href="#">
+					<?=$lang->line('system')?>
+				</a>
+				<div class="uk-navbar-dropdown" uk-dropdown="offset: 1">
+					<ul class="uk-nav uk-navbar-dropdown-nav">
+						<?php if ($CI->has_right('MENU_LIST')): ?>
+						<li><a href="<?=base_url(F_CP .'menu')?>"><?=$lang->line('menu')?></a></li>
+						<?php endif; ?>
 						<?php if ($CI->has_right('SITE_LIST')): ?>
 						<li><a href="<?=base_url(F_CP .'site')?>"><?=$lang->line('site')?></a></li>
+						<?php endif; ?>
+						<?php if ($CI->has_right('LAYOUT_LIST')): ?>
+						<li class="uk-nav-divider"></li>
+						<li><a href="<?=base_url(F_CP .'layout')?>"><?=$lang->line('layout')?></a></li>
+						<?php endif; ?>
+						<?php if ($CI->has_right('VIEW_LIST')): ?>
+						<li><a href="<?=base_url(F_CP .'view')?>"><?=$lang->line('view')?></a></li>
 						<?php endif; ?>
 						<?php if ($CI->has_right('STATE_LIST')): ?>
 						<li><a href="<?=base_url(F_CP .'state')?>"><?=$lang->line('state')?></a></li>
 						<?php endif; ?>
-						<?php if ($CI->has_right('LAYOUT_LIST')): ?>
-						<li><a href="<?=base_url(F_CP .'layout')?>"><?=$lang->line('layout')?></a></li>
-						<?php endif; ?>
-						<?php if ($CI->has_right('MENU_LIST')): ?>
-						<li><a href="<?=base_url(F_CP .'menu')?>"><?=$lang->line('menu')?></a></li>
-						<?php endif; ?>
 						<?php if ($CI->has_right('USER_GROUP_LIST')): ?>
+						<li class="uk-nav-divider"></li>
 						<li><a href="<?=base_url(F_CP .'user_group')?>"><?=$lang->line('user_group')?></a></li>
 						<?php endif; ?>
 						<?php if ($CI->has_right('USER_LIST')): ?>
@@ -69,6 +88,7 @@ $CI =& get_instance();
 				<div class="uk-navbar-dropdown" uk-dropdown="offset: 1">
 					<ul class="uk-nav uk-navbar-dropdown-nav">
 						<li><a href="<?=base_url(F_CP .'user/change_password')?>"><?=$lang->line('change_password')?></a></li>
+						<li class="uk-nav-divider"></li>
 						<li><a href="<?=base_url(F_CP .'user/logout')?>"><?=$lang->line('logout')?></a></li>
 					</ul>
 				</div>

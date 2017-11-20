@@ -6,11 +6,15 @@ $lang = array(
 	'subtitle' => 'Tiêu đề phụ',
 	'code' => 'Mã',
 	'name' => 'Tên',
+	'size' => 'Kích thước',
 	'uri' => 'URI',
 	'type' => 'Loại',
+	'description' => 'Mô tả',
+	'keywords' => 'Từ khoá',
 	'lead' => 'Trích dẫn',
+	'summary' => 'Tóm tắt',
 	'content' => 'Nội dung',
-	'tag' => 'Tag',
+	'tags' => 'Tag',
 	'avatar' => 'Hình đại diện',
 	'image' => 'Hình ảnh',
 	'video' => 'Video',
@@ -28,7 +32,9 @@ $lang = array(
 	'linkedin' => 'Linkedin',
 
 	'created' => 'Tạo',
+	'creator' => 'Người tạo',
 	'updated' => 'Cập nhật',
+	'updater' => 'Người cập nhật',
 	'last_login' => 'Đăng nhập lần cuối',
 	
 	'area' => 'Khu vực',
@@ -48,6 +54,9 @@ $lang = array(
 	'insert_image' => 'Chèn ảnh',
 
 	'email' => 'Email',
+	'phone' => 'Số điện thoại',
+	'address' => 'Địa chỉ',
+	'time' => 'Thời gian',
 	'user' => 'Người dùng',
 	'user_group' => 'Nhóm người dùng',
 	'username' => 'Tài khoản',
@@ -62,6 +71,7 @@ $lang = array(
 
 	'user' => 'Người dùng',
 	'admin' => 'Quản trị',
+	'system' => 'Hệ thống',
 
 	'select_one' => 'Chọn một',
 	'select_multi' => 'Chọn nhiều',
@@ -107,6 +117,7 @@ $lang = array(
 	'dashboard' => 'Dashboard',
 	'site' => 'Site',
 	'layout' => 'Layout',
+	'view' => 'View',
 	'cate_layout' => 'Layout mục',
 	'post_layout' => 'Layout bài',
 	'post' => 'Bài',
@@ -114,6 +125,17 @@ $lang = array(
 	'menu' => 'Trình đơn',
 	'menu_item' => 'Mục trình đơn',
 	'parent' => 'Cha',
+
+	'client' => 'Khách hàng',
+	'appointment' => 'Cuộc hẹn',
+	'demanded_content' => 'Nội dung mong muốn',
+	'consulted_content' => 'Nội dung tư vấn',
+
+	'apt_new' => 'Mới',
+	'apt_confirmed' => 'Xác nhận lịch hẹn',
+	'apt_phone_consulted' => 'Đã tư vấn qua điện thoại',
+	'apt_f2f_consulted' => 'Đã tư vấn trực tiếp',
+	'apt_done' => 'Hoàn thành',
 
 	'inactivated' => 'Vô hiệu',
 	'activated' => 'Hoạt động',
@@ -124,6 +146,7 @@ $lang = array(
 	'update_success' => 'Dữ liệu cập nhật thành công.',
 	'remove_successfully' => 'Xoá thành công.',
 	'db_update_danger' => 'Lỗi cập nhật cơ sở dữ liệu.',
+	'file_update_danger' => 'Lỗi cập nhật tập tin.',
 	'input_danger' => 'Lỗi dữ liệu đầu vào. Hãy kiểm tra lại.',
 	'item_not_found' => 'Không tìm thấy đối tượng.',
 

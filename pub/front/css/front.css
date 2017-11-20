@@ -237,6 +237,10 @@ ul.social-links li.linkedin a {
 	font-size: 30px;
 }
 
+#carousel-top .card-title {
+	text-transform: uppercase;
+}
+
 #hospital-list .slick-next {
 	right: 0;
 }
@@ -248,7 +252,7 @@ ul.social-links li.linkedin a {
 #hospital-list .slick-next,
 #hospital-list .slick-prev {
 	z-index: 99;
-	top: 60%;
+	top: 45%;
 	visibility: hidden;
 }
 
@@ -314,11 +318,11 @@ ul.social-links li.linkedin a {
 	margin-bottom: 0.75rem;
 }
 
-.service-list .bg-service-0 {
+.service-list .bg-service:nth-child(even) {
 	background-color: #199adb;
 }
 
-.service-list .bg-service-1 {
+.service-list .bg-service:nth-child(odd) {
 	background-color: #5eb8e4;
 }
 
@@ -405,7 +409,7 @@ ul.social-links li.linkedin a {
 	margin-bottom: 15px;
 }
 
-.cate-list .cate-title {
+.page-title {
 	font-size: 1.6em;
 	border-bottom: 1px solid #eee;
 	padding-bottom: 15px;

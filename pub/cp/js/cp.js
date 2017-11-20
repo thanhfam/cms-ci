@@ -5,13 +5,13 @@ $(document).ready(function() {
 		UIkit.notification(notification);
 	}
 
-	$('input.filter').click(function() {
+	$('button.filter').click(function() {
 		if (!$(this).parent().find('input.keyword').val()) {
 			return false;
 		}
 	});
 
-	$('input.unfilter').click(function() {
+	$('button.unfilter').click(function() {
 		if ($(this).parent().find('input.keyword').val()) {
 			$(this).parent().find('input.keyword').val('');
 		}

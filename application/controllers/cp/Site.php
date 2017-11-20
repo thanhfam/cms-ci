@@ -11,7 +11,7 @@ class Site extends MY_Controller {
 		$data = array(
 			'lang' => $this->lang,
 			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('site'),
-			'link_back' => base_url('cp/site/list')
+			'link_back' => base_url(F_CP .'site/list')
 		);
 
 		switch ($submit) {
@@ -20,6 +20,7 @@ class Site extends MY_Controller {
 					$item = array(
 						'id' => '',
 						'title' => '',
+						'subtitle' => '',
 						'name' => '',
 						'url' => '',
 						'language' => '',
@@ -42,6 +43,7 @@ class Site extends MY_Controller {
 				$item = array(
 					'id' => $id,
 					'title' => $this->input->post('title'),
+					'subtitle' => $this->input->post('subtitle'),
 					'name' => $this->input->post('name') ? $this->input->post('name') : url_title(convert_accented_characters($this->input->post('title')), 'dash', TRUE),
 					'url' => $this->input->post('url'),
 					'language' => $this->input->post('language'),
@@ -100,7 +102,7 @@ class Site extends MY_Controller {
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
-			'base_url' => base_url('cp/site/list')
+			'base_url' => base_url(F_CP .'site/list')
 		);
 
 		$data = array(
@@ -109,7 +111,7 @@ class Site extends MY_Controller {
 			'filter' => $filter,
 			'list' => $this->site_model->list_all($page, $filter, $pagy_config),
 			'pagy' => $this->pagination,
-			'link_create' => base_url('cp/site/edit')
+			'link_create' => base_url(F_CP .'site/edit')
 		);
 
 		$this->pagination->initialize($pagy_config);

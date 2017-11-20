@@ -4,7 +4,7 @@
 		<nav class="uk-navbar-container" uk-navbar>
 			<div class="uk-navbar-left">
 				<div class="uk-navbar-item">
-				&copy; 2017
+				&copy; 2017 - {elapsed_time}s - {memory_usage}
 				</div>
 			</div>
 			<div class="uk-navbar-right">
@@ -14,8 +14,8 @@
 	</footer>
 
 	<script>
-	var base_url = '<?=base_url();?>';
+	var base_url = '<?=base_url()?>';
 	</script>
-	<script src="<?=base_url(F_PUB .F_CP .'js/cp.js');?>"></script>
+	<script src="<?=base_url(F_PUB .F_CP .'js/cp.js')?>"></script>
 </body>
 </html>

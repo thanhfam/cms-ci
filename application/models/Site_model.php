@@ -32,7 +32,7 @@ class Site_model extends MY_Model {
 		$id = intval($id);
 
 		$this->db
-			->select('s.id, s.title, s.name, s.url, s.language, s.facebook, s.twitter, s.pinterest, s.gplus, s.linkedin, s.avatar_id, i.filename avatar_filename, s.created, s.updated')
+			->select('s.id, s.title, s.subtitle, s.name, s.url, s.language, s.facebook, s.twitter, s.pinterest, s.gplus, s.linkedin, s.avatar_id, i.filename avatar_filename, s.created, s.updated')
 			->from('site s')
 			->where('s.id', $id)
 			->join('image i', 's.avatar_id = i.id', 'left')
@@ -48,7 +48,7 @@ class Site_model extends MY_Model {
 
 	public function list_simple() {
 		$this->db
-			->select('id, concat(title, " (", id, ")") title')
+			->select('id, concat(name, " (", id, ")") title')
 			->order_by('id', 'ASC')
 		;
 
@@ -63,7 +63,7 @@ class Site_model extends MY_Model {
 		$filter = $this->db->escape_str(trim(strtolower($filter)));
 
 		$this->db
-			->select('s.id, s.title, s.name, s.url, s.language')
+			->select('s.id, s.subtitle, s.title, s.name, s.url, s.language')
 			->from('site s')
 			->order_by('s.id', 'ASC')
 		;
@@ -71,6 +71,7 @@ class Site_model extends MY_Model {
 		if ($filter != '') {
 			$this->db
 				->like('LOWER(s.id)', $filter)
+				->or_like('LOWER(s.subtitle)', $filter)
 				->or_like('LOWER(s.title)', $filter)
 				->or_like('LOWER(s.name)', $filter)
 				->or_like('LOWER(s.url)', $filter)

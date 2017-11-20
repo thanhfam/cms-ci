@@ -84,13 +84,23 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-defined('S_REMOVED')      OR define('S_REMOVED', -1);
-defined('S_INACTIVATED')      OR define('S_INACTIVATED', 0);
-defined('S_ACTIVATED')      OR define('S_ACTIVATED', 9);
-
+// folder
 defined('F_FILE')      OR define('F_FILE', 'file/');
 defined('F_CP')      OR define('F_CP', 'cp/');
 defined('F_FRONT')      OR define('F_FRONT', 'front/');
 defined('F_PUB')      OR define('F_PUB', 'pub/');
 
 defined('SECRET_KEY')      OR define('SECRET_KEY', '73da72cc2c67aa9cca56dd7946ca2872');
+
+// content type
+defined('CT_POST')      OR define('CT_POST', 'post');
+defined('CT_CATEGORY')      OR define('CT_CATEGORY', 'category');
+
+// state type
+defined('ST_CONTENT')      OR define('ST_CONTENT', 'content');
+defined('ST_APPOINTMENT')      OR define('ST_APPOINTMENT', 'appointment');
+
+// state
+defined('S_REMOVED')      OR define('S_REMOVED', -1);
+defined('S_INACTIVATED')      OR define('S_INACTIVATED', 0);
+defined('S_ACTIVATED')      OR define('S_ACTIVATED', 9);

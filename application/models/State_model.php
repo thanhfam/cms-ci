@@ -30,7 +30,7 @@ class state_model extends MY_Model {
 		}
 
 		$this->db
-			->select('s.id, s.name, s.weight, s.created, s.updated')
+			->select('s.id, s.name, s.weight, s.type, s.created, s.updated')
 			->from('state s')
 			->where('s.id', $id)
 		;
@@ -45,11 +45,12 @@ class state_model extends MY_Model {
 		return $item;
 	}
 
-	public function list_simple() {
+	public function list_simple($type = 'content') {
 		$this->load->helper(array('language'));
 
 		$this->db
 			->select('id, name, weight')
+			->where('type', $type)
 			->where('weight > -1')
 			->order_by('id', 'ASC')
 		;
@@ -66,9 +67,10 @@ class state_model extends MY_Model {
 		$filter = $this->db->escape_str(trim(strtolower($filter)));
 
 		$this->db
-			->select('s.id, s.name, s.weight')
+			->select('s.id, s.name, s.weight, s.type')
 			->from('state s')
-			->order_by('s.id', 'ASC')
+			->order_by('s.type', 'ASC')
+			->order_by('s.weight', 'ASC')
 		;
 
 		if ($filter != '') {

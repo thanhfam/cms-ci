@@ -12,7 +12,22 @@ class Layout extends MY_Controller {
 		$this->load->model(array('site_model'));
 		$this->load->helper(array('form', 'url', 'text'));
 
-		$submit = $this->input->post('submit');
+		$submit = $this->input->post('btn_submit');
+		$name = $this->input->post('name');
+
+		if (isset($submit)) {
+		}
+		else {
+			if (isset($name)) {
+				$submit = 'save';
+			}
+		}
+
+		$data = array(
+			'lang' => $this->lang,
+			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('layout'),
+			'link_back' => base_url(F_CP .'layout/list')
+		);
 
 		switch ($submit) {
 			case NULL:
@@ -31,6 +46,7 @@ class Layout extends MY_Controller {
 			break;
 
 			case 'save':
+			case 'save_back':
 				$item = array(
 					'id' => $id,
 					'name' => $this->input->post('name'),
@@ -52,6 +68,10 @@ class Layout extends MY_Controller {
 							'type' => 1,
 							'content' => $this->lang->line('update_success')
 						));
+
+						if ($submit == 'save_back') {
+							$this->go_to($data['link_back']);
+						}
 					}
 				}
 				else {
@@ -65,13 +85,10 @@ class Layout extends MY_Controller {
 			break;
 		}
 
-		$data = array(
-			'lang' => $this->lang,
-			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('layout'),
+		$data = array_merge($data, array(
 			'list_site' => $this->site_model->list_simple(),
-			'link_back' => base_url('cp/layout/list'),
 			'item' => $item
-		);
+		));
 
 		$this->set_body(
 			'system/layout_edit'
@@ -88,7 +105,7 @@ class Layout extends MY_Controller {
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
-			'base_url' => base_url('cp/layout/list')
+			'base_url' => base_url(F_CP .'layout/list')
 		);
 
 		$data = array(
@@ -97,7 +114,7 @@ class Layout extends MY_Controller {
 			'filter' => $filter,
 			'list' => $this->layout_model->list_all($page, $filter, $pagy_config),
 			'pagy' => $this->pagination,
-			'link_create' => base_url('cp/layout/edit')
+			'link_create' => base_url(F_CP .'layout/edit')
 		);
 
 		$this->pagination->initialize($pagy_config);

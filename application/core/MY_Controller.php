@@ -43,6 +43,7 @@ class MY_Controller extends CI_Controller {
 			'auth_model'
 		]);
 
+		$this->lang->load('cp');
 		$this->data['lang'] = $this->lang;
 	}
 
@@ -66,9 +67,6 @@ class MY_Controller extends CI_Controller {
 				}
 			break;
 		}
-
-
-
 
 		return FALSE;
 	}
@@ -214,7 +212,6 @@ class MY_Controller extends CI_Controller {
 			default:
 				$this->load->view($this->folder_view .$this->view_footer, $this->data);
 		}
-
 	}
 }
 
@@ -223,6 +220,7 @@ class FP_Controller extends CI_Controller {
 
 	protected $view_header = 'header';
 	protected $view_footer = 'footer';
+	protected $view_message = 'message';
 	protected $view_body = NULL;
 
 	public function __construct(array $params = []) {
@@ -232,6 +230,7 @@ class FP_Controller extends CI_Controller {
 			'url'
 		]);
 
+		$this->lang->load('front');
 		$this->data['lang'] = $this->lang;
 	}
 
@@ -252,6 +251,12 @@ class FP_Controller extends CI_Controller {
 
 		$this->load->view($this->folder_view .$this->view_header, $this->data);
 
+		/* leave the position for the template maker
+		if (isset($this->data['message'])) {
+			$this->load->view($this->folder_view .$this->view_message, $this->data);
+		}
+		*/
+
 		switch (gettype($this->view_body)) {
 			case 'array':
 				foreach ($this->view_body as $item) {
@@ -266,5 +271,43 @@ class FP_Controller extends CI_Controller {
 		}
 
 		$this->load->view($this->folder_view .$this->view_footer, $this->data);
+	}
+
+	public function set_message($message) {
+		switch($message['type']) {
+			case 0: // primary
+				$message['status'] = 'primary';
+			break;
+
+			case 2: // success
+				$message['status'] = 'secondary';
+			break;
+
+			case 1: // warning
+				$message['status'] = 'success';
+			break;
+
+			case 3: // danger
+				$message['status'] = 'danger';
+			break;
+
+			case 4: // warning
+				$message['status'] = 'warning';
+			break;
+
+			case 5: // danger
+				$message['status'] = 'info';
+			break;
+
+			case 6: // warning
+				$message['status'] = 'light';
+			break;
+
+			case 7: // danger
+				$message['status'] = 'dark';
+			break;
+		}
+
+		$this->data['message'] = $message;
 	}
 }

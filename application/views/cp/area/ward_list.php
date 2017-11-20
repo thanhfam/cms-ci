@@ -17,12 +17,12 @@ if (count($list) > 0) {
 foreach ($list as $row) {
 ?>
 <tr>
-	<td><?=$row['id']?></td>
-	<td><a href="<?=base_url('/ward/edit/' . $row['id']);?>"><?=$row['title']?></a></td>
-	<td><?=$row['code']?></td>
-	<td><?=$row['type']?></td>
-	<td><a href="<?=base_url('/ward/list/?filter=' . $row['district_title']);?>"><?=$row['district_title']?></a></td>
-	<td><a href="<?=base_url('/district/list/?filter=' . $row['city_title']);?>"><?=$row['city_title']?></a></td>
+	<td class="uk-text-small"><?=$row['id']?></td>
+	<td class="uk-text-small"><a href="<?=base_url('/ward/edit/' . $row['id']);?>"><?=$row['title']?></a></td>
+	<td class="uk-text-small"><?=$row['code']?></td>
+	<td class="uk-text-small"><?=$row['type']?></td>
+	<td class="uk-text-small"><a href="<?=base_url('/ward/list/?filter=' . $row['district_title']);?>"><?=$row['district_title']?></a></td>
+	<td class="uk-text-small"><a href="<?=base_url('/district/list/?filter=' . $row['city_title']);?>"><?=$row['city_title']?></a></td>
 	<td class="command">
 		<ul class="uk-iconnav">
 			<li><a href="<?=base_url('/ward/edit/' . $row['id']);?>" uk-icon="icon: file-edit" title="<?=$lang->line('edit');?>"></a></li>
@@ -36,7 +36,7 @@ foreach ($list as $row) {
 else {
 ?>
 <tr>
-	<td colspan="7"><?=$lang->line('no_row');?></td>
+	<td class="uk-text-small" colspan="7"><?=$lang->line('no_row')?></td>
 </tr>
 <?php
 }

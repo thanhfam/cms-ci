@@ -5,6 +5,7 @@
 	<th><?=$lang->line('id');?></th>
 	<th><?=$lang->line('name');?></th>
 	<th><?=$lang->line('weight');?></th>
+	<th><?=$lang->line('type');?></th>
 	<th><?=$lang->line('command');?></th>
 </tr>
 </thead>
@@ -14,9 +15,10 @@ if (count($list) > 0) {
 foreach ($list as $row) {
 ?>
 <tr>
-	<td><?=$row['id']?></td>
-	<td><a href="<?=base_url('cp/state/edit/' . $row['id']);?>"><?=$row['name']?></a></td>
-	<td><?=$row['weight']?></td>
+	<td class="uk-text-small"><?=$row['id']?></td>
+	<td class="uk-text-small"><a href="<?=base_url('cp/state/edit/' . $row['id']);?>"><?=$row['name']?></a></td>
+	<td class="uk-text-small"><?=$row['weight']?></td>
+	<td class="uk-text-small"><?=$row['type']?></td>
 	<td class="command">
 		<ul class="uk-iconnav">
 			<li><a href="<?=base_url('cp/state/edit/' . $row['id']);?>" uk-icon="icon: file-edit" title="<?=$lang->line('edit');?>"></a></li>
@@ -29,7 +31,7 @@ foreach ($list as $row) {
 else {
 ?>
 <tr>
-	<td colspan="5"><?=$lang->line('no_row');?></td>
+	<td class="uk-text-small" colspan="7"><?=$lang->line('no_row')?></td>
 </tr>
 <?php
 }

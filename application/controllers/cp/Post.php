@@ -1,8 +1,15 @@
 <?php
 
 class Post extends MY_Controller {
+	public function __construct() {
+		parent::__construct();
+
+		$this->load->model(array('post_model'));
+		$this->load->helper(array('language'));
+	}
+
 	public function edit($id = '') {
-		$this->load->model(array('post_model', 'category_model', 'state_model'));
+		$this->load->model(array('category_model', 'state_model'));
 		$this->load->helper(array('language', 'form', 'url', 'text'));
 		$this->load->library('form_validation');
 
@@ -11,9 +18,7 @@ class Post extends MY_Controller {
 		$data = array(
 			'lang' => $this->lang,
 			'title' => ($id == '' ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('post'),
-			'list_category' => $this->category_model->list_simple_for_post(),
-			'list_state' => $this->state_model->list_simple(),
-			'link_back' => base_url(F_CP .'/post/list')
+			'link_back' => base_url(F_CP .'post/list')
 		);
 
 		switch ($submit) {
@@ -23,9 +28,10 @@ class Post extends MY_Controller {
 						'id' => '',
 						'subtitle' => '',
 						'title' => '',
-						'name' => '',
+						'uri' => '',
 						'lead' => '',
 						'content' => '',
+						'tags' => '',
 						'cate_id' => '',
 						'avatar_id' => '',
 						'avatar_filename' => '',
@@ -40,17 +46,24 @@ class Post extends MY_Controller {
 			break;
 
 			case 'save':
+			case 'save_back':
 				$item = array(
 					'id' => $this->input->post('id'),
 					'subtitle' => $this->input->post('subtitle'),
 					'title' => $this->input->post('title'),
-					'name' => $this->input->post('name') ? $this->input->post('name') : url_title(convert_accented_characters($this->input->post('title')), 'dash', TRUE),
+					'uri' => $this->input->post('uri'),
 					'avatar_id' => $this->input->post('avatar_id'),
 					'lead' => $this->input->post('lead'),
 					'content' => $this->input->post('content'),
+					'tags' => $this->input->post('tags'),
 					'cate_id' => $this->input->post('cate_id'),
-					'state_weight' => $this->input->post('state_weight')
+					'state_weight' => $this->input->post('state_weight'),
+					'updater_id' => $this->session->user['id']
 				);
+
+				if (empty($item['id'])) {
+					$item['creator_id'] = $this->session->user['id'];
+				}
 
 				if ($this->form_validation->run('post_edit')) {
 					if (!$this->post_model->save($item)) {
@@ -64,6 +77,10 @@ class Post extends MY_Controller {
 							'type' => 1,
 							'content' => $this->lang->line('update_success')
 						));
+
+						if ($submit == 'save_back') {
+							$this->go_to($data['link_back']);
+						}
 					}
 				}
 				else {
@@ -80,6 +97,8 @@ class Post extends MY_Controller {
 		}
 
 		$data = array_merge($data, array(
+			'list_category' => $this->category_model->list_simple_for_post(),
+			'list_state' => $this->state_model->list_simple(),
 			'item' => $item
 		));
 
@@ -91,11 +110,15 @@ class Post extends MY_Controller {
 	}
 
 	public function list_all() {
-		$this->load->model('post_model');
-		$this->load->helper(array('language', 'url'));
+		$this->load->model('category_model');
 		$this->load->library('pagination');
 
-		$filter = $this->input->get('filter');
+		$filter = array(
+			'keyword' => $this->input->get('keyword', TRUE),
+			'cate_id' => $this->input->get('cate_id'),
+			'state_weight' => $this->input->get('state_weight')
+		);
+
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
@@ -106,6 +129,7 @@ class Post extends MY_Controller {
 			'lang' => $this->lang,
 			'title' => $this->lang->line('list_of') . $this->lang->line('post'),
 			'filter' => $filter,
+			'list_category' => $this->category_model->list_simple_for_post(TRUE),
 			'list' => $this->post_model->list_all($page, $filter, $pagy_config),
 			'pagy' => $this->pagination,
 			'link_create' => base_url(F_CP .'post/edit')
@@ -114,7 +138,6 @@ class Post extends MY_Controller {
 		$this->pagination->initialize($pagy_config);
 
 		$this->set_body(array(
-			'inc/list_header',
 			'content/post_list',
 			'inc/list_footer'
 		));

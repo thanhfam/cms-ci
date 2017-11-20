@@ -9,11 +9,17 @@ class Category extends MY_Controller {
 	}
 
 	public function edit($id = '') {
-		$this->load->model(array('state_model', 'layout_model'));
+		$this->load->model(array('state_model', 'layout_model', 'page_model'));
 		$this->load->helper(array('form', 'url', 'text'));
 		$this->load->library('form_validation');
 
 		$submit = $this->input->post('submit');
+
+		$data = array(
+			'lang' => $this->lang,
+			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('category'),
+			'link_back' => base_url('cp/category/list')
+		);
 
 		switch ($submit) {
 			case NULL:
@@ -24,6 +30,8 @@ class Category extends MY_Controller {
 						'title' => '',
 						'name' => '',
 						'uri' => '',
+						'description' => '',
+						'keywords' => '',
 						'lead' => '',
 						'content' => '',
 						'type' => '',
@@ -42,12 +50,15 @@ class Category extends MY_Controller {
 			break;
 
 			case 'save':
+			case 'save_back':
 				$item = array(
 					'id' => $this->input->post('id'),
 					'subtitle' => $this->input->post('subtitle'),
 					'title' => $this->input->post('title'),
 					'name' => $this->input->post('name') ? $this->input->post('name') : $this->input->post('title'),
-					'uri' => $this->input->post('uri') ? $this->input->post('uri') : url_title(convert_accented_characters($this->input->post('title')), 'dash', TRUE),
+					'uri' => $this->input->post('uri'),
+					'description' => $this->input->post('description'),
+					'keywords' => $this->input->post('keywords'),
 					'lead' => $this->input->post('lead'),
 					'content' => $this->input->post('content'),
 					'type' => $this->input->post('type'),
@@ -55,8 +66,13 @@ class Category extends MY_Controller {
 					'cate_id' => $this->input->post('cate_id'),
 					'cate_layout_id' => $this->input->post('cate_layout_id'),
 					'post_layout_id' => $this->input->post('post_layout_id'),
-					'state_weight' => $this->input->post('state_weight')
+					'state_weight' => $this->input->post('state_weight'),
+					'updater_id' => $this->session->user['id']
 				);
+
+				if (empty($item['id'])) {
+					$item['creator_id'] = $this->session->user['id'];
+				}
 
 				if ($this->form_validation->run('category_edit')) {
 					if (!$this->category_model->save($item)) {
@@ -70,6 +86,10 @@ class Category extends MY_Controller {
 							'type' => 1,
 							'content' => $this->lang->line('update_success')
 						));
+
+						if ($submit == 'save_back') {
+							$this->go_to($data['link_back']);
+						}
 					}
 				}
 				else {
@@ -83,15 +103,12 @@ class Category extends MY_Controller {
 			break;
 		}
 
-		$data = array(
-			'lang' => $this->lang,
-			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('category'),
+		$data = array_merge($data, array(
 			'list_category' => $this->category_model->list_simple($id),
 			'list_state' => $this->state_model->list_simple(),
 			'list_layout' => $this->layout_model->list_simple(),
-			'item' => $item,
-			'link_back' => base_url('cp/category/list')
-		);
+			'item' => $item
+		));
 
 		$this->set_body(
 			'content/category_edit'

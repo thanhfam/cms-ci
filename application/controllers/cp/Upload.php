@@ -3,6 +3,7 @@
 class Upload extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
+
 		$this->load->helper(array('language', 'form', 'url'));
 		$this->set_simple_page();
 	}
@@ -15,7 +16,7 @@ class Upload extends MY_Controller {
 		$data = array(
 			'lang' => $this->lang,
 			'title' => $this->lang->line('image'),
-			'link_back' => base_url('cp/image/list')
+			'link_back' => base_url(F_CP .'image/list')
 		);
 
 		switch ($submit) {
@@ -107,8 +108,33 @@ class Upload extends MY_Controller {
 		$this->render($data);
 	}
 
+	public function upload_ck() {
+		if(isset($_FILES['upload'])) {
+			// ------ Process your file upload code -------
+			$filen = $_FILES['upload']['tmp_name']; 
+			$con_images = "file/content/" .$_FILES['upload']['name'];
+			move_uploaded_file($filen, $con_images);
+			$url = base_url($con_images);
+
+			$funcNum = $_GET['CKEditorFuncNum'] ;
+			// Optional: instance name (might be used to load a specific configuration file or anything else).
+			$CKEditor = $_GET['CKEditor'] ;
+			// Optional: might be used to provide localized messages.
+			$langCode = $_GET['langCode'] ;
+
+			// Usually you will only assign something here if the file could not be uploaded.
+			$message = '';
+			echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>";
+		}
+	}
+
 	public function _remap($method, $params = array()) {
 		switch ($method) {
+			case 'ck':
+				$this->auth_model->require_right('IMAGE_UPLOAD');
+				$method = 'upload_ck';
+			break;
+
 			case 'image':
 				$this->auth_model->require_right('IMAGE_UPLOAD');
 				$method = 'upload_image';

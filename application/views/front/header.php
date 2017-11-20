@@ -3,10 +3,15 @@
 <html lang="vi">
 <head>
 	<meta charset="utf-8">
-	<title>TVN Healthcare - Tận tâm chia sẻ</title>
+	<title><?=$title?></title>
 
-	<link rel="stylesheet" href="<?=base_url('pub/front/css/front.css')?>" media="screen, projection" />
-	<script src="<?=base_url('pub/jquery/jquery-3.2.1.min.js')?>"></script>
+	<?php if (isset($meta)): ?>
+	<meta name="description" content="<?=$meta['description']?>">
+	<meta name="keywords" content="<?=$meta['keywords']?>">
+	<?php endif; ?>
+
+	<link rel="stylesheet" href="<?=base_url(F_PUB . F_FRONT .'css/front.css')?>" media="screen, projection" />
+	<script src="<?=base_url(F_PUB . F_FRONT .'jquery/jquery-3.2.1.min.js')?>"></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
@@ -16,9 +21,12 @@
 		<div id="header-logo-bar">
 			<div class="container">
 				<div class="row align-items-center no-gutters">
-				
 					<div id="logo" class="col-auto mr-auto">
-						<a href="/"><img src="pub/front/img/logo-vi.png" class="header-logo img-fluid" /></a>
+						<?php if ($site['avatar_filename']): ?>
+						<a href="/"><img src="<?=base_url(F_FILE .$site['avatar_filename'])?>" class="header-logo img-fluid" /></a>
+						<?php else: ?>
+						<a href="/"><img src="<?=base_url(F_PUB .F_FRONT .'img/logo-vi.png')?>" class="header-logo img-fluid" /></a>
+						<?php endif; ?>
 					</div>
 
 					<div class="logo-bar-item item-address-info col-auto d-none d-xl-block">
@@ -96,12 +104,12 @@
 
 					<div class="col-auto d-none d-xl-block">
 					<ul class="social-links">
-						<li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a>
+						<li class="facebook"><a target="_blank" href="<?=$site['facebook']?>"><i class="fa fa-facebook"></i></a>
 						</li>
-						<li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-						<li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-						<li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-						<li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+						<li class="twitter"><a target="_blank" href="<?=$site['twitter']?>"><i class="fa fa-twitter"></i></a></li>
+						<li class="pinterest"><a target="_blank" href="<?=$site['pinterest']?>"><i class="fa fa-pinterest"></i></a></li>
+						<li class="google-plus"><a target="_blank" href="<?=$site['gplus']?>"><i class="fa fa-google-plus"></i></a></li>
+						<li class="linkedin"><a target="_blank" href="<?=$site['linkedin']?>"><i class="fa fa-linkedin"></i></a></li>
 					</ul>
 					</div>
 

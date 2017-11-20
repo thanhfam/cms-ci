@@ -27,10 +27,19 @@ if (isset($item) && !empty($item['created'])) {
 	</div>
 </div>
 
+<div class="uk-margin-small uk-width-large">
+	<label class="uk-form-label" for="type"><?=$lang->line('type')?></label>
+	<div class="uk-form-controls">
+		<input type="text" name="type" id="type" value="<?=isset($item) ? $item['type'] : '';?>" class="uk-input uk-form-small <?=(form_error('type') ? 'uk-form-danger' : '');?>" />
+		<?=form_error('type');?>
+	</div>
+</div>
+
 <div class="uk-margin-small">
 	<input type="hidden" name="id" value="<?=isset($item) ? $item['id'] : '';?>" />
 	<input type="hidden" name="created" value="<?=isset($item) ? $item['created'] : '';?>" />
 	<button class="uk-button uk-button-small uk-button-primary" type="submit" name="submit" value="save"><?=$lang->line('save');?></button>
+	<button class="uk-button uk-button-small uk-button-secondary" type="submit" name="submit" value="save_back"><?=$lang->line('save_back')?></button>
 	<a class="uk-button uk-button-small" name="btn-back" href="<?=$link_back;?>"><?=$lang->line('back');?></a>
 </div>
 

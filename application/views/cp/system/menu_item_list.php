@@ -18,13 +18,13 @@ if (count($list) > 0):
 foreach ($list as $row):
 ?>
 <tr>
-	<td><?=$row['id']?></td>
-	<td><?=$row['title']?></td>
-	<td><?=$row['url']?></td>
-	<td><?=$row['parent_title']?></td>
-	<td><?=$row['menu_name']?></td>
-	<td><?=$row['position']?></td>
-	<td><?=$row['updated']?></td>
+	<td class="uk-text-small"><?=$row['id']?></td>
+	<td class="uk-text-small"><?=$row['title']?></td>
+	<td class="uk-text-small"><?=$row['url']?></td>
+	<td class="uk-text-small"><?=$row['parent_title']?></td>
+	<td class="uk-text-small"><?=$row['menu_name']?></td>
+	<td class="uk-text-small"><?=$row['position']?></td>
+	<td class="uk-text-small"><?=$row['updated']?></td>
 	<td class="command">
 		<ul class="uk-iconnav">
 			<li><a href="<?=base_url('cp/menu_item/edit/' . $row['menu_id'] . '/' . $row['id']);?>" uk-icon="icon: file-edit" title="<?=$lang->line('edit');?>"></a></li>
@@ -37,7 +37,7 @@ endforeach;
 else:
 ?>
 <tr>
-	<td colspan="8"><?=$lang->line('no_row');?></td>
+	<td class="uk-text-small" colspan="8"><?=$lang->line('no_row')?></td>
 </tr>
 <?php
 endif;

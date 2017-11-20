@@ -4,6 +4,7 @@
 <tr>
 	<th><?=$lang->line('id');?></th>
 	<th><?=$lang->line('title');?></th>
+	<th><?=$lang->line('subtitle');?></th>
 	<th><?=$lang->line('name');?></th>
 	<th><?=$lang->line('url');?></th>
 	<th><?=$lang->line('language');?></th>
@@ -16,14 +17,15 @@ if (count($list) > 0) {
 foreach ($list as $row) {
 ?>
 <tr>
-	<td><?=$row['id']?></td>
-	<td><a href="<?=base_url('cp/site/edit/' . $row['id']);?>"><?=$row['title']?></a></td>
-	<td><?=$row['name']?></td>
-	<td><a href="<?=$row['url']?>"><?=$row['url']?></a></td>
-	<td><?=$row['language']?></td>
+	<td class="uk-text-small"><?=$row['id']?></td>
+	<td class="uk-text-small"><a href="<?=base_url(F_CP .'site/edit/' . $row['id']);?>"><?=$row['title']?></a></td>
+	<td class="uk-text-small"><?=$row['subtitle']?></td>
+	<td class="uk-text-small"><?=$row['name']?></td>
+	<td class="uk-text-small"><a href="<?=$row['url']?>"><?=$row['url']?></a></td>
+	<td class="uk-text-small"><?=$row['language']?></td>
 	<td class="command">
 		<ul class="uk-iconnav">
-			<li><a href="<?=base_url('cp/site/edit/' . $row['id']);?>" uk-icon="icon: file-edit" title="<?=$lang->line('edit');?>"></a></li>
+			<li><a href="<?=base_url(F_CP .'site/edit/' . $row['id']);?>" uk-icon="icon: file-edit" title="<?=$lang->line('edit');?>"></a></li>
 		</ul>
 	</td>
 </tr>
@@ -33,7 +35,7 @@ foreach ($list as $row) {
 else {
 ?>
 <tr>
-	<td colspan="5"><?=$lang->line('no_row');?></td>
+	<td class="uk-text-small" colspan="7"><?=$lang->line('no_row')?></td>
 </tr>
 <?php
 }

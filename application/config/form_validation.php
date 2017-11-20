@@ -115,8 +115,8 @@ $config = array(
 			'rules' => 'trim|required|max_length[255]'
 		),
 		array(
-			'field' => 'type',
-			'label' => 'lang:type',
+			'field' => 'subtitle',
+			'label' => 'lang:subtitle',
 			'rules' => 'trim|max_length[255]'
 		)
 	),
@@ -140,6 +140,16 @@ $config = array(
 			'field' => 'subtitle',
 			'label' => 'lang:subtitle',
 			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'description',
+			'label' => 'lang:description',
+			'rules' => 'trim|max_length[512]'
+		),
+		array(
+			'field' => 'keywords',
+			'label' => 'lang:keywords',
+			'rules' => 'trim|max_length[512]'
 		),
 		array(
 			'field' => 'lead',
@@ -181,6 +191,13 @@ $config = array(
 			'field' => 'site_id',
 			'label' => 'lang:site',
 			'rules' => 'trim|required|integer'
+		)
+	),
+	'view_edit' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|required|max_length[255]'
 		)
 	),
 	'menu_item_edit' => array(
@@ -240,6 +257,11 @@ $config = array(
 			'field' => 'content',
 			'label' => 'lang:content',
 			'rules' => 'trim'
+		),
+		array(
+			'field' => 'tags',
+			'label' => 'lang:tags',
+			'rules' => 'trim|max_length[1024]'
 		)
 	),
 	'state_edit' => array(
@@ -294,8 +316,40 @@ $config = array(
 			'label' => 'lang:content',
 			'rules' => 'trim'
 		)
+	),
+	'appointment_edit' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'address',
+			'label' => 'lang:address',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'phone',
+			'label' => 'lang:phone',
+			'rules' => 'trim|numeric|required|min_length[10]|max_length[11]'
+		),
+		array(
+			'field' => 'email',
+			'label' => 'lang:email',
+			'rules' => 'trim|required|valid_email|max_length[255]'
+		),
+		array(
+			'field' => 'summary',
+			'label' => 'lang:summary',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'content',
+			'label' => 'lang:content',
+			'rules' => 'trim|required|max_length[1024]'
+		)
 	)
 );
 
-$config['error_prefix'] = '<div class="input-field-invalid">';
+$config['error_prefix'] = '<div class="form-text text-danger uk-text-small uk-margin-small input-field-invalid">';
 $config['error_suffix'] = '</div>';

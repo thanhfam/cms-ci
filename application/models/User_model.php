@@ -102,7 +102,6 @@ class User_model extends MY_Model {
 			->from('user u')
 			->where('u.username', $item['username'])
 			->where('u.password', $this->hash_password($item['password']))
-			->limit(1)
 		;
 
 		if ($item = $this->db->get()->row_array()) {

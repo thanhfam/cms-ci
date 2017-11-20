@@ -12,10 +12,18 @@ if (isset($item) && !empty($item['created'])) {
 <form method="post" accept-charset="utf-8" action="<?=current_url()?>" class="uk-form-stacked">
 
 <div class="uk-margin-small uk-width-large">
-	<label class="uk-form-label" for="title"><?=$lang->line('title')?></label>
+	<label class="uk-form-label" for="title"><?=$lang->line('title')?> (*)</label>
 	<div class="uk-form-controls">
 		<input type="text" name="title" id="title" value="<?=isset($item) ? $item['title'] : '';?>" class="uk-input uk-form-small <?=(form_error('title') ? 'uk-form-danger' : '');?>" />
 		<?=form_error('title');?>
+	</div>
+</div>
+
+<div class="uk-margin-small uk-width-large">
+	<label class="uk-form-label" for="subtitle"><?=$lang->line('subtitle')?></label>
+	<div class="uk-form-controls">
+		<input type="text" name="subtitle" id="subtitle" value="<?=isset($item) ? $item['subtitle'] : '';?>" class="uk-input uk-form-small <?=(form_error('subtitle') ? 'uk-form-danger' : '');?>" />
+		<?=form_error('subtitle');?>
 	</div>
 </div>
 
