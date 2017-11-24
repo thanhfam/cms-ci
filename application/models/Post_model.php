@@ -142,6 +142,7 @@ class Post_model extends MY_Model {
 			->join('site si', 'c.site_id = si.id')
 			->join('page pg', 'p.id = pg.content_id', 'left')
 			->where('pg.content_type', CT_POST)
+			->where('s.type', ST_CONTENT)
 			->order_by('p.id', 'DESC')
 		;
 
@@ -177,13 +178,15 @@ class Post_model extends MY_Model {
 		return $this->db->get()->result_array();
 	}
 
-	public function get_top_activated($cate_id, $limit) {
+	public function get_top_activated($cate_id, $limit, $get_content = FALSE) {
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.lead, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, p.lead, p.content, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated')
 			->from('post p')
 			->where('p.state_weight', S_ACTIVATED)
 			->join('page pg', 'pg.content_id = p.id')
 			->where('pg.content_type', CT_POST)
+			->join('state st', 'st.weight = p.state_weight')
+			->where('st.type', ST_CONTENT)
 			->join('category c', 'p.cate_id = c.id')
 			->join('image i', 'p.avatar_id = i.id', 'left')
 			->order_by('p.id', 'DESC')
@@ -204,16 +207,18 @@ class Post_model extends MY_Model {
 		return $result;
 	}
 
-	public function get_activated($cate_id, $page = 1, $filter = '', &$pagy_config) {
+	public function get_activated($cate_id, $page = 1, $filter = '', &$pagy_config, $get_content = FALSE) {
 		$this->load->library('pagination');
 
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.lead, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, p.lead, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated' . ($get_content ? ', p.content' : ''))
 			->from('post p')
 			->where('p.cate_id', intval($cate_id))
 			->where('p.state_weight', S_ACTIVATED)
+			->join('state st', 'st.weight = p.state_weight')
+			->where('st.type', ST_CONTENT)
 			->join('page pg', 'pg.content_id = p.id')
 			->where('pg.content_type', CT_POST)
 			->join('category c', 'p.cate_id = c.id')

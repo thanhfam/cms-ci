@@ -91,7 +91,7 @@ class Category_model extends MY_Model {
 		$id = intval($id);
 
 		$this->db
-			->select('c.id, c.subtitle, c.title, c.name, p.uri, c.description, c.keywords, c.lead, c.content, c.site_id, c.cate_id, c.cate_layout_id, c.post_layout_id, c.state_weight, c.created, c.updated')
+			->select('c.id, c.subtitle, c.title, c.name, p.uri, c.description, c.keywords, c.lead, c.content, c.type, c.site_id, c.cate_id, c.cate_layout_id, c.post_layout_id, c.state_weight, c.created, c.updated')
 			->from('category c')
 			->join('page p', 'c.id = p.content_id')
 			->where('p.content_type', CT_CATEGORY)
@@ -170,6 +170,7 @@ class Category_model extends MY_Model {
 			->join('category c2', 'c1.cate_id = c2.id', 'left')
 			->join('page p', 'c1.id = p.content_id')
 			->where('p.content_type', CT_CATEGORY)
+			->where('st.type', ST_CONTENT)
 			->order_by('c1.id', 'DESC')
 		;
 

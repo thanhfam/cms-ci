@@ -84,9 +84,10 @@ $CI =& get_instance();
 	<div class="uk-navbar-right">
 		<ul class="uk-navbar-nav uk-background-secondary">
 			<li>
-				<a href="#"><?=$user['name']?></a>
+				<a href="#"><span uk-icon="icon: user"></span>&nbsp;<?=$user['name']?></a>
 				<div class="uk-navbar-dropdown" uk-dropdown="offset: 1">
 					<ul class="uk-nav uk-navbar-dropdown-nav">
+						<li><a href="<?=base_url(F_CP .'user/edit_profile')?>"><?=$lang->line('profile')?></a></li>
 						<li><a href="<?=base_url(F_CP .'user/change_password')?>"><?=$lang->line('change_password')?></a></li>
 						<li class="uk-nav-divider"></li>
 						<li><a href="<?=base_url(F_CP .'user/logout')?>"><?=$lang->line('logout')?></a></li>

@@ -50,10 +50,13 @@ $lang = array(
 	'reset_password' => 'Thiết lập mật khẩu',
 	'new_password_is' => 'Mật khẩu mới là: ',
 	'password_incorrect' => 'Mật khẩu không đúng!',
+	'profile' => 'Thông tin cá nhân',
 
 	'insert_image' => 'Chèn ảnh',
 
 	'email' => 'Email',
+	'timezone' => 'Múi giờ',
+	'date_format' => 'Định dạng ngày tháng',
 	'phone' => 'Số điện thoại',
 	'address' => 'Địa chỉ',
 	'time' => 'Thời gian',

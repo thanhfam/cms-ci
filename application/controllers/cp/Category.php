@@ -34,7 +34,7 @@ class Category extends MY_Controller {
 						'keywords' => '',
 						'lead' => '',
 						'content' => '',
-						'type' => '',
+						'type' => '0',
 						'site_id' => '',
 						'cate_id' => '',
 						'cate_layout_id' => '',

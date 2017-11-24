@@ -60,6 +60,32 @@ class Menu_item_model extends MY_Model {
 		return $item;
 	}
 
+	public function get_menu_tree($menu_id) {
+		$this->db
+			->select('mt.id, mt.title, mt.url, mt.target, mt2.id parent_id, mt2.title parent_title, m.id menu_id, m.name menu_name, mt.position, mt.created, mt.updated')
+			->from('menu_item mt')
+			->where('mt.menu_id', $menu_id)
+			->join('menu_item mt2', 'mt.menu_item_id = mt2.id', 'left')
+			->join('menu m', 'mt.menu_id = m.id')
+			->order_by('mt.menu_item_id', 'ASC')
+			->order_by('mt.position', 'ASC')
+		;
+
+		$query = $this->db->query($this->db->get_compiled_select());
+
+		$menu_tree = array();
+
+		while ($row = $query->unbuffered_row('array')) {
+			$menu_tree[$row['parent_title']][$row['position']] = array(
+				'title' => $row['title'],
+				'url' => $row['url'],
+				'target' => $row['target']
+			);
+		}
+
+		return $menu_tree;
+	}
+
 	public function list_all($menu_id, $page = 1, $filter = '', &$pagy_config) {
 		$this->load->library('pagination');
 

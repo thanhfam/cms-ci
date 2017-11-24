@@ -96,3 +96,7 @@ html {
 .cke_editable p {
 	margin: 10px 0;
 }
+
+* + .uk-grid-margin, .uk-grid + .uk-grid, .uk-grid > .uk-grid-margin {
+	margin-top: 0;
+}

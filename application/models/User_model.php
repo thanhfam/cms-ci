@@ -154,7 +154,7 @@ class User_model extends MY_Model {
 		$id = intval($id);
 
 		$this->db
-			->select('u.id, u.username, u.name, u.email, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated')
+			->select('u.id, u.username, u.name, u.email, u.timezone, u.date_format, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated')
 			->from('user u')
 			->where('u.id', $id)
 		;

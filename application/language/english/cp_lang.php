@@ -49,10 +49,13 @@ $lang = array(
 	'reset_password' => 'Reset password',
 	'new_password_is' => 'The new password is: ',
 	'password_incorrect' => 'The password is not correct!',
+	'profile' => 'Profile',
 
 	'insert image' => 'Insert image',
 
 	'email' => 'Email',
+	'timezone' => 'Time zone',
+	'date_format' => 'Date format',
 	'phone' => 'Phone',
 	'address' => 'Phone',
 	'time' => 'Time',

@@ -35,7 +35,7 @@ foreach ($list as $row):
 	</td>
 	<td class="command">
 		<ul class="uk-iconnav">
-			<li><a href="<?=base_url(F_CP .'post/list/?filter=' . $row['title']);?>" uk-icon="icon: list" title="<?=$lang->line('list')?>"></a></li>
+			<li><a href="<?=base_url(F_CP .'post/list/?cate_id=' . $row['id']);?>" uk-icon="icon: list" title="<?=$lang->line('list')?>"></a></li>
 			<li><a href="<?=base_url(F_CP .'category/edit/' . $row['id'])?>" uk-icon="icon: file-edit" title="<?=$lang->line('edit')?>"></a></li>
 		</ul>
 	</td>

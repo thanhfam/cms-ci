@@ -4,10 +4,20 @@ class Page extends FP_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		$this->load->model(array('site_model', 'page_model', 'category_model', 'post_model'));
+		$this->load->model(array(
+			'page_model',
+			'site_model',
+			'menu_item_model',
+			'category_model',
+			'post_model'
+		));
 	}
 
 	public function index($uri = '') {
+		if ($uri == '') {
+			$uri = 'vi';
+		}
+
 		$item = $this->page_model->get_by_uri($uri);
 
 		if ($item) {
@@ -37,6 +47,7 @@ class Page extends FP_Controller {
 		}
 
 		$site = $this->site_model->get($cate['site_id']);
+		$menu_tree = $this->menu_item_model->get_menu_tree(1);
 
 		$data = array(
 			'title' => implode(' - ', [$cate['title'], $site['title'], $site['subtitle']]),
@@ -44,7 +55,8 @@ class Page extends FP_Controller {
 			'meta' => array(
 				'description' => $cate['description'],
 				'keywords' => $cate['keywords']
-			)
+			),
+			'menu_tree' => $menu_tree
 		);
 
 		if ($cate['uri'] == 'vi' || $cate['uri'] == 'en') {
@@ -67,9 +79,16 @@ class Page extends FP_Controller {
 				'base_url' => base_url('category/' .$uri)
 			);
 
+			if ($cate['id'] == 36) {
+				$list_post = $this->post_model->get_activated($cate['id'], $page, $filter, $pagy_config, TRUE);
+			}
+			else {
+				$list_post = $this->post_model->get_activated($cate['id'], $page, $filter, $pagy_config, TRUE);
+			}
+
 			$data = array_merge($data, array(
 				'cate' => $cate,
-				'list_post' => $this->post_model->get_activated($cate['id'], $page, $filter, $pagy_config),
+				'list_post' => $list_post,
 				'pagy' => $this->pagination
 			));
 
@@ -91,6 +110,7 @@ class Page extends FP_Controller {
 		}
 
 		$site = $this->site_model->get($post['site_id']);
+		$menu_tree = $this->menu_item_model->get_menu_tree(1);
 
 		$data = array(
 			'title' => implode(' - ', [$post['title'], $site['title'], $site['subtitle']]),
@@ -99,6 +119,7 @@ class Page extends FP_Controller {
 				'description' => $post['lead'],
 				'keywords' => $post['tags']
 			),
+			'menu_tree' => $menu_tree,
 			'post' => $post
 		);
 
@@ -110,7 +131,7 @@ class Page extends FP_Controller {
 	}
 
 	public function show_404() {
-		echo 'khong tim thay trang';
+		header("HTTP/1.0 404 Not Found");
 		exit(0);
 	}
 }

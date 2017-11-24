@@ -44,13 +44,12 @@ class User extends MY_Controller {
 			'content' => $this->lang->line('permission_not_grannted')
 		));
 
+		$this->set_simple_page();
 		$this->render($data);
 	}
 
-	public function change_password($id = '') {
-		if ($id == '') {
-			$id = $this->session->user['id'];
-		}
+	public function change_password() {
+		$id = $this->session->user['id'];
 
 		$this->load->helper('form');
 		$this->load->library('form_validation');
@@ -74,9 +73,8 @@ class User extends MY_Controller {
 			break;
 
 			case 'save':
-			case 'save_back':
 				$item = array(
-					'id' => $this->input->post('id'),
+					'id' => $id,
 					'password' => $this->input->post('password'),
 					'password_new' => $this->input->post('password_new'),
 					'password_new_confirm' => $this->input->post('password_new_confirm'),
@@ -94,10 +92,6 @@ class User extends MY_Controller {
 							'password_new' => '',
 							'password_new_confirm' => ''
 						));
-
-						if ($submit == 'save_back') {
-							$this->go_to($data['link_back']);
-						}
 					}
 				}
 				else {
@@ -227,6 +221,67 @@ class User extends MY_Controller {
 
 		$this->set_body(
 			'system/user_edit'
+		);
+		$this->render($data);
+	}
+
+	public function edit_profile() {
+		$id = $this->session->user['id'];
+
+		$this->load->helper(array('form', 'date'));
+		$this->load->library('form_validation');
+
+		$submit = $this->input->post('submit');
+
+		$data = array(
+			'title' => $this->lang->line('profile')
+		);
+
+		switch ($submit) {
+			case NULL:
+				$item = $this->user_model->get($id);
+			break;
+
+			case 'save':
+				$item = array(
+					'id' => $id,
+					'name' => $this->input->post('name'),
+					'email' => $this->input->post('email'),
+					'timezone' => $this->input->post('timezone'),
+					'date_format' => $this->input->post('date_format')
+				);
+
+				if ($this->form_validation->run('user_edit_profile')) {
+					if (!$this->user_model->save($item)) {
+						$this->set_message(array(
+							'type' => 3,
+							'content' => $this->lang->line('db_update_danger')
+						));
+					}
+					else {
+						$this->set_message(array(
+							'type' => 1,
+							'content' => $this->lang->line('update_success')
+						));
+					}
+				}
+				else {
+					$this->set_message(array(
+						'type' => 3,
+						'content' => $this->lang->line('input_danger')
+					));
+
+					$item['created'] = '';
+				}
+			break;
+		}
+
+		$data = array_merge($data, array(
+			'item' => $item
+		));
+
+		$this->set_body(
+			'system/user_edit_profile'
 		);
 		$this->render($data);
 	}

@@ -3,9 +3,15 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
 <div class="body">
+<div class="page-title">
+	<div class="page-title-bg">
+	<div class="container">
+		<h2><?=$cate['title']?></h2>
+	</div>
+	</div>
+</div>
 <div id="appointment" class="container">
-<h2 class="page-title"><?=$cate['title']?></h2>
-<p class="cate-lead"><?=$cate['lead']?></h2>
+<p class="cate-lead"><?=$cate['lead']?></p>
 
 <?php
 	$this->load->view(F_FRONT .'message');

@@ -1,7 +1,13 @@
 <div class="body">
+<div class="page-title">
+	<div class="page-title-bg">
+	<div class="container">
+		<h2><?=$cate['title']?></h2>
+	</div>
+	</div>
+</div>
 <?php if (isset($cate)): ?>
 <div class="container">
-<h2 class="page-title"><?=$cate['title']?></h2>
 <div class="post-list">
 <?php
 if (count($list_post) > 0):

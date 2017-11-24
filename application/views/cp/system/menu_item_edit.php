@@ -74,6 +74,7 @@ endif;
 <div class="uk-margin-small ">
 	<input type="hidden" name="id" value="<?=isset($item) ? $item['id'] : ''?>" />
 	<input type="hidden" name="created" value="<?=isset($item) ? $item['created'] : ''?>" />
+	<button class="uk-button uk-button-small uk-button-secondary" type="submit" name="submit" value="save_back"><?=$lang->line('save_back')?></button>
 	<button class="uk-button uk-button-small uk-button-primary" type="submit" name="submit" value="save"><?=$lang->line('save')?></button>
 	<a class="uk-button uk-button-small" name="btn-back" href="<?=$link_back?>"><?=$lang->line('back')?></a>
 </div>

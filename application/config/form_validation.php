@@ -305,6 +305,18 @@ $config = array(
 			'rules' => 'trim|required|valid_email|max_length[255]'
 		)
 	),
+	'user_edit_profile' => array(
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'email',
+			'label' => 'lang:email',
+			'rules' => 'trim|required|valid_email|max_length[255]'
+		)
+	),
 	'image_upload' => array(
 		array(
 			'field' => 'name',

@@ -5,6 +5,8 @@ class MY_Model extends CI_Model
 {
 	public function __construct() {
 		parent::__construct();
+
+		$this->load->helper('date');
 	}
 
 	function to_utf8( $string ) { 
@@ -34,5 +36,8 @@ class MY_Model extends CI_Model
 			$timestamp = strtotime($timestamp);
 		}
 		return date(DateTime::COOKIE, $timestamp);
+	}
+
+	public function get_date_string($timestamp) {
 	}
 }

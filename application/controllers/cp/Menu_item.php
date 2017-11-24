@@ -72,6 +72,7 @@ class Menu_item extends MY_Controller {
 			break;
 
 			case 'save':
+			case 'save_back':
 				$item = array(
 					'id' => $this->input->post('id'),
 					'title' => $this->input->post('title'),
@@ -94,6 +95,10 @@ class Menu_item extends MY_Controller {
 							'type' => 1,
 							'content' => $this->lang->line('update_success')
 						));
+
+						if ($submit == 'save_back') {
+							$this->go_to($data['link_back']);
+						}
 					}
 				}
 				else {

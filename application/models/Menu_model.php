@@ -72,7 +72,7 @@ class Menu_model extends MY_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('m.id, m.name, s.id site_id, s.title site_title, m.created, m.updated')
+			->select('m.id, m.name, s.id site_id, s.name site_name, s.title site_title, m.created, m.updated')
 			->from('menu m')
 			->join('site s', 'm.site_id = s.id')
 			->order_by('m.id', 'DESC')

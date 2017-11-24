@@ -7,6 +7,13 @@ class Auth_model extends MY_Model {
 		$this->load->model('user_model');
 	}
 
+	public function require_self_action($id) {
+		if ($this->session->user['id'] != $id) {
+			redirect(F_CP .'user/not_granted');
+			exit(0);
+		}
+	}
+
 	public function require_right($right) {
 		$this->db
 			->select('u.id, u.username, u.name, u.email, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated')

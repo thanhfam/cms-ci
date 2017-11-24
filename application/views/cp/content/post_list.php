@@ -54,7 +54,7 @@ foreach ($list as $row):
 		<?=$row['title'] ? '<a target="_blank" href="'. $row['site_url'] .$row['uri'] .'">' .$row['title'] .'</a>' : ''?>
 	</td>
 	<td class="uk-text-small">
-		<a href="<?=base_url(F_CP .'post/list/?filter=' . $row['cate_title'])?>"><?=$row['cate_title']?></a> (<?=$row['cate_id']?>)
+		<a href="<?=base_url(F_CP .'post/list/?cate_id=' . $row['cate_id'])?>"><?=$row['cate_title']?></a> (<?=$row['cate_id']?>)
 	</td>
 	<td class="uk-text-small">
 		<?=$lang->line($row['state_name']) ? $lang->line($row['state_name']) : $row['state_name']?> (<?=$row['state_weight']?>)

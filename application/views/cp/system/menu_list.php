@@ -19,7 +19,7 @@ foreach ($list as $row):
 	<td class="uk-text-small">
 		<a href="<?=base_url(F_CP .'menu/edit/' . $row['id'])?>" title="<?=$lang->line('edit')?>"><?=$row['name']?></a>
 	</td>
-	<td class="uk-text-small"><?=$row['site_title']?></td>
+	<td class="uk-text-small"><?=$row['site_name']?></td>
 	<td class="uk-text-small"><?=$row['updated']?></td>
 	<td class="command">
 		<ul class="uk-iconnav">

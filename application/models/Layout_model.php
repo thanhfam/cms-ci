@@ -67,7 +67,7 @@ class Layout_model extends MY_Model {
 			->select('l.id, l.name, l.site_id, s.title site_title, l.created, l.updated')
 			->from('layout l')
 			->join('site s', 'l.site_id = s.id')
-			->order_by('l.id', 'DESC')
+			->order_by('l.name', 'ASC')
 		;
 
 		if ($filter != '') {
