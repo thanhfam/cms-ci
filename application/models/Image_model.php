@@ -7,17 +7,19 @@ class Image_model extends MY_Model {
 
 	public function save(&$item) {
 		if (empty($item['id'])) {
+			$item['created'] = $item['updated'] = get_time();
 			$result = $this->db->insert('image', $item);
 
 			$item['id'] = $this->db->insert_id();
-			$item['created'] = $item['updated'] = $this->get_time();
+			$item['created'] = $item['updated'] = date_string();
 		}
 		else {
+			$item['updated'] = get_time();
 			$this->db->where('id', $item['id']);
 			$result = $this->db->update('image', $item);
 
 			$item['created'] = $this->input->post('created');
-			$item['updated'] = $this->get_time();
+			$item['updated'] = date_string();
 		}
 
 		//echo $this->db->last_query();
@@ -38,8 +40,8 @@ class Image_model extends MY_Model {
 
 		$item = $this->db->get()->row_array();
 
-		$item['created'] = $this->get_time($item['created']);
-		$item['updated'] = $this->get_time($item['updated']);
+		$item['created'] = date_string($item['created']);
+		$item['updated'] = date_string($item['updated']);
 
 		return $item;
 	}

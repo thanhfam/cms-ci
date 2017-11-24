@@ -23,8 +23,6 @@ if ( ! function_exists('date_format_menu')) {
 	}
 }
 
-// ------------------------------------------------------------------------
-
 if ( ! function_exists('date_formats')) {
 	function date_formats() {
 		$formats = array(
@@ -39,3 +37,55 @@ if ( ! function_exists('date_formats')) {
 		return $formats;
 	}
 }
+
+if ( ! function_exists('get_date_format')) {
+	function get_date_format() {
+		$CI = & get_instance();
+
+		if (isset($CI->session)) {
+			$date_format = $CI->session->date_format;
+		}
+		else {
+			$date_format = config_item('date_format');
+		}
+
+		return $date_format;
+	}
+}
+
+if ( ! function_exists('get_timezone')) {
+	function get_timezone() {
+		$CI = & get_instance();
+
+		if (isset($CI->session)) {
+			$timezone = $CI->session->timezone;
+		}
+		else {
+			$timezone = config_item('timezone');
+		}
+
+		return $timezone;
+	}
+}
+
+if ( ! function_exists('get_time')) {
+	function get_time() {
+		return local_to_gmt(now());
+	}
+}
+
+if ( ! function_exists('date_string')) {
+	function date_string($ts = '') {
+		$CI = & get_instance();
+
+		$df = get_date_format();
+		$tz = get_timezone();
+
+		if ($ts == '') {
+			$ts = get_time();
+		}
+
+		return mdate($df, gmt_to_local($ts, $tz));
+	}
+}
+

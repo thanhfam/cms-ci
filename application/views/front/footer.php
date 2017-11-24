@@ -1,4 +1,3 @@
-
 	<div id="footer">
 		<div class="container">
 			<div class="row">
@@ -60,12 +59,24 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-	(function(d,s,id){var z=d.createElement(s);z.type="text/javascript";z.id=id;z.async=true;z.src="//static.zotabox.com/c/d/cdb99778b59405e5d4b0fd293f4dc8a3/widgets.js";var sz=d.getElementsByTagName(s)[0];sz.parentNode.insertBefore(z,sz)}(document,"script","zb-embed-code"));
-	</script>
-
 	<script src="<?=base_url(F_PUB .F_FRONT .'popper.js/umd/popper.min.js')?>"></script>
 	<script src="<?=base_url(F_PUB .F_FRONT .'bootstrap/js/bootstrap.min.js')?>"></script>
 	<script src="<?=base_url(F_PUB .F_FRONT .'js/front.js')?>"></script>
+
+	<script>
+	(function(d,s,id){var z=d.createElement(s);z.type="text/javascript";z.id=id;z.async=true;z.src="//static.zotabox.com/c/d/cdb99778b59405e5d4b0fd293f4dc8a3/widgets.js";var sz=d.getElementsByTagName(s)[0];sz.parentNode.insertBefore(z,sz)}(document,"script","zb-embed-code"));
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110058758-1"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'UA-110058758-1');
+	</script>
+
+
 </body>
 </html>

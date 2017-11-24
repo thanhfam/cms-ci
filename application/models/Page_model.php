@@ -89,8 +89,8 @@ class Page_model extends MY_Model {
 		$item = $this->db->get()->row_array();
 
 		if ($item) {
-			$item['created'] = $this->get_time($item['created']);
-			$item['updated'] = $this->get_time($item['updated']);
+			$item['created'] = date_string($item['created']);
+			$item['updated'] = date_string($item['updated']);
 		}
 
 		return $item;

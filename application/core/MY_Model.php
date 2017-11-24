@@ -37,7 +37,4 @@ class MY_Model extends CI_Model
 		}
 		return date(DateTime::COOKIE, $timestamp);
 	}
-
-	public function get_date_string($timestamp) {
-	}
 }

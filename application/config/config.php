@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+$config['date_format'] = '%d/%m/%Y %H:%i';
+$config['timezone'] = 'UP7';
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -23,7 +26,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = "//".$_SERVER['HTTP_HOST'];
+$config['base_url'] = "";
+
+//$config['base_url'] = "//".$_SERVER['HTTP_HOST'];
 
 //$config['base_url'] = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/';
 

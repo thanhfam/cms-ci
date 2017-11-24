@@ -14,10 +14,11 @@ class Category_model extends MY_Model {
 		$this->db->trans_begin();
 
 		if (empty($item['id'])) {
+			$item['created'] = $item['updated'] = get_time();
 			$this->db->insert('category', $item);
 
 			$item['id'] = $this->db->insert_id();
-			$item['created'] = $item['updated'] = $this->get_time();
+			$item['created'] = $item['updated'] = date_string();
 
 			$item_page = array(
 				'content_id' => $item['id'],
@@ -28,11 +29,12 @@ class Category_model extends MY_Model {
 			$this->page_model->save($item_page);
 		}
 		else {
+			$item['updated'] = get_time();
 			$this->db->where('id', $item['id']);
 			$this->db->update('category', $item);
 
 			$item['created'] = $this->input->post('created');
-			$item['updated'] = $this->get_time();
+			$item['updated'] = date_string();
 
 			$item_page = $this->page_model->get_by_content($item['id'], CT_CATEGORY);
 
@@ -76,8 +78,8 @@ class Category_model extends MY_Model {
 		$item = $this->db->get()->row_array();
 
 		if ($item) {
-			$item['created'] = $this->get_time($item['created']);
-			$item['updated'] = $this->get_time($item['updated']);
+			$item['created'] = date_string($item['created']);
+			$item['updated'] = date_string($item['updated']);
 		}
 
 		return $item;
@@ -101,8 +103,8 @@ class Category_model extends MY_Model {
 		$item = $this->db->get()->row_array();
 
 		if ($item) {
-			$item['created'] = $this->get_time($item['created']);
-			$item['updated'] = $this->get_time($item['updated']);
+			$item['created'] = date_string($item['created']);
+			$item['updated'] = date_string($item['updated']);
 		}
 
 		return $item;
@@ -197,10 +199,18 @@ class Category_model extends MY_Model {
 
 		$this->db->limit($per_page, $from_row);
 
+		$query = $this->db->query($this->db->get_compiled_select());
+
+		$list = array();
+
+		while ($row = $query->unbuffered_row('array')) {
+			$row['updated'] = date_string($row['updated']);
+			$row['created'] = date_string($row['created']);
+			$list[] = $row;
+		}
+
 		//echo $this->db->last_query();
 
-		$result = $this->db->get()->result_array();
-
-		return $result;
+		return $list;
 	}
 }

@@ -8,17 +8,19 @@ class state_model extends MY_Model {
 	public function save(&$item) {
 		if ($item['id'] == '') {
 			unset($item['id']);
+			$item['created'] = $item['updated'] = get_time();
 			$result = $this->db->insert('state', $item);
 
 			$item['id'] = $this->db->insert_id();
-			$item['created'] = $item['updated'] = $this->get_time();
+			$item['created'] = $item['updated'] = date_string();
 		}
 		else {
+			$item['updated'] = get_time();
 			$this->db->where('id', $item['id']);
 			$result = $this->db->update('state', $item);
 
 			$item['created'] = $this->input->post('created');
-			$item['updated'] = $this->get_time();
+			$item['updated'] = date_string();
 		}
 
 		return $result;
@@ -38,8 +40,8 @@ class state_model extends MY_Model {
 		$item = $this->db->get()->row_array();
 
 		if ($item) {
-			$item['created'] = $this->get_time($item['created']);
-			$item['updated'] = $this->get_time($item['updated']);
+			$item['created'] = date_string($item['created']);
+			$item['updated'] = date_string($item['updated']);
 		}
 
 		return $item;
@@ -61,13 +63,12 @@ class state_model extends MY_Model {
 	}
 
 	public function list_all($page = 1, $filter = '', &$pagy_config) {
-		//$this->load->database();
 		$this->load->library('pagination');
 
 		$filter = $this->db->escape_str(trim(strtolower($filter)));
 
 		$this->db
-			->select('s.id, s.name, s.weight, s.type')
+			->select('s.id, s.name, s.weight, s.type, s.created, s.updated')
 			->from('state s')
 			->order_by('s.type', 'ASC')
 			->order_by('s.weight', 'ASC')
@@ -94,8 +95,18 @@ class state_model extends MY_Model {
 
 		$this->db->limit($per_page, $from_row);
 
+		$query = $this->db->query($this->db->get_compiled_select());
+
+		$list = array();
+
+		while ($row = $query->unbuffered_row('array')) {
+			$row['updated'] = date_string($row['updated']);
+			$row['created'] = date_string($row['created']);
+			$list[] = $row;
+		}
+
 		//echo $this->db->last_query();
 
-		return $this->db->get()->result_array();
+		return $list;
 	}
 }

@@ -7,17 +7,19 @@ class Ward_model extends MY_Model {
 
 	public function save(&$item) {
 		if (empty($item['id'])) {
+			$item['created'] = $item['updated'] = get_time();
 			$result = $this->db->insert('ward', $item);
 
 			$item['id'] = $this->db->insert_id();
-			$item['created'] = $item['updated'] = $this->get_time();
+			$item['created'] = $item['updated'] = date_string();
 		}
 		else {
+			$item['updated'] = get_time();
 			$this->db->where('id', $item['id']);
 			$result = $this->db->update('ward', $item);
 
 			$item['created'] = $this->input->post('created');
-			$item['updated'] = $this->get_time();
+			$item['updated'] = date_string();
 		}
 
 		return $result;
@@ -38,8 +40,10 @@ class Ward_model extends MY_Model {
 
 		$item = $this->db->get()->row_array();
 
-		$item['created'] = $this->get_time($item['created']);
-		$item['updated'] = $this->get_time($item['updated']);
+		if ($item) {
+			$item['created'] = date_string($item['created']);
+			$item['updated'] = date_string($item['updated']);
+		}
 
 		return $item;
 	}
@@ -98,8 +102,18 @@ class Ward_model extends MY_Model {
 
 		$this->db->limit($per_page, $from_row);
 
+		$query = $this->db->query($this->db->get_compiled_select());
+
+		$list = array();
+
+		while ($row = $query->unbuffered_row('array')) {
+			$row['updated'] = date_string($row['updated']);
+			$row['created'] = date_string($row['created']);
+			$list[] = $row;
+		}
+
 		//echo $this->db->last_query();
 
-		return $this->db->get()->result_array();
+		return $list;
 	}
 }

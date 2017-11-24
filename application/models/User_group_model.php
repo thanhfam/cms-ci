@@ -7,17 +7,19 @@ class User_group_model extends MY_Model {
 
 	public function save(&$item) {
 		if (empty($item['id'])) {
+			$item['created'] = $item['updated'] = get_time();
 			$result = $this->db->insert('user_group', $item);
 
 			$item['id'] = $this->db->insert_id();
-			$item['created'] = $item['updated'] = $this->get_time();
+			$item['created'] = $item['updated'] = date_string();
 		}
 		else {
+			$item['updated'] = get_time();
 			$this->db->where('id', $item['id']);
 			$result = $this->db->update('user_group', $item);
 
 			$item['created'] = $this->input->post('created');
-			$item['updated'] = $this->get_time();
+			$item['updated'] = date_string();
 		}
 
 		//echo $this->db->last_query();
@@ -41,8 +43,8 @@ class User_group_model extends MY_Model {
 		$item = $this->db->get()->row_array();
 
 		if ($item) {
-			$item['created'] = $this->get_time($item['created']);
-			$item['updated'] = $this->get_time($item['updated']);
+			$item['created'] = date_string($item['created']);
+			$item['updated'] = date_string($item['updated']);
 		}
 
 		return $item;
@@ -95,8 +97,18 @@ class User_group_model extends MY_Model {
 
 		//echo $this->db->last_query();
 
-		$result = $this->db->get()->result_array();
+		$query = $this->db->query($this->db->get_compiled_select());
 
-		return $result;
+		$list = array();
+
+		while ($row = $query->unbuffered_row('array')) {
+			$row['updated'] = date_string($row['updated']);
+			$row['created'] = date_string($row['created']);
+			$list[] = $row;
+		}
+
+		//echo $this->db->last_query();
+
+		return $list;
 	}
 }

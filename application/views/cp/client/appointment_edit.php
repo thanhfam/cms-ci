@@ -50,7 +50,7 @@ endif;
 </div>
 
 <div class="uk-margin-small uk-width-large" >
-	<label class="uk-form-label" for="time"><?=$lang->line('time')?></label>
+	<label class="uk-form-label" for="time"><?=$lang->line('time')?> (*)</label>
 	<div class="uk-form-controls">
 		<input type="text" name="time" id="time" value="<?=isset($item) ? $item['time'] : ''?>" class="uk-input uk-form-small <?=(form_error('time') ? 'uk-form-danger' : '')?>" />
 		<?=form_error('time')?>
@@ -73,7 +73,7 @@ $('#time').datetimepicker({
 </div>
 
 <div class="uk-margin-small uk-width-xlarge">
-	<label class="uk-form-label" for="content"><?=$lang->line('content')?></label>
+	<label class="uk-form-label" for="content"><?=$lang->line('content')?> (*)</label>
 	<div class="uk-form-controls">
 		<textarea type="text" name="content" id="content" rows="5" class="uk-text-small uk-textarea <?=(form_error('content') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['content'] : ''?></textarea>
 		<?=form_error('content')?>
@@ -93,9 +93,8 @@ $('#time').datetimepicker({
 	</div>
 </div>
 
-
 <script>
-	CKEDITOR.replace( 'content' );
+	AlloyEditor.editable('content');
 </script>
 
 <div class="uk-margin-small">

@@ -263,6 +263,9 @@ class User extends MY_Controller {
 							'type' => 1,
 							'content' => $this->lang->line('update_success')
 						));
+
+						$this->session->date_format = $item['date_format'];
+						$this->session->timezone = $item['timezone'];
 					}
 				}
 				else {
@@ -357,6 +360,9 @@ class User extends MY_Controller {
 	public function init_session($user) {
 		$this->session->user = $user;
 		$this->session->menu_data = $this->user_model->get_menu_data($user);
+
+		$this->session->date_format = $user['date_format'];
+		$this->session->timezone = $user['timezone'];
 	}
 
 	public function list_all() {

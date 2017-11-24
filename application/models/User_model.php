@@ -10,6 +10,10 @@ class User_model extends MY_Model {
 			return FALSE;
 		}
 
+		$updated = $item['updated'];
+
+		$item['updated'] = get_time();
+
 		$this->db->where('id', $item['id']);
 
 		$result = $this->db->update('user', array(
@@ -23,13 +27,15 @@ class User_model extends MY_Model {
 				'content' => $this->lang->line('update_success')
 			);
 
-			$item['updated'] = $this->get_time();
+			$item['updated'] = date_string();
 		}
 		else {
 			$message = array(
 				'type' => 3,
 				'content' => $this->lang->line('db_update_danger')
 			);
+
+			$item['updated'] = $updated;
 		}
 
 		return $message;
@@ -64,17 +70,19 @@ class User_model extends MY_Model {
 
 	public function save(&$item) {
 		if (empty($item['id'])) {
+			$item['created'] = $item['updated'] = get_time();
 			$result = $this->db->insert('user', $item);
 
 			$item['id'] = $this->db->insert_id();
-			$item['created'] = $item['updated'] = $this->get_time();
+			$item['created'] = $item['updated'] = date_string();
 		}
 		else {
+			$item['updated'] = get_time();
 			$this->db->where('id', $item['id']);
 			$result = $this->db->update('user', $item);
 
 			$item['created'] = $this->input->post('created');
-			$item['updated'] = $this->get_time();
+			$item['updated'] = date_string();
 		}
 
 		return $result;
@@ -163,11 +171,11 @@ class User_model extends MY_Model {
 
 		if ($item) {
 			if ($item['last_login']) {
-				$item['last_login'] = $this->get_time($item['last_login']);
+				$item['last_login'] = date_string($item['last_login']);
 			}
 
-			$item['created'] = $this->get_time($item['created']);
-			$item['updated'] = $this->get_time($item['updated']);
+			$item['created'] = date_string($item['created']);
+			$item['updated'] = date_string($item['updated']);
 		}
 
 		return $item;
@@ -192,7 +200,7 @@ class User_model extends MY_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('u.id, u.username, u.email, u.state_weight, s.name state_name, u.last_login, u.user_group_id, ug.title user_group_title')
+			->select('u.id, u.username, u.email, u.state_weight, s.name state_name, u.last_login, u.user_group_id, ug.title user_group_title, u.created, u.updated')
 			->from('user u')
 			->join('state s', 'u.state_weight = s.weight')
 			->join('user_group ug', 'u.user_group_id = ug.id')
@@ -214,8 +222,18 @@ class User_model extends MY_Model {
 
 		$this->db->limit($per_page, $from_row);
 
+		$query = $this->db->query($this->db->get_compiled_select());
+
+		$list = array();
+
+		while ($row = $query->unbuffered_row('array')) {
+			$row['updated'] = date_string($row['updated']);
+			$row['created'] = date_string($row['created']);
+			$list[] = $row;
+		}
+
 		//echo $this->db->last_query();
 
-		return $this->db->get()->result_array();
+		return $list;
 	}
 }

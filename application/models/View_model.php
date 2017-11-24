@@ -46,6 +46,7 @@ class View_model extends MY_Model {
 
 		foreach ($file_list as &$file) {
 			$file['size'] = byte_format($file['size']);
+			$file['date'] = date_string($file['date']);
 		}
 
 		return $file_list;

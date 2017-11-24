@@ -8,17 +8,19 @@ class Site_model extends MY_Model {
 	public function save(&$item) {
 		if ($item['id'] == '') {
 			unset($item['id']);
+			$item['created'] = $item['updated'] = get_time();
 			$result = $this->db->insert('site', $item);
 
 			$item['id'] = $this->db->insert_id();
-			$item['created'] = $item['updated'] = $this->get_time();
+			$item['created'] = $item['updated'] = date_string();
 		}
 		else {
+			$item['updated'] = get_time();
 			$this->db->where('id', $item['id']);
 			$result = $this->db->update('site', $item);
 
 			$item['created'] = $this->input->post('created');
-			$item['updated'] = $this->get_time();
+			$item['updated'] = date_string();
 		}
 
 		return $result;
@@ -40,8 +42,10 @@ class Site_model extends MY_Model {
 		//echo $this->db->last_query();
 		$item = $this->db->get()->row_array();
 
-		$item['created'] = $this->get_time($item['created']);
-		$item['updated'] = $this->get_time($item['updated']);
+		if ($item) {
+			$item['created'] = date_string($item['created']);
+			$item['updated'] = date_string($item['updated']);
+		}
 
 		return $item;
 	}
@@ -63,7 +67,7 @@ class Site_model extends MY_Model {
 		$filter = $this->db->escape_str(trim(strtolower($filter)));
 
 		$this->db
-			->select('s.id, s.subtitle, s.title, s.name, s.url, s.language')
+			->select('s.id, s.subtitle, s.title, s.name, s.url, s.language, s.created, s.updated')
 			->from('site s')
 			->order_by('s.id', 'ASC')
 		;
@@ -92,10 +96,18 @@ class Site_model extends MY_Model {
 
 		$this->db->limit($per_page, $from_row);
 
+		$query = $this->db->query($this->db->get_compiled_select());
+
+		$list = array();
+
+		while ($row = $query->unbuffered_row('array')) {
+			$row['updated'] = date_string($row['updated']);
+			$row['created'] = date_string($row['created']);
+			$list[] = $row;
+		}
+
 		//echo $this->db->last_query();
 
-		$result = $this->db->get()->result_array();
-
-		return $result;
+		return $list;
 	}
 }
