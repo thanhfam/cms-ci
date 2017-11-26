@@ -45,7 +45,8 @@ if ( ! function_exists('get_date_format')) {
 		if (isset($CI->session)) {
 			$date_format = $CI->session->date_format;
 		}
-		else {
+		
+		if (!isset($date_format) || empty($date_format)) {
 			$date_format = config_item('date_format');
 		}
 
@@ -60,7 +61,8 @@ if ( ! function_exists('get_timezone')) {
 		if (isset($CI->session)) {
 			$timezone = $CI->session->timezone;
 		}
-		else {
+
+		if (!isset($timezone) || empty($timezone)) {
 			$timezone = config_item('timezone');
 		}
 

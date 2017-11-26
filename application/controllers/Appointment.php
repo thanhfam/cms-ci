@@ -4,7 +4,7 @@ class Appointment extends FP_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		$this->load->model(array('appointment_model', 'category_model', 'site_model'));
+		$this->load->model(array('menu_item_model', 'appointment_model', 'category_model', 'site_model'));
 		$this->load->helper('language');
 	}
 
@@ -16,6 +16,7 @@ class Appointment extends FP_Controller {
 
 		$site = $this->site_model->get(1);
 		$cate = $this->category_model->get(28);
+		$menu_tree = $this->menu_item_model->get_menu_tree(1);
 
 		$data = array(
 			'title' => implode(' - ', [$cate['title'], $site['title'], $site['subtitle']]),
@@ -25,6 +26,7 @@ class Appointment extends FP_Controller {
 			),
 			'site' => $site,
 			'cate' => $cate,
+			'menu_tree' => $menu_tree,
 			'lang' => $this->lang
 		);
 
@@ -39,7 +41,8 @@ class Appointment extends FP_Controller {
 						'address' => '',
 						'time' => '',
 						'content' => '',
-						'state_weight' => '0'
+						'state_weight' => '0',
+						'recapthcha_site_key' => config_item('recaptcha_site_key')
 					);
 				}
 			break;
@@ -53,8 +56,36 @@ class Appointment extends FP_Controller {
 					'address' => $this->input->post('address'),
 					'time' => $this->input->post('time'),
 					'content' => $this->input->post('content'),
-					'state_weight' => 0,
+					'state_weight' => 0
 				);
+
+				$captcha = $this->input->post('g-recaptcha-response');
+
+				if (!isset($captcha) || empty($captcha)) {
+					$this->set_message(array(
+						'type' => 3,
+						'content' => $this->lang->line('captcha_required')
+					));
+
+					break;
+				}
+				else {
+					$secret = config_item('recaptcha_secret_key');
+					$remoteip = $_SERVER['REMOTE_ADDR'];
+
+					$response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secret."&response=".$captcha."&remoteip=".$remoteip);
+
+					$responseKeys = json_decode($response,true);
+
+					if (intval($responseKeys["success"]) !== 1) {
+						$this->set_message(array(
+							'type' => 3,
+							'content' => $this->lang->line('spam_attempt')
+						));
+
+						break;
+					}
+				}
 
 				if ($this->form_validation->run('appointment_edit')) {
 					if (!$this->appointment_model->save($item)) {

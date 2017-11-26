@@ -13,5 +13,7 @@ $lang = array(
 	'send' => 'Send',
 	'update_success' => 'Sent successfully, we will touch you as soon as possible.',
 	'input_danger' => 'Input error, please check your information.',
-	'db_update_danger' => 'Sent not successfully, please try it again later.'
+	'db_update_danger' => 'Sent not successfully, please try it again later.',
+	'captcha_required' => 'Captcha required!',
+	'spam_attempt' => 'Spam attempt!!!'
 );

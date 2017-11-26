@@ -1,7 +1,7 @@
 <?php
 
 class View_model extends MY_Model {
-	protected $folder_view = FCPATH .'application\views\front\\';
+	protected $folder_view = FCPATH .'application/views/front/';
 
 	public function __construct() {
 		parent::__construct();
@@ -44,9 +44,11 @@ class View_model extends MY_Model {
 
 		$file_list = get_dir_file_info($this->folder_view, TRUE);
 
-		foreach ($file_list as &$file) {
-			$file['size'] = byte_format($file['size']);
-			$file['date'] = date_string($file['date']);
+		if (is_array($file_list) || is_object($file_list)) {
+			foreach ($file_list as &$file) {
+				$file['size'] = byte_format($file['size']);
+				$file['date'] = date_string($file['date']);
+			}
 		}
 
 		return $file_list;

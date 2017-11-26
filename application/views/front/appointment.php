@@ -70,7 +70,7 @@
 
 <div class="form-group row col-sm-12 col-md-6">
 	<div class="col-sm-9 offset-sm-3">
-		<div class="g-recaptcha" data-sitekey="6LcIjjkUAAAAAD73RIFklLVO2CZ0op5WdZRK-YTP"></div>
+		<div class="g-recaptcha" data-sitekey="<?=config_item('recaptcha_site_key')?>"></div>
 	</div>
 </div>
 

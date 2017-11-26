@@ -10,7 +10,9 @@ class User_model extends MY_Model {
 			return FALSE;
 		}
 
-		$updated = $item['updated'];
+		if (isset($item['updated'])) {
+			$updated = $item['updated'];
+		}
 
 		$item['updated'] = get_time();
 
@@ -35,7 +37,9 @@ class User_model extends MY_Model {
 				'content' => $this->lang->line('db_update_danger')
 			);
 
-			$item['updated'] = $updated;
+			if (isset($updated)) {
+				$item['updated'] = $updated;
+			}
 		}
 
 		return $message;

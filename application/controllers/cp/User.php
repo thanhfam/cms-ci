@@ -25,6 +25,8 @@ class User extends MY_Controller {
 
 		$message['show_link_back'] = TRUE;
 
+		$this->set_message($message);
+
 		$data = array(
 			'title' => $this->lang->line('reset_password'),
 			'link_back' => base_url(F_CP .'user/list')

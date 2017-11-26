@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="vi">
+<html lang="<?=$site['language']?>">
 <head>
 	<meta charset="utf-8">
 	<title><?=$title?></title>

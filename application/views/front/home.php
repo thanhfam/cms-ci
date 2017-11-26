@@ -25,7 +25,7 @@
 		<?php foreach ($list_service as $row): ?>
 		<div class="col-sm-12 col-md-6 col-lg-3 bg-service">
 			<div class="card">
-				<i class="icon-support"></i>
+				<i class="fa <?=$row['subtitle']?>"></i>
 				<h5 class="card-title"><a href="<?=$row['uri']?>"><?=$row['title']?></a></h5>
 				<p class="card-text"><?=$row['lead']?></p>
 			</div>
@@ -158,3 +158,60 @@
 	</div>
 </div>
 <!-- Partner - END -->
+
+<script>
+$(document).ready(function() {
+
+	$('#carousel-top').slick({
+		infinite: true,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		adaptiveHeight: true,
+		autoplay: true,
+		autoplaySpeed: 8000,
+		fade: true,
+		cssEase: 'linear'
+	});
+
+	$('#carousel-hospital').slick({
+		infinite: true,
+		slidesToShow: 4,
+		slidesToScroll: 4,
+		adaptiveHeight: true,
+		responsive: [{
+			breakpoint: 768,
+			settings: {
+				slidesToShow: 2,
+				slidesToScroll: 2
+			}
+		}, {
+			breakpoint: 576,
+			settings: {
+				slidesToShow: 1,
+				slidesToScroll: 1
+			}
+		}]
+	});
+
+	$('#carousel-partner').slick({
+		infinite: true,
+		slidesToShow: 6,
+		slidesToScroll: 1,
+		adaptiveHeight: true,
+		autoplay: true,
+		autoplaySpeed: 2000,
+		arrows: false,
+		responsive: [{
+			breakpoint: 992,
+			settings: {
+				slidesToShow: 4
+			}
+		}, {
+			breakpoint: 576,
+			settings: {
+				slidesToShow: 2
+			}
+		}]
+	});
+});
+</script>

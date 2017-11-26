@@ -4,11 +4,11 @@ if ($message_show_type == 0):
 <div class="<?=$message['cls']?> uk-margin-small" uk-alert>
 	<a class="uk-alert-close" uk-close></a>
 	<?php
-	if (isset($message['title'])) {
+	if (isset($message['title'])):
 	?>
 	<h3><?=$message['title'];?></h3>
 	<?php
-	}
+	endif;
 	?>
 	<p><?=$message['content'];?></p>
 </div>
