@@ -97,6 +97,7 @@ $lang = array(
 	'upload' => 'Tải lên',
 	'list_of' => 'Danh sách ',
 	'list' => 'Danh sách',
+	'export_to_excel' => 'Xuất ra Excel',
 
 	'created_at' => 'Tạo: ',
 	'updated_at' => 'Cập nhật: ',

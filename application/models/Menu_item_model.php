@@ -104,8 +104,10 @@ class Menu_item_model extends MY_Model {
 		;
 
 		if ($filter != '') {
-			$this->db->like('LOWER(mt.id)', $filter)
+			$this->db->group_start()
+				->like('LOWER(mt.id)', $filter)
 				->or_like('LOWER(mt.title)', $filter)
+				->group_end()
 			;
 		}
 

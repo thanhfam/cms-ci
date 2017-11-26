@@ -1,7 +1,7 @@
 <?php
 
 class View_model extends MY_Model {
-	protected $folder_view = FCPATH .'application/views/front/';
+	protected $folder_view = APPPATH .'views/front/';
 
 	public function __construct() {
 		parent::__construct();

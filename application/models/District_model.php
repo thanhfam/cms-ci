@@ -72,11 +72,13 @@ class District_model extends MY_Model {
 			->from('district d')
 			->join('city c', 'd.city_id = c.id')
 			->order_by('d.id', 'ASC')
-			->like('LOWER(d.id)', $filter)
+			->group_start()
+				->like('LOWER(d.id)', $filter)
 				->or_like('LOWER(d.title)', $filter)
 				->or_like('LOWER(d.type)', $filter)
 				->or_like('LOWER(c.id)', $filter)
 				->or_like('LOWER(c.title)', $filter)
+			->group_end()
 		;
 
 		$total_row = $this->db->count_all_results('', FALSE);

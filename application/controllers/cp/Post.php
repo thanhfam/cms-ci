@@ -110,7 +110,7 @@ class Post extends MY_Controller {
 	}
 
 	public function list_all() {
-		$this->load->model('category_model');
+		$this->load->model(array('category_model', 'state_model'));
 		$this->load->library('pagination');
 
 		$filter = array(
@@ -130,6 +130,7 @@ class Post extends MY_Controller {
 			'title' => $this->lang->line('list_of') . $this->lang->line('post'),
 			'filter' => $filter,
 			'list_category' => $this->category_model->list_simple_for_post(TRUE),
+			'list_state' => $this->state_model->list_simple('content', TRUE),
 			'list' => $this->post_model->list_all($page, $filter, $pagy_config),
 			'pagy' => $this->pagination,
 			'link_create' => base_url(F_CP .'post/edit')

@@ -118,11 +118,16 @@ class Category extends MY_Controller {
 	}
 
 	public function list_all() {
-		$this->load->model('category_model');
+		$this->load->model('state_model');
 		$this->load->helper(array('language', 'url'));
 		$this->load->library('pagination');
 
-		$filter = $this->input->get('filter');
+		$filter = array(
+			'keyword' => $this->input->get('keyword', TRUE),
+			'cate_id' => $this->input->get('cate_id'),
+			'state_weight' => $this->input->get('state_weight')
+		);
+
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
@@ -133,6 +138,7 @@ class Category extends MY_Controller {
 			'lang' => $this->lang,
 			'title' => $this->lang->line('list_of') . $this->lang->line('category'),
 			'filter' => $filter,
+			'list_state' => $this->state_model->list_simple('content', TRUE),
 			'list' => $this->category_model->list_all($page, $filter, $pagy_config),
 			'pagy' => $this->pagination,
 			'link_create' => base_url('cp/category/edit')
@@ -141,7 +147,6 @@ class Category extends MY_Controller {
 		$this->pagination->initialize($pagy_config);
 
 		$this->set_body(array(
-			'inc/list_header',
 			'content/category_list',
 			'inc/list_footer'
 		));

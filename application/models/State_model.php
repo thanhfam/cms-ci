@@ -47,7 +47,7 @@ class state_model extends MY_Model {
 		return $item;
 	}
 
-	public function list_simple($type = 'content') {
+	public function list_simple($type = 'content', $for_list = FALSE) {
 		$this->load->helper(array('language'));
 
 		$this->db
@@ -58,6 +58,14 @@ class state_model extends MY_Model {
 		;
 
 		$result = $this->db->get('state')->result_array();
+
+		if ($for_list) {
+			array_unshift($result, array(
+				'id' => '',
+				'name' => '-',
+				'weight' => '',
+			));
+		}
 
 		return $result;
 	}
@@ -75,9 +83,12 @@ class state_model extends MY_Model {
 		;
 
 		if ($filter != '') {
-			$this->db->like('LOWER(s.id)', $filter)
+			$this->db->group_start()
+				->like('LOWER(s.id)', $filter)
 				->or_like('LOWER(s.name)', $filter)
 				->or_like('LOWER(s.weight)', $filter)
+				->or_like('LOWER(s.type)', $filter)
+				->group_end()
 			;
 		}
 

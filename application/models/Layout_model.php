@@ -73,9 +73,10 @@ class Layout_model extends MY_Model {
 		;
 
 		if ($filter != '') {
-			$this->db
+			$this->db->group_start()
 				->like('LOWER(s.id)', $filter)
 				->or_like('LOWER(s.name)', $filter)
+				->group_end()
 			;
 		}
 

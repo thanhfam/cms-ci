@@ -160,11 +160,13 @@ class Page_model extends MY_Model {
 		;
 
 		if ($filter != '') {
-			$this->db->like('LOWER(c1.id)', $filter)
+			$this->db->group_start()
+				->like('LOWER(c1.id)', $filter)
 				->or_like('LOWER(c1.subtitle)', $filter)
 				->or_like('LOWER(c1.title)', $filter)
 				->or_like('LOWER(c1.name)', $filter)
 				->or_like('LOWER(c2.title)', $filter)
+				->group_end()
 			;
 		}
 

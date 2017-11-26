@@ -110,7 +110,7 @@ class Category_model extends MY_Model {
 		return $item;
 	}
 
-	public function list_simple_for_post($for_post_list = FALSE) {
+	public function list_simple_for_post($for_list = FALSE) {
 		$this->db
 			->select('id, concat(title, " (", id, ")") title, name')
 			->where('state_weight', S_ACTIVATED)
@@ -120,7 +120,7 @@ class Category_model extends MY_Model {
 
 		$result = $this->db->get('category')->result_array();
 
-		if ($for_post_list) {
+		if ($for_list) {
 			array_unshift($result, array(
 				'id' => '',
 				'title' => '-'
@@ -157,10 +157,8 @@ class Category_model extends MY_Model {
 		return $result;
 	}
 
-	public function list_all($page = 1, $filter = '', &$pagy_config) {
+	public function list_all($page = 1, $filter = array(), &$pagy_config) {
 		$this->load->library('pagination');
-
-		$filter = strtolower($filter);
 
 		$this->db
 			->select('c1.id, c1.subtitle, c1.title, c1.name, p.uri, si.id site_id, si.title site_title, si.url site_url, st.name state_name, st.weight state_weight, c2.id parent_id, c2.title parent_title, c1.created, c1.updated, c1.creator_id, u1.name creator_name, u1.username creator_username, c1.updater_id, u2.name updater_name, u2.username updater_username')
@@ -176,12 +174,19 @@ class Category_model extends MY_Model {
 			->order_by('c1.id', 'DESC')
 		;
 
-		if ($filter != '') {
-			$this->db->like('LOWER(c1.id)', $filter)
-				->or_like('LOWER(c1.subtitle)', $filter)
-				->or_like('LOWER(c1.title)', $filter)
-				->or_like('LOWER(c1.name)', $filter)
-				->or_like('LOWER(c2.title)', $filter)
+		if (isset($filter['state_weight']) && ($filter['state_weight'] != '')) {
+			$this->db->where('c1.state_weight', $filter['state_weight']);
+		}
+
+		if (isset($filter['keyword']) && ($filter['keyword'] != '')) {
+			$keyword = $this->to_utf8($filter['keyword']);
+
+			$this->db->group_start()
+				->like('LOWER(c1.id)', $keyword)
+				->or_like('LOWER(c1.name)', $keyword)
+				->or_like('LOWER(c1.title)', $keyword)
+				->or_like('LOWER(c1.subtitle)', $keyword)
+				->group_end()
 			;
 		}
 

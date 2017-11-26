@@ -212,6 +212,16 @@ class User_model extends MY_Model {
 			->order_by('u.username', 'ASC')
 		;
 
+		if ($filter != '') {
+			$this->db->group_start()
+				->like('LOWER(u.id)', $filter)
+				->or_like('LOWER(u.username)', $filter)
+				->or_like('LOWER(u.email)', $filter)
+				->or_like('LOWER(ug.title)', $filter)
+				->group_end()
+			;
+		}
+
 		$total_row = $this->db->count_all_results('', FALSE);
 		$pagy_config['total_rows'] = $total_row;
 

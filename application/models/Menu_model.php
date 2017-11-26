@@ -81,8 +81,10 @@ class Menu_model extends MY_Model {
 		;
 
 		if ($filter != '') {
-			$this->db->like('LOWER(m.id)', $filter)
+			$this->db->group_start()
+				->like('LOWER(m.id)', $filter)
 				->or_like('LOWER(m.name)', $filter)
+				->group_end()
 			;
 		}
 

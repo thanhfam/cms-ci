@@ -96,6 +96,7 @@ $lang = array(
 	'select' => 'Upload',
 	'list_of' => 'List of ',
 	'list' => 'List',
+	'export_to_excel' => 'Export to Excel',
 
 	'created_at' => 'Created:',
 	'updated_at' => 'Updated:',

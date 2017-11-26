@@ -70,11 +70,13 @@ class Nation_model extends MY_Model {
 			->from('nation n')
 			->join('continent c', 'n.continent_id = c.id')
 			->order_by('n.id', 'ASC')
-			->like('LOWER(n.id)', $filter)
-			->or_like('LOWER(n.title)', $filter)
-			->or_like('LOWER(n.type)', $filter)
-			->or_like('LOWER(c.id)', $filter)
-			->or_like('LOWER(c.title)', $filter)
+			->group_start()
+				->like('LOWER(n.id)', $filter)
+				->or_like('LOWER(n.title)', $filter)
+				->or_like('LOWER(n.type)', $filter)
+				->or_like('LOWER(c.id)', $filter)
+				->or_like('LOWER(c.title)', $filter)
+			->group_end()
 		;
 
 		$total_row = $this->db->count_all_results('', FALSE);

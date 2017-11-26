@@ -76,8 +76,10 @@ class Right_model extends MY_Model {
 		;
 
 		if ($filter != '') {
-			$this->db->like('LOWER(r.id)', $filter)
+			$this->db->group_start()
+				->like('LOWER(r.id)', $filter)
 				->or_like('LOWER(r.name)', $filter)
+				->group_end()
 			;
 		}
 

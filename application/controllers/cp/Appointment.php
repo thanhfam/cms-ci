@@ -99,10 +99,15 @@ class Appointment extends MY_Controller {
 	}
 
 	public function list_all() {
+		$this->load->model(array('state_model'));
 		$this->load->helper(array('language', 'url'));
 		$this->load->library('pagination');
 
-		$filter = $this->input->get('filter');
+		$filter = array(
+			'keyword' => $this->input->get('keyword', TRUE),
+			'state_weight' => $this->input->get('state_weight')
+		);
+
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
@@ -113,20 +118,43 @@ class Appointment extends MY_Controller {
 			'lang' => $this->lang,
 			'title' => $this->lang->line('list_of') . $this->lang->line('appointment'),
 			'filter' => $filter,
-			'list' => $this->appointment_model->list_all($page, $filter, $pagy_config),
+			'list_state' => $this->state_model->list_simple('appointment', TRUE),
+			'list' => $this->appointment_model->list_all($filter, $page, $pagy_config),
 			'pagy' => $this->pagination,
+			'link_excel' => base_url(F_CP .'appointment/excel'),
 			'link_create' => base_url(F_CP .'appointment/edit')
 		);
 
 		$this->pagination->initialize($pagy_config);
 
 		$this->set_body(array(
-			'inc/list_header',
 			'client/appointment_list',
 			'inc/list_footer'
 		));
 
 		$this->render($data);
+	}
+
+	public function excel() {
+		$filter = array(
+			'keyword' => $this->input->get('keyword', TRUE),
+			'state_weight' => $this->input->get('state_weight')
+		);
+
+		$list = $this->appointment_model->list_all($filter);
+
+		include APPPATH . 'third_party/PHPExcel.php';
+		$excel = new PHPExcel();
+
+		$data = array(
+			'lang' => $this->lang,
+			'title' => $this->lang->line('list_of') . $this->lang->line('appointment'),
+			'filter' => $filter,
+			'list' => $list,
+			'excel' => $excel
+		);
+
+		$this->load->view(F_CP .'client/appointment_excel', $data);
 	}
 
 	public function list_select() {
@@ -155,6 +183,10 @@ class Appointment extends MY_Controller {
 			case 'list':
 				$this->auth_model->require_right('APPOINTMENT_LIST');
 				$method = 'list_all';
+			break;
+
+			case 'excel':
+				$this->auth_model->require_right('APPOINTMENT_LIST');
 			break;
 
 			case 'edit':

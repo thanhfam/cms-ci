@@ -131,7 +131,7 @@ class Post_model extends MY_Model {
 		return $result;
 	}
 
-	public function list_all($page = 1, $filter = '', &$pagy_config) {
+	public function list_all($page = 1, $filter = array(), &$pagy_config) {
 		$this->load->library('pagination');
 
 		$this->db
@@ -152,12 +152,18 @@ class Post_model extends MY_Model {
 			$this->db->where('p.cate_id', $filter['cate_id']);
 		}
 
+		if (isset($filter['state_weight']) && ($filter['state_weight'] != '')) {
+			$this->db->where('p.state_weight', $filter['state_weight']);
+		}
+
 		if (isset($filter['keyword']) && ($filter['keyword'] != '')) {
 			$keyword = $this->to_utf8($filter['keyword']);
 
-			$this->db->like('LOWER(p.id)', $keyword)
+			$this->db->group_start()
+				->like('LOWER(p.id)', $keyword)
 				->or_like('LOWER(p.subtitle)', $keyword)
 				->or_like('LOWER(p.title)', $keyword)
+				->group_end()
 			;
 		}
 
@@ -247,11 +253,13 @@ class Post_model extends MY_Model {
 		;
 
 		if ($filter != '') {
-			$this->db->like('LOWER(p.id)', $filter)
+			$this->db->group_start()
+				->like('LOWER(p.id)', $filter)
 				->or_like('LOWER(p.subtitle)', $filter)
 				->or_like('LOWER(p.title)', $filter)
 				->or_like('LOWER(p.name)', $filter)
 				->or_like('LOWER(p.title)', $filter)
+				->group_end()
 			;
 		}
 

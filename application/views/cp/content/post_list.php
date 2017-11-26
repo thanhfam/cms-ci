@@ -13,6 +13,14 @@
 				<option value="<?=$category['id']?>" <?=($category['id'] == $filter['cate_id']) ? 'selected' : ''?>><?=$category['title']?></option>
 				<?php endforeach; ?>
 			</select>
+
+			<select class="uk-select uk-form-small uk-width-small" id="state-selector" name="state_weight">
+				<option value="" disabled><?=$lang->line('select_one') .' ' .$lang->line('state')?></option>
+				<?php foreach ($list_state as $state): ?>
+				<option value="<?=$state['weight']?>" <?=($state['weight'] == $filter['state_weight']) ? 'selected' : ''?>><?=$lang->line($state['name']) ? $lang->line($state['name']) .' (' .$state['weight'] .')': $state['name']?></option>
+				<?php endforeach; ?>
+			</select>
+
 			<button class="uk-button-small uk-button uk-button-primary" type="submit"><?=$lang->line('filter')?></button>
 			<a class="uk-button uk-button-small uk-button-secondary" href="<?=current_url()?>"><?=$lang->line('unfilter')?></a>
 			</form>

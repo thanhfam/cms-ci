@@ -71,11 +71,13 @@ class City_model extends MY_Model {
 			->from('city c')
 			->join('nation n', 'c.nation_id = n.id')
 			->order_by('c.id', 'ASC')
-			->like('LOWER(c.id)', $filter)
-			->or_like('LOWER(c.title)', $filter)
-			->or_like('LOWER(c.type)', $filter)
-			->or_like('LOWER(n.id)', $filter)
-			->or_like('LOWER(n.title)', $filter)
+			->group_start()
+				->like('LOWER(c.id)', $filter)
+				->or_like('LOWER(c.title)', $filter)
+				->or_like('LOWER(c.type)', $filter)
+				->or_like('LOWER(n.id)', $filter)
+				->or_like('LOWER(n.title)', $filter)
+			->group_end()
 		;
 
 		$total_row = $this->db->count_all_results('', FALSE);
