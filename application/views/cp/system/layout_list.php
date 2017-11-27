@@ -17,7 +17,7 @@ foreach ($list as $row):
 <tr>
 	<td class="uk-text-small"><?=$row['id']?></td>
 	<td class="uk-text-small"><a href="<?=base_url('cp/layout/edit/' . $row['id']);?>"><?=$row['name']?></a></td>
-	<td class="uk-text-small"><?=$row['site_title']?> (<?=$row['site_id']?>)</td>
+	<td class="uk-text-small"><?=$row['site_name']?> (<?=$row['site_id']?>)</td>
 	<td class="uk-text-small"><?=$row['updated']?></td>
 	<td class="command">
 		<ul class="uk-iconnav">

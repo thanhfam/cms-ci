@@ -8,7 +8,9 @@ class Appointment_model extends MY_Model {
 	public function save(&$item) {
 		if (empty($item['id'])) {
 			$item['created'] = $item['updated'] = get_time();
-			$item['creator_id'] = $item['updater_id'] = $this->session->user['id'];
+			if (isset($this->session)) {
+				$item['creator_id'] = $item['updater_id'] = $this->session->user['id'];
+			}
 
 			$result = $this->db->insert('appointment', $item);
 
@@ -17,7 +19,9 @@ class Appointment_model extends MY_Model {
 		}
 		else {
 			$item['updated'] = get_time();
-			$item['updater_id'] = $this->session->user['id'];
+			if (isset($this->session)) {
+				$item['updater_id'] = $this->session->user['id'];
+			}
 
 			$this->db->where('id', $item['id']);
 			$result = $this->db->update('appointment', $item);

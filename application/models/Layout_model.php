@@ -66,7 +66,7 @@ class Layout_model extends MY_Model {
 		$filter = $this->db->escape_str(trim(strtolower($filter)));
 
 		$this->db
-			->select('l.id, l.name, l.site_id, s.title site_title, l.created, l.updated')
+			->select('l.id, l.name, l.site_id, s.name site_name, s.title site_title, l.created, l.updated')
 			->from('layout l')
 			->join('site s', 'l.site_id = s.id')
 			->order_by('l.name', 'ASC')

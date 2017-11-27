@@ -31,9 +31,9 @@ $config['recaptcha_secret_key'] = '6LcIjjkUAAAAAMhXvuLtS-EjSBPvqDxmIufwqgi_';
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = "";
+//$config['base_url'] = "";
 
-//$config['base_url'] = "//".$_SERVER['HTTP_HOST'];
+$config['base_url'] = "//".$_SERVER['HTTP_HOST'];
 
 //$config['base_url'] = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/';
 
