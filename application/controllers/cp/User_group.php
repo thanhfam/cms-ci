@@ -8,6 +8,90 @@ class User_group extends MY_Controller {
 		$this->load->helper('language');
 	}
 
+	public function assign($id = '') {
+		$this->load->model('right_model');
+		$this->load->helper(array('form', 'url'));
+
+		$submit = $this->input->post('submit');
+		$filter = $this->input->get('filter');
+
+		$other_right_filter = array(
+			'keyword' => $filter,
+			'not_user_group_id' => $id
+		);
+
+		$current_right_filter = array(
+			'keyword' => $filter,
+			'user_group_id' => $id
+		);
+
+		// for adding
+		$other_right = $this->input->post('other_right');
+
+		// for removing
+		$current_right = $this->input->post('current_right');
+
+		switch ($submit) {
+			case 'add':
+				if (count($other_right) <= 0) {
+					break;
+				}
+
+				if ($this->user_group_model->assign($id, $other_right)) {
+					$this->set_message(array(
+						'type' => 1,
+						'content' => $this->lang->line('update_success')
+					));
+				}
+				else {
+					$this->set_message(array(
+						'type' => 3,
+						'content' => $this->lang->line('db_update_danger')
+					));
+				}
+			break;
+
+			case 'remove':
+				if (count($current_right) <= 0) {
+					break;
+				}
+
+				if ($this->user_group_model->unassign($id, $current_right)) {
+					$this->set_message(array(
+						'type' => 1,
+						'content' => $this->lang->line('update_success')
+					));
+				}
+				else {
+					$this->set_message(array(
+						'type' => 3,
+						'content' => $this->lang->line('db_update_danger')
+					));
+				}
+			break;
+		}
+
+		$data = array(
+			'lang' => $this->lang,
+			'title' => $this->lang->line('right_assign'),
+			'link_back' => base_url(F_CP .'user_group/list'),
+			'filter' => $filter,
+			'other_right_filter' => $other_right_filter,
+			'current_right_filter' => $current_right_filter,
+			'list_other_right' => $this->right_model->list_all($other_right_filter),
+			'list_current_right' => $this->right_model->list_all($current_right_filter),
+			'other_right' => $other_right,
+			'current_right' => $current_right
+		);
+
+		$this->set_body(array(
+			'inc/list_header',
+			'system/user_group_assign'
+		));
+
+		$this->render($data);
+	}
+
 	public function edit($id = '') {
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
@@ -143,6 +227,7 @@ class User_group extends MY_Controller {
 			break;
 
 			case 'edit':
+			case 'assign':
 				$this->auth_model->require_right('USER_GROUP_EDIT');
 			break;
 

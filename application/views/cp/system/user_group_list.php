@@ -23,6 +23,7 @@ foreach ($list as $row):
 	<td class="uk-text-small"><?=$row['updated']?></td>
 	<td class="command">
 		<ul class="uk-iconnav">
+			<li><a href="<?=base_url(F_CP .'user_group/assign/' . $row['id'])?>" uk-icon="icon: list" title="<?=$lang->line('list_of') . $this->lang->line('right')?>"></a></li>
 			<li><a href="<?=base_url(F_CP .'user_group/edit/' . $row['id'])?>" uk-icon="icon: file-edit" title="<?=$lang->line('edit')?>"></a></li>
 		</ul>
 	</td>

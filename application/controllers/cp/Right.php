@@ -87,7 +87,10 @@ class Right extends MY_Controller {
 		$this->load->helper(array('language', 'url'));
 		$this->load->library('pagination');
 
-		$filter = $this->input->get('filter');
+		$filter = array(
+			'keyword' => $this->input->get('filter', TRUE)
+		);
+
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
@@ -97,8 +100,8 @@ class Right extends MY_Controller {
 		$data = array(
 			'lang' => $this->lang,
 			'title' => $this->lang->line('list_of') . $this->lang->line('right'),
-			'filter' => $filter,
-			'list' => $this->right_model->list_all($page, $filter, $pagy_config),
+			'filter' => $filter['keyword'],
+			'list' => $this->right_model->list_all($filter, $page, $pagy_config),
 			'pagy' => $this->pagination,
 			'link_create' => base_url(F_CP .'right/edit')
 		);

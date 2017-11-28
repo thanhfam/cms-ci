@@ -63,6 +63,41 @@ class User_group_model extends MY_Model {
 		return $result;
 	}
 
+	public function assign($id = '', $rights = array()) {
+		if (!is_numeric($id) || (count($rights) <= 0)) {
+			return;
+		}
+
+		$id = intval($id);
+
+		$batch = array();
+
+		foreach ($rights as $key => $value) {
+			$batch[] = array(
+				'user_group_id' => $id,
+				'right_id' => $key
+			);
+		}
+
+		return $this->db->insert_batch('user_group_right', $batch);
+	}
+
+	public function unassign($id = '', $rights = array()) {
+		if (!is_numeric($id) || (count($rights) <= 0)) {
+			return;
+		}
+
+		$id = intval($id);
+
+		$batch = array();
+
+		foreach ($rights as $key => $value) {
+			$this->db->or_where('right_id', $key);
+		}
+
+		return $this->db->delete('user_group_right');
+	}
+
 	public function list_all($page = 1, $filter = '', &$pagy_config) {
 		//$this->load->database();
 		$this->load->library('pagination');

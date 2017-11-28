@@ -13,7 +13,10 @@
 	</div>
 	<div class="uk-navbar-right">
 		<div class="uk-navbar-item">
-		<?php if ($link_create): ?>
+		<?php if (isset($link_back)): ?>
+			<a class="uk-button-small uk-button uk-button-primary" href="<?=$link_back?>"><?=$lang->line('back')?></a>
+		<?php endif; ?>
+		<?php if (isset($link_create)): ?>
 			<a class="uk-button-small uk-button uk-button-primary" href="<?=$link_create?>"><?=$lang->line('create')?></a>
 		<?php endif; ?>
 		</div>
