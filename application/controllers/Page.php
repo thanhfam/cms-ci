@@ -61,6 +61,7 @@ class Page extends FP_Controller {
 
 		if ($cate['uri'] == 'vi' || $cate['uri'] == 'en') {
 			$data = array_merge($data, array(
+				'cate' => $cate,
 				'list_top' => $this->post_model->get_top_activated(11, 6),
 				'list_service' => $this->post_model->get_top_activated(1, 4),
 				'list_hospital' => $this->post_model->get_top_activated(array(4, 5, 6, 7, 8, 9), 8),
@@ -83,7 +84,7 @@ class Page extends FP_Controller {
 				$list_post = $this->post_model->get_activated($cate['id'], $page, $filter, $pagy_config, TRUE);
 			}
 			else {
-				$list_post = $this->post_model->get_activated($cate['id'], $page, $filter, $pagy_config, TRUE);
+				$list_post = $this->post_model->get_activated($cate['id'], $page, $filter, $pagy_config, FALSE);
 			}
 
 			$data = array_merge($data, array(

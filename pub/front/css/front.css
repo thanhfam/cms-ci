@@ -230,6 +230,18 @@ ul.social-links li.linkedin a {
 	color: #333;
 }
 
+.navbar-light .navbar-nav .active > .nav-link,
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-link.show,
+.navbar-light .navbar-nav .show > .nav-link {
+	color: #0087be;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+	background-color: #0087be;
+}
+
 .navbar {
 	padding-left: 0;
 	padding-right: 0;

@@ -11,34 +11,56 @@
 				<div class="collapse navbar-collapse" id="header-nav">
 					<ul class="navbar-nav mr-auto">
 						<?php
+						if (isset($cate)):
+							$uri = $cate['uri'];
+						else :
+							$uri = $post['uri'];
+						endif;
+
+						if ($uri == 'vi'):
+							$uri = '/';
+						else:
+							$uri = '/' .$uri .'/';
+						endif;
+
 						if (isset($menu_tree)):
 						foreach ($menu_tree[''] as $item):
 						?>
 
-						<?php
-							if (isset($menu_tree[$item['title']])):
-						?>
+						<?php if (isset($menu_tree[$item['title']])): ?>
+
+						<?php if ($uri == $item['url']): ?>
+						<li class="nav-item dropdown active">
+						<?php else: ?>
 						<li class="nav-item dropdown">
+						<?php endif; ?>
+						
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><?=$item['title']?></a>
 						<div class="dropdown-menu">
 							<?php
-							foreach ($menu_tree[$item['title']] as $item):
+								foreach ($menu_tree[$item['title']] as $item):
+								if ($uri == $item['url']):
 							?>
-							<a class="dropdown-item" href="<?=$item['url']?>"><?=$item['title']?></a>
+								<a class="dropdown-item active" href="<?=$item['url']?>"><?=$item['title']?></a>
+							<?php else: ?>
+								<a class="dropdown-item" href="<?=$item['url']?>"><?=$item['title']?></a>
 							<?php
-							endforeach;
+								endif;
+								endforeach;
 							?>
 						</div>
 						</li>
-						<?php
-							else:
-						?>
+						<?php else: ?>
+
+						<?php if ($uri == $item['url']): ?>
+						<li class="nav-item active">
+						<?php else: ?>
 						<li class="nav-item">
+						<?php endif; ?>
+
 						<a class="nav-link" href="<?=$item['url']?>"><?=$item['title']?></a>
 						</li>
-						<?php
-							endif;
-						?>
+						<?php endif; ?>
 
 						<?php
 						endforeach;
