@@ -77,10 +77,13 @@ if ( ! function_exists('get_time')) {
 }
 
 if ( ! function_exists('date_string')) {
-	function date_string($ts = '') {
+	function date_string($ts = '', $df = '') {
 		$CI = & get_instance();
 
-		$df = get_date_format();
+		if ($df == '') {
+			$df = get_date_format();
+		}
+
 		$tz = get_timezone();
 
 		if ($ts == '') {

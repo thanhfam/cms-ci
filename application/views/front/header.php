@@ -22,11 +22,13 @@
 			<div class="container">
 				<div class="row align-items-center no-gutters">
 					<div id="logo" class="col-auto mr-auto">
-						<?php if ($site['avatar_filename']): ?>
-						<a href="/"><img src="<?=base_url(F_FILE .$site['avatar_filename'])?>" class="header-logo img-fluid" /></a>
+						<a href="/">
+						<?php if ($site['avatar_url'] && $site['avatar_type'] == MT_IMAGE): ?>
+							<img src="<?=$site['avatar_url']?>" class="header-logo img-fluid" />
 						<?php else: ?>
-						<a href="/"><img src="<?=base_url(F_PUB .F_FRONT .'img/logo-vi.png')?>" class="header-logo img-fluid" /></a>
+							<img src="<?=base_url(F_PUB .F_FRONT .'img/logo-vi.png')?>" class="header-logo img-fluid" />
 						<?php endif; ?>
+						</a>
 					</div>
 
 					<div class="logo-bar-item item-address-info col-auto d-none d-xl-block">

@@ -5,3 +5,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond $1 !^(index\.php|pub|robots\.txt)
 RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>
+
+#php_value post_max_size 524288000 # 500MB
+#php_value upload_max_filesize 524288000 # 500MB
+#php_value max_execution_time 300 # 5 minutes

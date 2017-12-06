@@ -18,7 +18,7 @@ class Category extends MY_Controller {
 		$data = array(
 			'lang' => $this->lang,
 			'title' => (empty($id) ? $this->lang->line('create') : $this->lang->line('edit')) . ' ' . $this->lang->line('category'),
-			'link_back' => base_url('cp/category/list')
+			'link_back' => base_url(F_CP .'category/list')
 		);
 
 		switch ($submit) {
@@ -131,7 +131,7 @@ class Category extends MY_Controller {
 		$page = $this->input->get('page');
 
 		$pagy_config = array(
-			'base_url' => base_url('cp/category/list')
+			'base_url' => base_url(F_CP .'category/list')
 		);
 
 		$data = array(
@@ -141,7 +141,7 @@ class Category extends MY_Controller {
 			'list_state' => $this->state_model->list_simple('content', TRUE),
 			'list' => $this->category_model->list_all($page, $filter, $pagy_config),
 			'pagy' => $this->pagination,
-			'link_create' => base_url('cp/category/edit')
+			'link_create' => base_url(F_CP .'category/edit')
 		);
 
 		$this->pagination->initialize($pagy_config);

@@ -9,7 +9,7 @@ $CI =& get_instance();
 			CMS
 		</a>
 		<ul class="uk-navbar-nav">
-			<?php if ($CI->has_right(array('CATE_LIST', 'POST_LIST'))): ?>
+			<?php if ($CI->has_right(array('CATE_LIST', 'POST_LIST', 'MEDIA_LIST'))): ?>
 			<li>
 				
 				<a href="#">
@@ -22,6 +22,9 @@ $CI =& get_instance();
 						<?php endif; ?>
 						<?php if ($CI->has_right('POST_LIST')): ?>
 						<li><a href="<?=base_url(F_CP .'post')?>"><?=$lang->line('post')?></a></li>
+						<?php endif; ?>
+						<?php if ($CI->has_right('MEDIA_LIST')): ?>
+						<li><a href="<?=base_url(F_CP .'media')?>"><?=$lang->line('media')?></a></li>
 						<?php endif; ?>
 					</ul>
 				</div>

@@ -1,6 +1,7 @@
 <?php
 
 $lang = array(
+	'all' => 'Tất cả',
 	'id' => 'ID',
 	'title' => 'Tiêu đề',
 	'subtitle' => 'Tiêu đề phụ',
@@ -16,9 +17,12 @@ $lang = array(
 	'content' => 'Nội dung',
 	'tags' => 'Tag',
 	'avatar' => 'Hình đại diện',
+	'media' => 'Media',
 	'image' => 'Hình ảnh',
 	'video' => 'Video',
 	'audio' => 'Audio',
+	'flash' => 'Flash',
+	'attach' => 'Đính kèm',
 	'url' => 'URL',
 	'target' => 'Đích',
 	'position' => 'Vị trí',
@@ -84,6 +88,8 @@ $lang = array(
 	'select_video' => 'Chọn video',
 	'select_file' => 'Chọn tập tin',
 
+	'selected_items' => 'Đã chọn',
+
 	'command' => 'Lệnh',
 	'edit' => 'Sửa',
 	'change' => 'Đổi',
@@ -97,6 +103,7 @@ $lang = array(
 	'back' => 'Quay lại',
 	'select' => 'Chọn',
 	'upload' => 'Tải lên',
+	'download' => 'Tải xuống',
 	'list_of' => 'Danh sách ',
 	'list' => 'Danh sách',
 	'export_to_excel' => 'Xuất ra Excel',
@@ -146,6 +153,15 @@ $lang = array(
 	'inactivated' => 'Vô hiệu',
 	'activated' => 'Hoạt động',
 	'removed' => 'Bị xoá',
+
+	'drop_file_to_upload' => 'Thả các tập tin vào đây để tải lên hoặc',
+	'select_file_to_upload' => 'Chọn tập tin',
+	'invalid_mime' => 'Chỉ cho phép các tập tin: %s',
+	'invalid_name' => 'Tên tập tin không hợp lệ: %s',
+	'upload_successfully' => 'Tải lên thành công!!!',
+	'upload_failed' => 'Tải lên KHÔNG thành công!!!',
+	'successfully' => 'Thành công',
+	'failed' => 'Thất bại',
 
 	'not_granted' => 'Không có quyền',
 	'permission_not_grannted' => 'Bạn không có quyền truy cập chức năng này!',

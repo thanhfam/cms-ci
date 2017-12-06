@@ -41,16 +41,9 @@ endif;
 <div class="uk-margin-small uk-width-xlarge">
 	<label class="uk-form-label" for="avatar"><?=$lang->line('avatar')?></label>
 	<div class="uk-form-controls">
-		<div id="avatar-container" style="display: none;">
-			<img class="uk-height-small" id="avatar-img" src="<?=(isset($item) && $item['avatar_filename'] != '') ? base_url('/file/' .$item['avatar_filename']) : ''?>" />
-			<button class="uk-button uk-button-small uk-button-primary" type="button" data-type="post" onclick="changeAvatar(this);"><?=$lang->line('change')?></button>
-			<button class="uk-button uk-button-small uk-button-danger" type="button" onclick="removeAvatar(this);"><?=$lang->line('remove')?></button>
-		</div>
-		<div id="non-avatar-container" style="display: none;">
-			<button class="uk-button uk-button-small uk-button-primary" type="button" data-type="post" onclick="addAvatar(this);"><?=$lang->line('add')?></button>
-		</div>
-		<input type="hidden" name="avatar_id" id="avatar-id" value="<?=isset($item) ? $item['avatar_id'] : ''?>" />
-		<input type="hidden" name="avatar_filename" id="avatar-filename" value="<?=isset($item) ? $item['avatar_filename'] : ''?>" />
+		<?php
+			$this->load->view(F_CP .'inc/avatar');
+		?>
 	</div>
 </div>
 
@@ -120,4 +113,4 @@ endif;
 </form>
 
 <?php
-	$this->load->view('cp/inc/modal_upload_image');
+	$this->load->view(F_CP .'inc/modal_media');

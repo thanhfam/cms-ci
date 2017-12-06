@@ -94,9 +94,9 @@ class Post_model extends MY_Model {
 		$id = intval($id);
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, pg.uri, p.lead, p.content, p.tags, p.cate_id, p.avatar_id, i.filename avatar_filename, p.state_weight, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, pg.uri, p.lead, p.content, p.tags, p.cate_id, p.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.state_weight, p.created, p.updated')
 			->from('post p')
-			->join('image i', 'p.avatar_id = i.id', 'left')
+			->join('media m', 'p.avatar_id = m.id', 'left')
 			->join('page pg', 'p.id = pg.content_id', 'left')
 			->where('pg.content_type', CT_POST)
 			->where('p.id', $id)
@@ -107,6 +107,13 @@ class Post_model extends MY_Model {
 		if ($item) {
 			$item['created'] = date_string($item['created']);
 			$item['updated'] = date_string($item['updated']);
+
+			if ($item['file_name']) {
+				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			}
+			else {
+				$item['avatar_url'] = '';
+			}
 		}
 
 		return $item;
@@ -198,7 +205,7 @@ class Post_model extends MY_Model {
 
 	public function get_top_activated($cate_id, $limit, $get_content = FALSE) {
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.lead, p.content, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, p.lead, p.content, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.created, p.updated')
 			->from('post p')
 			->where('p.state_weight', S_ACTIVATED)
 			->join('page pg', 'pg.content_id = p.id')
@@ -206,7 +213,7 @@ class Post_model extends MY_Model {
 			->join('state st', 'st.weight = p.state_weight')
 			->where('st.type', ST_CONTENT)
 			->join('category c', 'p.cate_id = c.id')
-			->join('image i', 'p.avatar_id = i.id', 'left')
+			->join('media m', 'p.avatar_id = m.id', 'left')
 			->order_by('p.id', 'DESC')
 			->limit($limit)
 		;
@@ -222,10 +229,18 @@ class Post_model extends MY_Model {
 
 		$list = array();
 
-		while ($row = $query->unbuffered_row('array')) {
-			$row['updated'] = date_string($row['updated']);
-			$row['created'] = date_string($row['created']);
-			$list[] = $row;
+		while ($item = $query->unbuffered_row('array')) {
+			$item['updated'] = date_string($item['updated']);
+			$item['created'] = date_string($item['created']);
+
+			if ($item['file_name']) {
+				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			}
+			else {
+				$item['avatar_url'] = '';
+			}
+
+			$list[] = $item;
 		}
 
 		//echo $this->db->last_query();
@@ -239,7 +254,7 @@ class Post_model extends MY_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.lead, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, i.filename avatar_filename, p.created, p.updated' . ($get_content ? ', p.content' : ''))
+			->select('p.id, p.subtitle, p.title, p.lead, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.created, p.updated' . ($get_content ? ', p.content' : ''))
 			->from('post p')
 			->where('p.cate_id', intval($cate_id))
 			->where('p.state_weight', S_ACTIVATED)
@@ -248,7 +263,7 @@ class Post_model extends MY_Model {
 			->join('page pg', 'pg.content_id = p.id')
 			->where('pg.content_type', CT_POST)
 			->join('category c', 'p.cate_id = c.id')
-			->join('image i', 'p.avatar_id = i.id', 'left')
+			->join('media m', 'p.avatar_id = m.id', 'left')
 			->order_by('p.id', 'DESC')
 		;
 
@@ -281,10 +296,16 @@ class Post_model extends MY_Model {
 
 		$list = array();
 
-		while ($row = $query->unbuffered_row('array')) {
-			$row['updated'] = date_string($row['updated']);
-			$row['created'] = date_string($row['created']);
-			$list[] = $row;
+		while ($item = $query->unbuffered_row('array')) {
+			$item['updated'] = date_string($item['updated']);
+			$item['created'] = date_string($item['created']);
+			if ($item['file_name']) {
+				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			}
+			else {
+				$item['avatar_url'] = '';
+			}
+			$list[] = $item;
 		}
 
 		//echo $this->db->last_query();

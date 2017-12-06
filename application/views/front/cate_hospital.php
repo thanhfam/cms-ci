@@ -15,9 +15,33 @@
 	?>
 	<div class="post col">
 		<div class="row">
-			<?php if ($post['avatar_filename']): ?>
+			<?php if ($post['avatar_url']): ?>
 			<div class="col col-sm-2">
-				<a href="<?=base_url($post['uri'])?>"><img class="post-avatar img-fluid" src="<?=base_url(F_FILE .$post['avatar_filename'])?>" /></a>
+				<?php switch($post['avatar_type']):
+					case MT_IMAGE: ?>
+					<a href="<?=base_url($post['uri'])?>">
+					<img class="post-avatar img-fluid" src="<?=$post['avatar_url']?>" />
+					</a>
+				<?php
+					break;
+					case MT_VIDEO:
+				?>
+					<video class="card-img img-fluid" controls>
+						<source src="<?=$post['avatar_url']?>" type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+				<?php
+					break;
+					case MT_AUDIO:
+				?>
+					<audio class="card-img img-fluid" controls>
+						<source src="<?=$post['avatar_url']?>" type="audio/mpeg">
+						Your browser does not support the audio tag.
+					</audio>
+				<?php
+					break;
+					endswitch;
+				?>
 			</div>
 			<?php endif; ?>
 			<div class="col">

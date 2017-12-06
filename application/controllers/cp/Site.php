@@ -30,7 +30,9 @@ class Site extends MY_Controller {
 						'gplus' => '',
 						'linkedin' => '',
 						'avatar_id' => '',
-						'avatar_filename' => '',
+						'avatar_url' => '',
+						'avatar_type' => '',
+						'avatar_file_ext' => '',
 						'created' => ''
 					);
 				}
@@ -78,7 +80,11 @@ class Site extends MY_Controller {
 					$item['created'] = '';
 				}
 
-				$item['avatar_filename'] = $this->input->post('avatar_filename');
+				$item = array_merge($item, array(
+					'avatar_url' => $this->input->post('avatar_url'),
+					'avatar_type' => $this->input->post('avatar_type'),
+					'avatar_file_ext' => $this->input->post('avatar_file_ext')
+				));
 			break;
 		}
 

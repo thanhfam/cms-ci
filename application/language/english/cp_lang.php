@@ -1,11 +1,13 @@
 <?php
 
 $lang = array(
+	'all' => 'All',
 	'id' => 'ID',
 	'title' => 'Title',
 	'subtitle' => 'Subtitle',
 	'code' => 'Code',
 	'name' => 'Name',
+	'size' => 'Size',
 	'uri' => 'URI',
 	'type' => 'Type',
 	'description' => 'Description',
@@ -15,9 +17,12 @@ $lang = array(
 	'content' => 'Content',
 	'tags' => 'Tag(s)',
 	'avatar' => 'Avatar',
+	'media' => 'Media',
 	'image' => 'Image',
 	'video' => 'Video',
 	'audio' => 'Audio',
+	'flash' => 'Flash',
+	'attach' => 'Attach',
 	'url' => 'URL',
 	'target' => 'Target',
 	'position' => 'Position',
@@ -83,6 +88,8 @@ $lang = array(
 	'select_video' => 'Select a video',
 	'select_file' => 'Select a file',
 
+	'selected_items' => 'Selected',
+
 	'command' => 'Command',
 	'edit' => 'Edit',
 	'change' => 'Change',
@@ -95,7 +102,8 @@ $lang = array(
 	'close' => 'Close',
 	'back' => 'Back',
 	'select' => 'Select',
-	'select' => 'Upload',
+	'upload' => 'Upload',
+	'download' => 'Download',
 	'list_of' => 'List of ',
 	'list' => 'List',
 	'export_to_excel' => 'Export to Excel',
@@ -145,6 +153,15 @@ $lang = array(
 	'inactivated' => 'Inactivated',
 	'activated' => 'Activated',
 	'removed' => 'Removed',
+
+	'drop_file_to_upload' => 'Drop file(s) here to upload or',
+	'select_file_to_upload' => 'Select file(s)',
+	'invalid_mime' => 'Allowed file type: %s',
+	'invalid_name' => 'Invalide file name: %s',
+	'upload_successfully' => 'Upload successfully!!!',
+	'upload_failed' => 'Upload failed!!!',
+	'successfully' => 'Successfully',
+	'failed' => 'Failed',
 
 	'not_granted' => 'Not granted',
 	'permission_not_grannted' => 'Permission is not granted!',

@@ -1,13 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto') projection, screen;
 @import url('../uikit/css/uikit.min.css') projection, screen;
+@import url('font-awesome.min.css') projection, screen;
 
-html {
+html, body {
+	height: 100%;
+}
+
+html, body {
 	font-family: Roboto;
 	font-size: 15px;
+	font-weight: 400;
 }
 
 .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
 	font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
 	margin-bottom: 15px;
+}
+
+address, dl, fieldset, figure, ol, p, pre, ul {
+	margin: 0 0 15px 0;
 }
 
 .uk-button-secondary,
@@ -74,7 +85,7 @@ html {
 	width: 100%;
 }
 
-.uk-height-viewport {
+.user-login-background {
 	background-image: url(../img/background.jpg);
 	background-position: center center;
 	background-attachment: scroll;
@@ -99,4 +110,78 @@ html {
 
 * + .uk-grid-margin, .uk-grid + .uk-grid, .uk-grid > .uk-grid-margin {
 	margin-top: 0;
+}
+
+.media.uk-card {
+	margin-bottom: 10px !important;
+	padding: 10px;
+}
+
+.media-list .media .media-head {
+	min-height: 96px;
+}
+
+.media-list .media .media-head {
+	position: relative;
+}
+
+.media-list .media .media-head img {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	margin: auto;
+}
+
+.media .media-head-max-height {
+	max-height: 96px;
+}
+
+.media-full .media .media-head-max-height {
+	max-height: 100%;
+}
+
+.media .media-head,
+.media .media-meta {
+	overflow: hidden;
+}
+
+.media .media-head .fa {
+	font-size: 48px;
+	line-height: 96px;
+}
+
+.media .media-head audio {
+	min-height: 32px;
+}
+
+.media ul.media-meta {
+	margin: 10px 0;
+}
+
+.media ul.media-meta > li:nth-child(n+2) {
+	margin-top: 0;
+}
+
+.media ul.media-meta ul {
+	margin: 5px auto 0;
+	width: 80px;
+	padding-left: 0;
+}
+
+.media ul.media-meta ul > li:first-child{
+	padding-left: 0;
+}
+
+.media-upload {
+	display: table;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+}
+
+.media-upload .uk-placeholder {
+	display: table-cell;
+	vertical-align: middle;
 }

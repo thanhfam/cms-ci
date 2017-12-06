@@ -329,6 +329,13 @@ $config = array(
 			'rules' => 'trim'
 		)
 	),
+	'media_edit' => array(
+		array(
+			'field' => 'content',
+			'label' => 'lang:content',
+			'rules' => 'trim'
+		)
+	),
 	'appointment_edit' => array(
 		array(
 			'field' => 'name',

@@ -11,3 +11,5 @@ application/config/database.php
 
 db
 db/*
+
+file/*

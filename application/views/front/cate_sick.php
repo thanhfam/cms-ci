@@ -15,8 +15,32 @@ foreach ($list_post as $post):
 ?>
 	<div class="col-sm-6 col-md-3 col-lg-2">
 		<div class="post">
-			<?php if ($post['avatar_filename']): ?>
-			<a href="<?=base_url($post['uri'])?>"><img class="card-img img-fluid" src="<?=base_url(F_FILE .$post['avatar_filename'])?>"></a>
+			<?php if ($post['avatar_url']): ?>
+				<?php switch($post['avatar_type']):
+					case MT_IMAGE: ?>
+					<a href="<?=base_url($post['uri'])?>">
+					<img class="card-img img-fluid" src="<?=$post['avatar_url']?>">
+					</a>
+				<?php
+					break;
+					case MT_VIDEO:
+				?>
+					<video class="card-img img-fluid" controls>
+						<source src="<?=$post['avatar_url']?>" type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+				<?php
+					break;
+					case MT_AUDIO:
+				?>
+					<audio class="card-img img-fluid" controls>
+						<source src="<?=$post['avatar_url']?>" type="audio/mpeg">
+						Your browser does not support the audio tag.
+					</audio>
+				<?php
+					break;
+					endswitch;
+				?>
 			<?php endif; ?>
 			<h4 class="post-title"><a href="<?=base_url($post['uri'])?>"><?=$post['title']?></a></h4>
 		</div>

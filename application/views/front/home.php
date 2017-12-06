@@ -5,8 +5,30 @@
 	<?php foreach ($list_top as $row): ?>
 	<div class="carousel-item">
 		<div class="card card-inverse">
-			<?php if ($row['avatar_filename']): ?>
-			<img class="card-img img-fluid" src="<?=base_url(F_FILE .$row['avatar_filename'])?>">
+			<?php if ($row['avatar_url']): ?>
+				<?php switch($row['avatar_type']):
+					case MT_IMAGE: ?>
+					<img class="card-img img-fluid" src="<?=$row['avatar_url']?>">
+				<?php
+					break;
+					case MT_VIDEO:
+				?>
+					<video class="card-img img-fluid" controls>
+						<source src="<?=$row['avatar_url']?>" type="video/mp4">
+						Your browser does not support the video tag.
+					</video>
+				<?php
+					break;
+					case MT_AUDIO:
+				?>
+					<audio class="card-img img-fluid" controls>
+						<source src="<?=$row['avatar_url']?>" type="audio/mpeg">
+						Your browser does not support the audio tag.
+					</audio>
+				<?php
+					break;
+					endswitch;
+				?>
 			<?php endif; ?>
 			<div class="card-img-overlay">
 				<h4 class="card-title"><a href="<?=$row['uri']?>"><?=$row['title']?></a></h4>
@@ -43,8 +65,30 @@
 			<?php foreach ($list_hospital as $row): ?>
 			<div class="col-sm-12 col-md-3">
 				<div class="card">
-					<?php if ($row['avatar_filename']): ?>
-					<img class="card-img-top img-fluid" src="<?=base_url(F_FILE .$row['avatar_filename'])?>">
+					<?php if ($row['avatar_url']): ?>
+						<?php switch($row['avatar_type']):
+							case MT_IMAGE: ?>
+							<img class="card-img img-fluid" src="<?=$row['avatar_url']?>">
+						<?php
+							break;
+							case MT_VIDEO:
+						?>
+							<video class="card-img img-fluid" controls>
+								<source src="<?=$row['avatar_url']?>" type="video/mp4">
+								Your browser does not support the video tag.
+							</video>
+						<?php
+							break;
+							case MT_AUDIO:
+						?>
+							<audio class="card-img img-fluid" controls>
+								<source src="<?=$row['avatar_url']?>" type="audio/mpeg">
+								Your browser does not support the audio tag.
+							</audio>
+						<?php
+							break;
+							endswitch;
+						?>
 					<?php endif; ?>
 					<h5 class="card-title"><a href="<?=$row['uri']?>"><?=$row['title']?></a></h5>
 					<p class="card-text"><?=$row['lead']?></p>
@@ -62,9 +106,31 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-lg-6">
-				<?php if ($list_about[0] && $list_about[0]['avatar_filename']): ?>
+				<?php if ($list_about[0] && $list_about[0]['avatar_url']): ?>
 				<div class="card">
-					<img class="card-img img-fluid" src="<?=base_url(F_FILE .$list_about[0]['avatar_filename'])?>">
+					<?php switch($list_about[0]['avatar_type']):
+						case MT_IMAGE: ?>
+						<img class="card-img img-fluid" src="<?=$list_about[0]['avatar_url']?>">
+					<?php
+						break;
+						case MT_VIDEO:
+					?>
+						<video class="card-img img-fluid" controls>
+							<source src="<?=$list_about[0]['avatar_url']?>" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+					<?php
+						break;
+						case MT_AUDIO:
+					?>
+						<audio class="card-img img-fluid" controls>
+							<source src="<?=$list_about[0]['avatar_url']?>" type="audio/mpeg">
+							Your browser does not support the audio tag.
+						</audio>
+					<?php
+						break;
+						endswitch;
+					?>
 				</div>
 				<?php endif; ?>
 			</div>
@@ -92,8 +158,30 @@
 				<?php foreach ($list_news as $row): ?>
 				<div class="col-sm-12 col-lg-6">
 					<div class="card">
-					<?php if ($row['avatar_filename']): ?>
-					<img class="card-img-top img-fluid" src="<?=base_url(F_FILE .$row['avatar_filename'])?>">
+					<?php if ($row['avatar_url']): ?>
+						<?php switch($row['avatar_type']):
+							case MT_IMAGE: ?>
+							<img class="card-img img-fluid" src="<?=$row['avatar_url']?>">
+						<?php
+							break;
+							case MT_VIDEO:
+						?>
+							<video class="card-img img-fluid" controls>
+								<source src="<?=$row['avatar_url']?>" type="video/mp4">
+								Your browser does not support the video tag.
+							</video>
+						<?php
+							break;
+							case MT_AUDIO:
+						?>
+							<audio class="card-img img-fluid" controls>
+								<source src="<?=$row['avatar_url']?>" type="audio/mpeg">
+								Your browser does not support the audio tag.
+							</audio>
+						<?php
+							break;
+							endswitch;
+						?>
 					<?php endif; ?>
 					<div class="card-body">
 						<h4 class="card-title"><a href="<?=$row['uri']?>"><?=$row['title']?></a></h4>
@@ -112,8 +200,30 @@
 					<?php foreach ($list_sick as $row): ?>
 					<div class="col-sm-6 col-lg-4">
 						<div class="card">
-							<?php if ($row['avatar_filename']): ?>
-							<img class="card-img img-fluid" src="<?=base_url(F_FILE .$row['avatar_filename'])?>">
+							<?php if ($row['avatar_url']): ?>
+								<?php switch($row['avatar_type']):
+									case MT_IMAGE: ?>
+									<img class="card-img img-fluid" src="<?=$row['avatar_url']?>">
+								<?php
+									break;
+									case MT_VIDEO:
+								?>
+									<video class="card-img img-fluid" controls>
+										<source src="<?=$row['avatar_url']?>" type="video/mp4">
+										Your browser does not support the video tag.
+									</video>
+								<?php
+									break;
+									case MT_AUDIO:
+								?>
+									<audio class="card-img img-fluid" controls>
+										<source src="<?=$row['avatar_url']?>" type="audio/mpeg">
+										Your browser does not support the audio tag.
+									</audio>
+								<?php
+									break;
+									endswitch;
+								?>
 							<?php endif; ?>
 							<h4 class="card-title"><a href="<?=$row['uri']?>"><?=$row['title']?></a></h4>
 						</div>

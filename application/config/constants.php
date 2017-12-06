@@ -100,6 +100,22 @@ defined('CT_CATEGORY')      OR define('CT_CATEGORY', 'category');
 defined('ST_CONTENT')      OR define('ST_CONTENT', 'content');
 defined('ST_APPOINTMENT')      OR define('ST_APPOINTMENT', 'appointment');
 
+// media type
+defined('MT_IMAGE')      OR define('MT_IMAGE', 'image');
+defined('MT_VIDEO')      OR define('MT_VIDEO', 'video');
+defined('MT_AUDIO')      OR define('MT_AUDIO', 'audio');
+defined('MT_FLASH')      OR define('MT_FLASH', 'flash');
+defined('MT_ATTACH')      OR define('MT_ATTACH', 'attach');
+defined('MT_IMAGE_EXT')      OR define('MT_IMAGE_EXT', 'jpg|jpeg|gif|png');
+defined('MT_VIDEO_EXT')      OR define('MT_VIDEO_EXT', 'mp4');
+defined('MT_AUDIO_EXT')      OR define('MT_AUDIO_EXT', 'mp3');
+defined('MT_FLASH_EXT')      OR define('MT_FLASH_EXT', 'swf');
+defined('MT_ATTACH_EXT')      OR define('MT_ATTACH_EXT', 'docx|doc|xls|xlsx|ppt|pptx|pdf|zip');
+
+// image  direction
+defined('ID_HORIZONTAL')      OR define('ID_HORIZONTAL', 'horizontal');
+defined('ID_VERTICAL')      OR define('ID_VERTICAL', 'vertical');
+
 // state
 defined('S_REMOVED')      OR define('S_REMOVED', -1);
 defined('S_INACTIVATED')      OR define('S_INACTIVATED', 0);

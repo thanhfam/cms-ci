@@ -88,7 +88,8 @@ class Right_model extends MY_Model {
 		// not allow others than ROOT assign RIGHT-*
 		if ($this->session && $this->session->user['id'] != 1) {
 			$this->db
-				->not_like('name', 'RIGHT');
+				->not_like('name', 'RIGHT')
+				->not_like('name', 'REMOVE');
 		}
 
 		if (isset($filter['keyword']) && ($filter['keyword'] != '')) {

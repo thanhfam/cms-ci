@@ -44,7 +44,6 @@ class MY_Controller extends CI_Controller {
 		]);
 
 		$this->lang->load('cp');
-		$this->data['lang'] = $this->lang;
 	}
 
 	public function has_right($item) {
@@ -159,7 +158,29 @@ class MY_Controller extends CI_Controller {
 		$this->data['message'] = $message;
 	}
 
-	public function render($data) {
+	public function render_output($content_type, $content) {
+		$this->output
+			->set_content_type($content_type)
+			->set_output($content);
+	}
+
+	public function render_json($data) {
+		$this->data = array_merge($this->data, $data);
+
+		if (isset($data)) {
+			$this->data = $data;
+		}
+
+		return $this->output
+			->set_content_type('application/json', 'utf-8')
+			->set_status_header(200)
+			->set_output(json_encode($this->data))
+		;
+	}
+
+	public function render($data = array()) {
+		$this->data['lang'] = $this->lang;
+
 		$this->data = array_merge($this->data, $data);
 
 		if (isset($this->session->user)) {

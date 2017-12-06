@@ -34,17 +34,24 @@ class Site_model extends MY_Model {
 		$id = intval($id);
 
 		$this->db
-			->select('s.id, s.title, s.subtitle, s.name, s.url, s.language, s.facebook, s.twitter, s.pinterest, s.gplus, s.linkedin, s.avatar_id, i.filename avatar_filename, s.created, s.updated')
+			->select('s.id, s.title, s.subtitle, s.name, s.url, s.language, s.facebook, s.twitter, s.pinterest, s.gplus, s.linkedin, s.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, s.created, s.updated')
 			->from('site s')
 			->where('s.id', $id)
-			->join('image i', 's.avatar_id = i.id', 'left')
+			->join('media m', 's.avatar_id = m.id', 'left')
 		;
-		//echo $this->db->last_query();
+
 		$item = $this->db->get()->row_array();
 
 		if ($item) {
 			$item['created'] = date_string($item['created']);
 			$item['updated'] = date_string($item['updated']);
+
+			if ($item['file_name']) {
+				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			}
+			else {
+				$item['avatar_url'] = '';
+			}
 		}
 
 		return $item;

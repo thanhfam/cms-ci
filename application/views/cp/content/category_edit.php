@@ -16,7 +16,7 @@ endif;
 
 <div uk-grid>
 <div class="uk-width-2-3@m">
-<div class="container uk-padding-small">
+<div class="container uk-padding-small uk-background-muted">
 	<div class="uk-margin-small">
 		<label class="uk-form-label" for="subtitle"><?=$lang->line('subtitle')?></label>
 		<div class="uk-form-controls">
@@ -52,7 +52,7 @@ endif;
 	<div class="uk-margin-small" >
 		<label class="uk-form-label" for="lead"><?=$lang->line('lead')?></label>
 		<div class="uk-form-controls">
-			<textarea type="text" name="lead" id="lead" rows="5" class="uk-text-small uk-textarea <?=(form_error('lead') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['lead'] : ''?></textarea>
+			<textarea type="text" name="lead" id="lead" rows="3" class="uk-text-small uk-textarea <?=(form_error('lead') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['lead'] : ''?></textarea>
 			<?=form_error('lead')?>
 		</div>
 	</div>
@@ -60,13 +60,13 @@ endif;
 	<div class="uk-margin-small" >
 		<label class="uk-form-label" for="content"><?=$lang->line('content')?></label>
 		<div class="uk-form-controls">
-			<textarea type="text" name="content" id="content" rows="3" class="uk-text-small uk-textarea <?=(form_error('content') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['content'] : ''?></textarea>
+			<textarea type="text" name="content" id="content" rows="10" class="uk-text-small uk-textarea <?=(form_error('content') ? 'uk-form-danger' : '')?>"><?=isset($item) ? $item['content'] : ''?></textarea>
 			<?=form_error('content')?>
 		</div>
 	</div>
 
 	<script>
-		AlloyEditor.editable('content');
+		//AlloyEditor.editable('content');
 	</script>
 
 	<div class="uk-margin-small">
