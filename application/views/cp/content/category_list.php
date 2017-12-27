@@ -39,9 +39,7 @@
 	<th><?=$lang->line('id')?></th>
 	<th><?=$lang->line('title')?></th>
 	<th><?=$lang->line('category')?></th>
-	<!--
 	<th><?=$lang->line('site')?></th>
-	-->
 	<th><?=$lang->line('state')?></th>
 	<th><?=$lang->line('updated')?></th>
 	<th><?=$lang->line('command')?></th>
@@ -58,9 +56,7 @@ foreach ($list as $row):
 		<?=$row['title'] ? '<a target="_blank" href="'. $row['site_url'] .$row['uri'] .'">' .$row['title'] .'</a>' : ''?>
 	</td>
 	<td class="uk-text-small"><?=$row['parent_title']?></td>
-	<!--
-	<td class="uk-text-small"><?=$row['site_title']?></td>
-	-->
+	<td class="uk-text-small"><?=$row['site_title']?> (<?=$row['site_id']?>)</td>
 	<td class="uk-text-small">
 		<?=$lang->line($row['state_name']) ? $lang->line($row['state_name']) : $row['state_name']?> (<?=$row['state_weight']?>)
 	</td>

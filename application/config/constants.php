@@ -120,3 +120,9 @@ defined('ID_VERTICAL')      OR define('ID_VERTICAL', 'vertical');
 defined('S_REMOVED')      OR define('S_REMOVED', -1);
 defined('S_INACTIVATED')      OR define('S_INACTIVATED', 0);
 defined('S_ACTIVATED')      OR define('S_ACTIVATED', 9);
+
+// response state
+defined('RS_NICE')      OR define('RS_NICE', 0);
+defined('RS_DANGER')      OR define('RS_DANGER', -1);
+defined('RS_INPUT_DANGER')      OR define('RS_INPUT_DANGER', 1);
+defined('RS_DB_DANGER')      OR define('RS_DB_DANGER', 9);

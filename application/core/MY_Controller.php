@@ -236,6 +236,43 @@ class MY_Controller extends CI_Controller {
 	}
 }
 
+class JSON_Controller extends CI_COntroller {
+	public function __construct(array $params = []) {
+		parent::__construct($params);
+
+		$this->lang->load('front');
+
+		$this->data = array();
+	}
+
+	public function not_logged_in() {
+		return !$this->is_logged_in();
+	}
+
+	public function is_logged_in() {
+		if (isset($this->session->user)) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+
+	public function set_message($message) {
+		$this->data['message'] = $message;
+	}
+
+	public function render($data) {
+		$this->data = array_merge($this->data, $data);
+
+		return $this->output
+			->set_content_type('application/json', 'utf-8')
+			->set_status_header(200)
+			->set_output(json_encode($this->data))
+		;
+	}
+}
+
 class FP_Controller extends CI_Controller {
 	protected $folder_view = F_FRONT;
 
@@ -265,6 +302,20 @@ class FP_Controller extends CI_Controller {
 
 	public function set_footer($footer) {
 		$this->view_footer = $footer;
+	}
+
+	public function render_json($data) {
+		$this->data = array_merge($this->data, $data);
+
+		if (isset($data)) {
+			$this->data = $data;
+		}
+
+		return $this->output
+			->set_content_type('application/json', 'utf-8')
+			->set_status_header(200)
+			->set_output(json_encode($this->data))
+		;
 	}
 
 	public function render($data) {

@@ -62,7 +62,7 @@ class Category extends MY_Controller {
 					'lead' => $this->input->post('lead'),
 					'content' => $this->input->post('content'),
 					'type' => $this->input->post('type'),
-					'site_id' => 1, //$this->input->post('site_id'),
+					'site_id' => 3, //$this->input->post('site_id'),
 					'cate_id' => $this->input->post('cate_id'),
 					'cate_layout_id' => $this->input->post('cate_layout_id'),
 					'post_layout_id' => $this->input->post('post_layout_id'),

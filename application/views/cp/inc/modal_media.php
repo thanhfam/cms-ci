@@ -22,12 +22,13 @@ Mustache.parse(avatar_template);
 var avatar = $('#avatar');
 
 var avatar_media = {
-	id: <?=isset($item) ? $item["avatar_id"] : ""?>,
+	id: '<?=isset($item) ? $item["avatar_id"] : ""?>',
 	url: '<?=isset($item) ? $item["avatar_url"] : ""?>',
 	type: '<?=isset($item) ? $item["avatar_type"] : ""?>',
 	file_ext: '<?=isset($item) ? $item["avatar_file_ext"] : ""?>'
 };
 
+console.warn(avatar_media)
 if (avatar_media.id) {
 	$('#avatar-container').show();
 }

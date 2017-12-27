@@ -18,17 +18,31 @@ class Page extends FP_Controller {
 			$uri = 'vi';
 		}
 
+		$format = $this->input->get('fm');
+
 		$item = $this->page_model->get_by_uri($uri);
 
 		if ($item) {
-			switch ($page_type = $item['content_type']) {
-				case 'category':
-					$this->show_category($uri);
-				break;
+			switch ($format) {
+				case 'json':
+					switch ($page_type = $item['content_type']) {
+					case 'category':
+						$this->show_category_json($uri);
+						break;
+					}
 
-				case 'post':
-					$this->show_post($uri);
-				break;
+					break;
+
+				default:
+					switch ($page_type = $item['content_type']) {
+					case 'category':
+						$this->show_category($uri);
+						break;
+
+					case 'post':
+						$this->show_post($uri);
+						break;
+					}
 			}
 		}
 		else {
@@ -37,6 +51,42 @@ class Page extends FP_Controller {
 	}
 
 	public function show_home() {
+	}
+
+
+	public function show_category_json($uri) {
+		$cate = $this->category_model->get_by_uri($uri);
+
+		if ($cate === FALSE) {
+			$this->show_404();
+		}
+
+		$site = $this->site_model->get($cate['site_id']);
+
+		$data = array(
+			'site' => $site
+		);
+
+		$this->load->library('pagination');
+
+		$filter = $this->input->get('filter');
+		$page = $this->input->get('page');
+
+		$pagy_config = array(
+			'base_url' => base_url('category/' .$uri .'?fm=json')
+		);
+
+		$list_post = $this->post_model->get_activated($cate['id'], $page, $filter, $pagy_config, TRUE);
+
+		$data = array_merge($data, array(
+			'cate' => $cate,
+			'list_post' => $list_post,
+			'pagy' => $this->pagination
+		));
+
+		$this->pagination->initialize($pagy_config);
+
+		$this->render_json($data);
 	}
 
 	public function show_category($uri) {
