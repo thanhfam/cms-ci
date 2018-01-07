@@ -174,7 +174,7 @@ class MY_Controller extends CI_Controller {
 		return $this->output
 			->set_content_type('application/json', 'utf-8')
 			->set_status_header(200)
-			->set_output(json_encode($this->data))
+			->set_output(json_encode($this->data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))
 		;
 	}
 
@@ -236,13 +236,52 @@ class MY_Controller extends CI_Controller {
 	}
 }
 
-class JSON_Controller extends CI_COntroller {
+class JSON_Controller extends CI_Controller {
 	public function __construct(array $params = []) {
 		parent::__construct($params);
+
+		$this->load->library([
+			'session'
+		]);
+
+		$this->load->model(array('auth_model'));
+
+		if (($this->router->class != 'user') || ($this->router->method != 'login')) {
+			if ($this->not_logged_in()) {
+
+			}
+			else {
+
+			}
+		}
 
 		$this->lang->load('front');
 
 		$this->data = array();
+	}
+
+	public function require_right($right) {
+		if ($this->not_logged_in()) {
+			$state = RS_AUTH_DANGER;
+		}
+		else {
+			$state = $this->auth_model->require_right_json($right);
+		}
+
+		$this->data['state'] = $state;
+
+		switch ($state) {
+			case RS_AUTH_DANGER:
+			case RS_RIGHT_DANGER:
+				$this->render();
+				exit(0);
+
+			case RS_NICE:
+				break;
+
+			default:
+				break;
+		}
 	}
 
 	public function not_logged_in() {
@@ -262,14 +301,17 @@ class JSON_Controller extends CI_COntroller {
 		$this->data['message'] = $message;
 	}
 
-	public function render($data) {
+	public function render($data = array()) {
 		$this->data = array_merge($this->data, $data);
 
-		return $this->output
+		$this->output
 			->set_content_type('application/json', 'utf-8')
 			->set_status_header(200)
-			->set_output(json_encode($this->data))
+			->set_output(json_encode($this->data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))
+			->_display()
 		;
+
+		exit(0);
 	}
 }
 

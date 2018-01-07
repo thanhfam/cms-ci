@@ -29,7 +29,7 @@ class Site extends MY_Controller {
 						'pinterest' => '',
 						'gplus' => '',
 						'linkedin' => '',
-						'avatar_id' => '',
+						'avatar_id' => 0,
 						'avatar_url' => '',
 						'avatar_type' => '',
 						'avatar_file_ext' => '',

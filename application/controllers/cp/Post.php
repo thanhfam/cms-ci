@@ -33,10 +33,14 @@ class Post extends MY_Controller {
 						'content' => '',
 						'tags' => '',
 						'cate_id' => '',
-						'avatar_id' => '',
+						'avatar_id' => 0,
 						'avatar_url' => '',
 						'avatar_type' => '',
 						'avatar_file_ext' => '',
+						'attachment_id' => 0,
+						'attachment_url' => '',
+						'attachment_type' => '',
+						'attachment_file_ext' => '',
 						'state_weight' => 0,
 						'created' => '',
 						'udpated' => ''
@@ -54,10 +58,11 @@ class Post extends MY_Controller {
 					'subtitle' => $this->input->post('subtitle'),
 					'title' => $this->input->post('title'),
 					'uri' => $this->input->post('uri'),
-					'avatar_id' => $this->input->post('avatar_id'),
 					'lead' => $this->input->post('lead'),
 					'content' => $this->input->post('content'),
 					'tags' => $this->input->post('tags'),
+					'avatar_id' => $this->input->post('avatar_id'),
+					'attachment_id' => $this->input->post('attachment_id'),
 					'cate_id' => $this->input->post('cate_id'),
 					'state_weight' => $this->input->post('state_weight'),
 					'updater_id' => $this->session->user['id']
@@ -95,9 +100,14 @@ class Post extends MY_Controller {
 				}
 
 				$item = array_merge($item, array(
+					'avatar_id' => $this->input->post('avatar_id'),
 					'avatar_url' => $this->input->post('avatar_url'),
 					'avatar_type' => $this->input->post('avatar_type'),
-					'avatar_file_ext' => $this->input->post('avatar_file_ext')
+					'avatar_file_ext' => $this->input->post('avatar_file_ext'),
+					'attachment_id' => $this->input->post('attachment_id'),
+					'attachment_url' => $this->input->post('attachment_url'),
+					'attachment_type' => $this->input->post('attachment_type'),
+					'attachment_file_ext' => $this->input->post('attachment_file_ext')
 				));
 			break;
 		}

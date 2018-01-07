@@ -17,6 +17,7 @@ $lang = array(
 	'content' => 'Nội dung',
 	'tags' => 'Tag',
 	'avatar' => 'Hình đại diện',
+	'attachment' => 'Tập tin đính kèm',
 	'media' => 'Media',
 	'image' => 'Hình ảnh',
 	'video' => 'Video',
@@ -152,7 +153,10 @@ $lang = array(
 
 	'inactivated' => 'Vô hiệu',
 	'activated' => 'Hoạt động',
-	'removed' => 'Bị xoá',
+	'removed' => 'Đã xoá',
+
+	'cancel' => 'Huỷ',
+	'canceled' => 'Đã huỷ',
 
 	'drop_file_to_upload' => 'Thả các tập tin vào đây để tải lên hoặc',
 	'select_file_to_upload' => 'Chọn tập tin',

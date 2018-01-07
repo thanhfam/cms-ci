@@ -28,7 +28,6 @@
 	var msgBody = $('#message-body');
 
 	UIkit.upload('.js-upload', {
-
 		url: '<?=current_url()?>',
 		multiple: true,
 		params: {

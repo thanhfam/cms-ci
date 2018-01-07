@@ -60,6 +60,26 @@ class Category_model extends MY_Model {
 		}
 	}
 
+	public function remove($id = '') {
+		if ($id == '') {
+			return FALSE;
+		}
+
+		$item = array(
+			'id' => $id,
+			'state_weight' => S_REMOVED,
+			'updated' => get_time()
+		);
+
+		$this->db
+			->where('id', $id)
+			->update('category', $item);
+
+		$result = $this->db->affected_rows();
+
+		return $result;
+	}
+
 	public function get_by_uri($uri = '') {
 		if ($uri == '') {
 			return FALSE;
@@ -93,9 +113,10 @@ class Category_model extends MY_Model {
 		$id = intval($id);
 
 		$this->db
-			->select('c.id, c.subtitle, c.title, c.name, p.uri, c.description, c.keywords, c.lead, c.content, c.type, c.site_id, c.cate_id, c.cate_layout_id, c.post_layout_id, c.state_weight, c.created, c.updated')
+			->select('c.id, c.subtitle, c.title, c.name, p.uri, c.description, c.keywords, c.lead, c.content, c.type, c.site_id, c.cate_id, c.cate_layout_id, c.post_layout_id, c.state_weight, c.created, c.updated, c.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
 			->from('category c')
 			->join('page p', 'c.id = p.content_id')
+			->join('media m', 'c.avatar_id = m.id', 'left')
 			->where('p.content_type', CT_CATEGORY)
 			->where('c.id', $id)
 		;
@@ -105,6 +126,13 @@ class Category_model extends MY_Model {
 		if ($item) {
 			$item['created'] = date_string($item['created']);
 			$item['updated'] = date_string($item['updated']);
+
+			if ($item['file_name']) {
+				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			}
+			else {
+				$item['avatar_url'] = '';
+			}
 		}
 
 		return $item;
@@ -114,6 +142,7 @@ class Category_model extends MY_Model {
 		$this->db
 			->select('id, concat(title, " (", id, ")") title, name')
 			->where('state_weight', S_ACTIVATED)
+			->where('type', CT_POST)
 			->order_by('name', 'ASC')
 			->order_by('title', 'ASC')
 		;
@@ -129,7 +158,6 @@ class Category_model extends MY_Model {
 
 		return $result;
 	}
-
 
 	public function list_simple($cate_id = '', $site_id = '') {
 		$this->db
@@ -157,11 +185,40 @@ class Category_model extends MY_Model {
 		return $result;
 	}
 
+	public function list_activated_by_type($type = '') {
+		$this->db
+			->select('c.id, c.title, c.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
+			->from('category c')
+			->where('c.state_weight', S_ACTIVATED)
+			->where('c.type', $type)
+			->join('media m', 'c.avatar_id = m.id', 'left')
+			->order_by('id', 'ASC')
+			->order_by('title', 'ASC')
+		;
+
+		$query = $this->db->query($this->db->get_compiled_select());
+
+		$list = array();
+
+		while ($row = $query->unbuffered_row('array')) {
+			if ($row['file_name']) {
+				$row['avatar_url'] = base_url(F_FILE .$row['folder'] .'/' .$row['file_name']);
+			}
+			else {
+				$row['avatar_url'] = '';
+			}
+
+			$list[] = $row;
+		}
+
+		return $list;
+	}
+
 	public function list_all($page = 1, $filter = array(), &$pagy_config) {
 		$this->load->library('pagination');
 
 		$this->db
-			->select('c1.id, c1.subtitle, c1.title, c1.name, p.uri, si.id site_id, si.title site_title, si.url site_url, st.name state_name, st.weight state_weight, c2.id parent_id, c2.title parent_title, c1.created, c1.updated, c1.creator_id, u1.name creator_name, u1.username creator_username, c1.updater_id, u2.name updater_name, u2.username updater_username')
+			->select('c1.id, c1.subtitle, c1.title, c1.name, c1.type, p.uri, si.id site_id, si.title site_title, si.url site_url, st.name state_name, st.weight state_weight, c2.id parent_id, c2.title parent_title, c1.created, c1.updated, c1.creator_id, u1.name creator_name, u1.username creator_username, c1.updater_id, u2.name updater_name, u2.username updater_username')
 			->from('category c1')
 			->join('user u1', 'c1.creator_id = u1.id')
 			->join('user u2', 'c1.updater_id = u2.id')
@@ -171,6 +228,7 @@ class Category_model extends MY_Model {
 			->join('page p', 'c1.id = p.content_id')
 			->where('p.content_type', CT_CATEGORY)
 			->where('st.type', ST_CONTENT)
+			->where('st.weight >', S_REMOVED)
 			->order_by('c1.id', 'DESC')
 		;
 

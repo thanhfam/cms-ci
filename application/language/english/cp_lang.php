@@ -17,6 +17,7 @@ $lang = array(
 	'content' => 'Content',
 	'tags' => 'Tag(s)',
 	'avatar' => 'Avatar',
+	'attachment' => 'Attachment',
 	'media' => 'Media',
 	'image' => 'Image',
 	'video' => 'Video',
@@ -153,6 +154,9 @@ $lang = array(
 	'inactivated' => 'Inactivated',
 	'activated' => 'Activated',
 	'removed' => 'Removed',
+
+	'cancel' => 'Cancel',
+	'canceled' => 'Canceled',
 
 	'drop_file_to_upload' => 'Drop file(s) here to upload or',
 	'select_file_to_upload' => 'Select file(s)',

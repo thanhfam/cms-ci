@@ -21,5 +21,8 @@ $lang = array(
 
 	'sign_up_successfully' => 'Bạn đã đăng ký thành công.',
 	'sign_in_successfully' => 'Bạn đã đăng nhập thành công.',
-	'incorrect_username_password' => 'Tên đăng nhập hoặc mật khẩu không đúng.'
+	'incorrect_username_password' => 'Tên đăng nhập hoặc mật khẩu không đúng.',
+
+	'upload_successfully' => 'Tải lên thành công!!!',
+	'upload_failed' => 'Tải lên KHÔNG thành công!!!'
 );

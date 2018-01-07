@@ -21,5 +21,8 @@ $lang = array(
 
 	'sign_up_successfully' => 'You have signed up successfully.',
 	'sign_in_successfully' => 'You have signed in successfully.',
-	'incorrect_username_password' => 'Username/password is not corrected.'
+	'incorrect_username_password' => 'Username/password is not corrected.',
+
+	'upload_successfully' => 'Upload successfully!!!',
+	'upload_failed' => 'Upload failed!!!'
 );

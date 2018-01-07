@@ -11,6 +11,21 @@ class Post_model extends MY_Model {
 		$uri = empty($item['uri']) ? $this->page_model->generate_uri($item['title']) : $item['uri'];
 		unset($item['uri']);
 
+		if (isset($item['avatar_id'])) {
+			$avatar_id = $item['avatar_id'];
+
+			if (gettype($avatar_id) == 'array') {
+				$item['avatar_id'] = $avatar_id[0];
+			}
+			else {
+				$item['avatar_id'] = 0;
+			}
+		}
+
+		if (isset($item['attachment_id'])) {
+			$this->save_attachment($item);
+		}
+
 		$this->db->trans_begin();
 
 		if (empty($item['id'])) {
@@ -60,6 +75,63 @@ class Post_model extends MY_Model {
 		}
 	}
 
+	public function save_attachment(&$item) {
+		$attachment_id = $item['attachment_id'];
+		if (gettype($attachment_id) == 'array') {
+			$item['attachment_id'] = implode(",", $attachment_id);
+		}
+	}
+
+	public function load_attachment(&$item, $fm = '') {
+		if ($item['attachment_id'] == '') {
+			if ($fm = '') {
+				$item['attachment_type'] = '';
+				$item['attachment_file_ext'] = '';
+				$item['attachment_url'] = '';
+			}
+			return;
+		}
+
+		$attachment_id = explode(',', $item['attachment_id']);
+
+		$this->db
+			->select('m.id, m.file_name, m.folder, m.type, m.file_ext, m.content')
+			->from('media m')
+			->where_in('m.id', $attachment_id)
+		;
+
+		$query = $this->db->query($this->db->get_compiled_select());
+
+		if ($fm == 'json') {
+			$item['attachment'] = array();
+
+			while ($row = $query->unbuffered_row('array')) {
+				$attachment = array(
+					'id' => $row['id'],
+					'type' => $row['type'],
+					'file_ext' => $row['file_ext'],
+					'url' => base_url(F_FILE .$row['folder'] .'/' .$row['file_name'])
+				);
+
+				$item['attachment'][] = $attachment;
+			}
+		}
+		else {
+			$item['attachment_id'] = $item['attachment_type'] = $item['attachment_url'] = $item['attachment_file_ext'] = array();
+
+			while ($row = $query->unbuffered_row('array')) {
+				$item['attachment_id'][] = $row['id'];
+				$item['attachment_type'][] = $row['type'];
+				$item['attachment_file_ext'][] = $row['file_ext'];
+				$item['attachment_url'][] = base_url(F_FILE .$row['folder'] .'/' .$row['file_name']);
+			}
+		}
+	}
+
+	public function load_attachment_json(&$item) {
+		$this->load_attachment($item, 'json');
+	}
+
 	public function get_by_uri($uri = '') {
 		if ($uri == '') {
 			return FALSE;
@@ -94,7 +166,7 @@ class Post_model extends MY_Model {
 		$id = intval($id);
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, pg.uri, p.lead, p.content, p.tags, p.cate_id, p.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.state_weight, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, pg.uri, p.lead, p.content, p.tags, p.cate_id, p.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, p.state_weight, p.created, p.updated')
 			->from('post p')
 			->join('media m', 'p.avatar_id = m.id', 'left')
 			->join('page pg', 'p.id = pg.content_id', 'left')
@@ -109,11 +181,16 @@ class Post_model extends MY_Model {
 			$item['updated'] = date_string($item['updated']);
 
 			if ($item['file_name']) {
-				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+				$item['avatar_id'] = [$item['avatar_id']];
+				$item['avatar_type'] = [$item['avatar_type']];
+				$item['avatar_file_ext'] = [$item['avatar_file_ext']];
+				$item['avatar_url'] = [base_url(F_FILE .$item['folder'] .'/' .$item['file_name'])];
 			}
 			else {
 				$item['avatar_url'] = '';
 			}
+
+			$this->load_attachment($item);
 		}
 
 		return $item;

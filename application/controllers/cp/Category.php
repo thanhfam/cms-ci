@@ -8,6 +8,35 @@ class Category extends MY_Controller {
 		$this->load->helper(array('language'));
 	}
 
+	public function remove($id = '') {
+		$data = array(
+			'lang' => $this->lang,
+			'title' => $this->lang->line('remove') .' ' . $this->lang->line('category') . ' #' . $id,
+			'link_back' => base_url(F_CP .'category/list')
+		);
+
+		$result = $this->category_model->remove($id);
+
+		if ($result == 0) {
+			$message = array(
+				'type' => 3,
+				'content' => $this->lang->line('item_not_found'),
+				'show_link_back' => TRUE
+			);
+		}
+		else {
+			$message = array(
+				'type' => 1,
+				'content' => $this->lang->line('remove_successfully'),
+				'show_link_back' => TRUE
+			);
+		}
+
+		$this->set_message($message);
+
+		$this->render($data);
+	}
+
 	public function edit($id = '') {
 		$this->load->model(array('state_model', 'layout_model', 'page_model'));
 		$this->load->helper(array('form', 'url', 'text'));
@@ -34,9 +63,13 @@ class Category extends MY_Controller {
 						'keywords' => '',
 						'lead' => '',
 						'content' => '',
-						'type' => '0',
+						'type' => '',
 						'site_id' => '',
 						'cate_id' => '',
+						'avatar_id' => 0,
+						'avatar_url' => '',
+						'avatar_type' => '',
+						'avatar_file_ext' => '',
 						'cate_layout_id' => '',
 						'post_layout_id' => '',
 						'state_weight' => 0,
@@ -61,13 +94,14 @@ class Category extends MY_Controller {
 					'keywords' => $this->input->post('keywords'),
 					'lead' => $this->input->post('lead'),
 					'content' => $this->input->post('content'),
-					'type' => $this->input->post('type'),
+					'type' => $this->input->post('type') ? $this->input->post('type') : CT_POST,
 					'site_id' => 3, //$this->input->post('site_id'),
 					'cate_id' => $this->input->post('cate_id'),
 					'cate_layout_id' => $this->input->post('cate_layout_id'),
 					'post_layout_id' => $this->input->post('post_layout_id'),
 					'state_weight' => $this->input->post('state_weight'),
-					'updater_id' => $this->session->user['id']
+					'updater_id' => $this->session->user['id'],
+					'avatar_id' => $this->input->post('avatar_id')
 				);
 
 				if (empty($item['id'])) {
@@ -100,6 +134,12 @@ class Category extends MY_Controller {
 
 					$item['created'] = '';
 				}
+
+				$item = array_merge($item, array(
+					'avatar_url' => $this->input->post('avatar_url'),
+					'avatar_type' => $this->input->post('avatar_type'),
+					'avatar_file_ext' => $this->input->post('avatar_file_ext')
+				));
 			break;
 		}
 
@@ -186,6 +226,10 @@ class Category extends MY_Controller {
 
 			case 'edit':
 				$this->auth_model->require_right('CATE_EDIT');
+			break;
+
+			case 'remove':
+				$this->auth_model->require_right('CATE_REMOVE');
 			break;
 
 			case 'select':

@@ -14,7 +14,11 @@ class Auth_model extends MY_Model {
 		}
 	}
 
-	public function require_right($right) {
+	public function require_right_json($right) {
+		return $this->require_right($right, 'json');
+	}
+
+	public function require_right($right, $fm = '') {
 		$this->db
 			->select('u.id, u.username, u.name, u.email, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated')
 			->from('user u')
@@ -28,11 +32,16 @@ class Auth_model extends MY_Model {
 		$item = $this->db->get()->row_array();
 
 		if ($item) {
-			return;
+			return RS_NICE;
 		}
 		else {
-			redirect(F_CP .'user/not_granted');
-			exit(0);
+			if ($fm == 'json') {
+				return RS_RIGHT_DANGER;
+			}
+			else {
+				redirect(F_CP .'user/not_granted');
+				exit(0);
+			}
 		}
 	}
 }

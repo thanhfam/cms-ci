@@ -39,6 +39,7 @@
 	<th><?=$lang->line('id')?></th>
 	<th><?=$lang->line('title')?></th>
 	<th><?=$lang->line('category')?></th>
+	<th><?=$lang->line('type')?></th>
 	<th><?=$lang->line('site')?></th>
 	<th><?=$lang->line('state')?></th>
 	<th><?=$lang->line('updated')?></th>
@@ -56,6 +57,7 @@ foreach ($list as $row):
 		<?=$row['title'] ? '<a target="_blank" href="'. $row['site_url'] .$row['uri'] .'">' .$row['title'] .'</a>' : ''?>
 	</td>
 	<td class="uk-text-small"><?=$row['parent_title']?></td>
+	<td class="uk-text-small"><?=$row['type']?></td>
 	<td class="uk-text-small"><?=$row['site_title']?> (<?=$row['site_id']?>)</td>
 	<td class="uk-text-small">
 		<?=$lang->line($row['state_name']) ? $lang->line($row['state_name']) : $row['state_name']?> (<?=$row['state_weight']?>)
@@ -65,8 +67,9 @@ foreach ($list as $row):
 	</td>
 	<td class="command">
 		<ul class="uk-iconnav">
-			<li><a href="<?=base_url(F_CP .'post/list/?cate_id=' . $row['id']);?>" uk-icon="icon: list" title="<?=$lang->line('list')?>"></a></li>
+			<li><a href="<?=base_url(F_CP .'post/list/?cate_id=' . $row['id'])?>" uk-icon="icon: list" title="<?=$lang->line('list')?>"></a></li>
 			<li><a href="<?=base_url(F_CP .'category/edit/' . $row['id'])?>" uk-icon="icon: file-edit" title="<?=$lang->line('edit')?>"></a></li>
+			<li><a href="<?=base_url(F_CP .'category/remove/' . $row['id'])?>" uk-icon="icon: trash" data-msg="<?=$lang->line('sure_to_remove')?>" title="<?=$lang->line('remove')?>" class="btn-remove"></a></li>
 		</ul>
 	</td>
 </tr>

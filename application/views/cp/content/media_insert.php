@@ -217,7 +217,7 @@
 	<div class="uk-width-1-4@m uk-width-1-2@s">
 	<div class="media uk-card uk-card-small uk-card-default uk-card-body uk-padding-small">
 		<div class="media-head media-head-max-height">
-			{{{avatar}}}
+			{{{presentation}}}
 		</div>
 		<ul class="uk-list media-meta">
 			<li class="uk-text-small">#{{id}}</li>
@@ -238,7 +238,7 @@
 <script id="selected_items_template" type="x-tmpl-mustache">
 	<div class="media uk-card uk-card-small uk-card-default uk-card-body uk-padding-small">
 		<div class="media-head media-head-max-height">
-			{{{avatar}}}
+			{{{presentation}}}
 		</div>
 		<ul class="uk-list media-meta">
 			<li class="command">
@@ -282,44 +282,45 @@ var list_items_template = $('#list_items_template').html();
 var selected_items_template = $('#selected_items_template').html();
 
 var list_items = {
-	avatar: function () {
+	presentation: function () {
+		var media;
 		switch (this.type) {
 			case '<?=MT_IMAGE?>':
-				avatar = '<img src="' + this.url + '" alt="' + this.content  + '">';
+				media = '<img src="' + this.url + '" alt="' + this.content  + '">';
 			break;
 			case '<?=MT_VIDEO?>':
-				avatar = '<video controls><source src="' + this.url + '" type="video/mp4">Your browser does not support the video tag.</video>';
+				media = '<video controls><source src="' + this.url + '" type="video/mp4">Your browser does not support the video tag.</video>';
 			break;
 			case '<?=MT_AUDIO?>':
-				avatar = '<audio controls><source src="' + this.url + '" type="audio/mpeg">Your browser does not support the audio tag.</audio>';
+				media = '<audio controls><source src="' + this.url + '" type="audio/mpeg">Your browser does not support the audio tag.</audio>';
 			break;
 			case '<?=MT_FLASH?>':
-				avatar = '<i class="fa fa-bolt" aria-hidden="true"></i>';
+				media = '<i class="fa fa-bolt" aria-hidden="true"></i>';
 			break;
 			case '<?=MT_ATTACH?>':
 				switch (this.file_ext) {
 					case 'xls':
 					case 'xlsx':
-						avatar = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>';
+						media = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>';
 					break;
 					case 'doc':
 					case 'docx':
-						avatar = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-word-o" aria-hidden="true"></i></a>';
+						media = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-word-o" aria-hidden="true"></i></a>';
 					break;
 					case 'ppt':
 					case 'pptx':
-						avatar = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i></a>';
+						media = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i></a>';
 					break;
 					case 'pdf':
-						avatar = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>';
+						media = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>';
 					break;
 					case 'zip':
-						avatar = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>';
+						media = '<a href="javascript:void(0);" title="' + this.content + '"><i class="fa fa-file-archive-o" aria-hidden="true"></i></a>';
 					break;
 				}
 			break;
 		}
-		return avatar;
+		return media;
 	}
 }
 
@@ -342,7 +343,7 @@ var use = function() {
 	}
 
 	if (window.parent && window.parent[callback]) {
-		window.parent[callback](selected_items);
+		window.parent[callback]({list: selected_items});
 	}
 }
 
@@ -358,7 +359,7 @@ var add_item = function(index) {
 		}
 	}
 
-	selected_item.avatar = list_items.avatar;
+	selected_item.presentation = list_items.presentation;
 
 	if (multi_select) {
 		selected_items.push(selected_item);

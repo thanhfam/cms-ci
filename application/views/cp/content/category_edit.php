@@ -14,7 +14,7 @@ endif;
 
 <form method="post" accept-charset="utf-8" action="<?=current_url()?>" class="uk-form-stacked">
 
-<div uk-grid>
+<div uk-grid class="uk-grid-small">
 <div class="uk-width-2-3@m">
 <div class="container uk-padding-small uk-background-muted">
 	<div class="uk-margin-small">
@@ -108,6 +108,15 @@ endif;
 <div class="uk-width-1-3@m">
 <div class="container uk-padding-small uk-background-muted">
 	<div class="uk-margin-small">
+		<label class="uk-form-label" for="avatar"><?=$lang->line('avatar')?></label>
+		<div class="uk-form-controls">
+		<?php
+			$this->load->view(F_CP .'inc/avatar');
+		?>
+		</div>
+	</div>
+
+	<div class="uk-margin-small">
 		<label class="uk-form-label" for="type"><?=$lang->line('type')?></label>
 		<div class="uk-form-controls">
 			<input type="text" name="type" id="type" value="<?=isset($item) ? $item['type'] : ''?>" class="uk-input uk-form-small <?=(form_error('type') ? 'uk-form-danger' : '')?>" />
@@ -159,7 +168,8 @@ endif;
 </div>
 </div>
 
-
-
 </div>
 </form>
+
+<?php
+	$this->load->view(F_CP .'inc/modal_media');

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+	<meta charset="utf-8">
+	<title>Trang chủ - TVN Healthcare - Tận tâm chia sẻ</title>
+
+		<meta name="description" content="">
+	<meta name="keywords" content="">
+	
+	<link rel="stylesheet" href="http://[::1]/tvn/pub/front/css/front.css" media="screen, projection" />
+	<script src="http://[::1]/tvn/pub/front/jquery/jquery-3.2.1.min.js"></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+<form id="form-sign-up">
+Name <input type="text" name="name" value="Thanh" />
+Email <input type="text" name="email" value="thanhfam@ymail.com" />
+Password <input type="text" name="password" value="12341234" />
+<button type="submit">Submit</button>
+</form>
+
+<form id="form-sign-in">
+Email <input type="text" name="username" value="thanhfam@ymail.com" />
+Password <input type="text" name="password" value="12341234" />
+<button type="submit">Submit</button>
+</form>
+
+<form id="tfreport-edit">
+ID <input type="text" name="id" value="" /><br>
+Title <input type="text" name="title" value="tfreport" /><br>
+Content <input type="text" name="content" value="tfreport" /><br>
+Attachment <input type="text" name="attachment_id" value="" /><br>
+Category <input type="text" name="cate_id" value="33" /><br>
+<button type="submit">Submit</button>
+</form>
+
+
+<script>
+$("#form-sign-up").submit(function(e) {
+	$.ajax({
+		type: "POST",
+		url: '/tvn/user/sign_up',
+		data: $("#form-sign-up").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+
+$("#form-sign-in").submit(function(e) {
+	$.ajax({
+		type: "POST",
+		url: '/tvn/user/sign_in',
+		data: $("#form-sign-in").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+
+$("#tfreport-edit").submit(function(e) {
+	$.ajax({
+		type: "POST",
+		url: '/tvn/tfreport/edit',
+		data: $("#tfreport-edit").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+</script>
+</body>
