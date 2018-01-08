@@ -2,7 +2,7 @@
 
 require_once(APPPATH.'models/Post_model.php');
 
-class TFReport_model extends Post_model {
+class Tfreport_model extends Post_model {
 	public function __construct() {
 		parent::__construct();
 	}

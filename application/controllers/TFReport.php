@@ -1,6 +1,6 @@
 <?php
 
-class TFReport extends JSON_Controller {
+class Tfreport extends JSON_Controller {
 	public function __construct() {
 		parent::__construct();
 	}
@@ -9,7 +9,7 @@ class TFReport extends JSON_Controller {
 		$this->load->model(array('category_model'));
 		$data = array();
 
-		$data['list'] = $this->category_model->list_activated_by_type(CAT_TF_REPORT);
+		$data['list'] = $this->category_model->list_activated_by_type(CT_TF_REPORT);
 
 		$this->render($data);
 	}
