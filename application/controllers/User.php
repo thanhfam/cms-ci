@@ -73,7 +73,24 @@ class User extends JSON_Controller {
 		$this->render($data);
 	}
 
+	public function get_session() {
+		if ($this->is_logged_in()) {
+			$data['state'] = RS_NICE;
+			$data['user'] = $this->session->user;
+		}
+		else {
+			$data['state'] = RS_AUTH_DANGER;
+		}
+
+		$this->render($data);
+	}
+
 	public function sign_in() {
+		if ($this->is_logged_in()) {
+			$this->get_session();
+			return;
+		}
+
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
@@ -89,6 +106,8 @@ class User extends JSON_Controller {
 			);
 
 			if ($user = $this->user_model->login($item)) {
+				$this->init_session($user);
+
 				$data['user'] = $user;
 				$data['state'] = RS_NICE;
 				$data['message'] = $this->lang->line('sign_in_successfully');
@@ -214,21 +233,21 @@ class User extends JSON_Controller {
 		$this->set_body(
 			'system/user_edit_profile'
 		);
+
 		$this->render($data);
 	}
 
-	public function logout() {
+	public function sign_out() {
 		unset($this->session->user);
 		$this->session->sess_destroy();
-		$this->go_to_login();
+
+		$data['state'] = RS_NICE;
+
+		$this->render($data);
 	}
 
 	public function init_session($user) {
 		$this->session->user = $user;
-		$this->session->menu_data = $this->user_model->get_menu_data($user);
-
-		$this->session->date_format = $user['date_format'];
-		$this->session->timezone = $user['timezone'];
 	}
 
 	public function _remap($method, $params = array()) {
@@ -238,6 +257,7 @@ class User extends JSON_Controller {
 			case 'sign_up':
 			case 'sign_in':
 			case 'sign_out':
+			case 'get_session':
 			case 'edit_profile':
 			case 'reset_password':
 
