@@ -126,9 +126,8 @@ $('#media-insert').on('hide', function() {
 });
 
 window.insert_avatar = function(media_list) {
-	var media = media_list[0];
-
-	if (media.id && media.url) {
+	if (media_list.list.length) {
+		var media = media_list.list[0];
 		show_avatar(media);
 	}
 

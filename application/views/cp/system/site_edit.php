@@ -110,4 +110,4 @@ if (isset($item) && !empty($item['created'])) {
 </form>
 
 <?php
-	$this->load->view(F_CP .'inc/modal_media');
+	$this->load->view(F_CP .'inc/modal_media_old');
