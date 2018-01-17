@@ -83,8 +83,9 @@ class Tfreport extends JSON_Controller {
 		$item = array(
 			'id' => $this->input->post('id'),
 			'title' => $this->input->post('title', TRUE),
-			'content' => $this->input->post('content', TRUE),
+			'lead' => $this->input->post('lead', TRUE),
 			'type' => CT_TF_REPORT,
+			'avatar_id' => $this->input->post('avatar_id'),
 			'attachment_id' => $this->input->post('attachment_id'),
 			'cate_id' => $this->input->post('cate_id'),
 			'state_weight' => S_INACTIVATED,
