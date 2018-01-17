@@ -37,7 +37,7 @@ class Media extends MY_Controller {
 					mkdir($folder_path, 775, true);
 				}
 
-				$this->upload->set_upload_path(F_FILE .$folder_path);
+				$this->upload->set_upload_path($folder_path);
 
 				if (!$this->upload->do_upload('files')) {
 					$result = 0;
