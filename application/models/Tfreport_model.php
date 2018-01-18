@@ -11,11 +11,12 @@ class Tfreport_model extends Post_model {
 		$this->load->library('pagination');
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
+			->select('p.id, p.subtitle, p.title, p.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
 			->from('post p')
 			->join('user u1', 'p.creator_id = u1.id')
 			->join('state s', 'p.state_weight = s.weight')
 			->join('category c', 'p.cate_id = c.id')
+			->join('media m', 'p.avatar_id = m.id', 'left')
 			->where('s.type', ST_CONTENT)
 			->where('s.weight', S_ACTIVATED)
 			->where('p.type', CT_TF_REPORT)
@@ -58,6 +59,13 @@ class Tfreport_model extends Post_model {
 		while ($row = $query->unbuffered_row('array')) {
 			$row['updated'] = date_string($row['updated']);
 			$row['created'] = date_string($row['created']);
+
+			if ($row['file_name']) {
+				$row['avatar_url'] = base_url(F_FILE .$row['folder'] .'/' .$row['file_name']);
+			}
+			else {
+				$row['avatar_url'] = '';
+			}
 
 			$this->load_attachment_json($row);
 

@@ -142,10 +142,10 @@ class Category_model extends MY_Model {
 		$this->db
 			->select('id, concat(title, " (", id, ")") title, name')
 			->where('state_weight', S_ACTIVATED)
-			->where('type', CT_POST)
 			->order_by('name', 'ASC')
 			->order_by('title', 'ASC')
 		;
+		//->where('type', CT_POST)
 
 		$result = $this->db->get('category')->result_array();
 
