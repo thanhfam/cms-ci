@@ -14,6 +14,72 @@ class Tfreport extends JSON_Controller {
 		$this->render($data);
 	}
 
+	public function upload() {
+		$this->load->model(array('media_model'));
+
+		$folder = date_string(get_time(), '%Y%m');
+		$folder_path = FCPATH .F_FILE .$folder;
+
+		if (!file_exists($folder_path)) {
+			mkdir($folder_path, 775, true);
+		}
+
+		$files = $_FILES['file'];
+		$total = count($files['name']);
+		$result = true;
+		$list = $list_error = [];
+
+		for ($i = 0; $i < $total; $i++) {
+			$tmpFilePath = $files['tmp_name'][$i];
+
+			if ($tmpFilePath != "") {
+				//Setup our new file path
+				$newFilePath = $folder_path .'/' .$files['name'][$i];
+
+
+				if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+					$item = array(
+						'folder' => $folder,
+						'file_name' => $files['name'][$i],
+						'file_type' => $files['type'][$i],
+						'file_ext' => pathinfo($files['name'][$i], PATHINFO_EXTENSION),
+						'orig_name' => $files['name'][$i],
+						'file_size' => $files['size'][$i]
+					);
+
+					if ($this->media_model->save($item)) {
+						$list[] = $item;
+					}
+					else {
+						$list_error[] = $item;
+						$result = false;
+					}
+				}
+				else {
+					$result = false;
+				}
+			}
+		}
+
+		if ($result) {
+			$state = RS_NICE;
+			$message = $this->lang->line('upload_successfully');
+		}
+		else {
+			$state = RS_DANGER;
+			$message = $this->lang->line('upload_failed');
+		}
+
+		$data = array(
+			'list' => $list,
+			'list_error' => $list_error,
+			'state' => $state,
+			'message' => $message
+		);
+
+		$this->render($data);
+	}
+
 	public function upload_file() {
 		$this->load->model(array('media_model'));
 		$this->load->library('upload');
@@ -160,6 +226,7 @@ class Tfreport extends JSON_Controller {
 				break;
 
 			case 'upload_file':
+			case 'upload':
 				$this->require_right('TF_REPORT_UPLOAD_FILE');
 				break;
 

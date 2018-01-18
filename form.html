@@ -36,6 +36,12 @@ Attachment <input type="text" name="attachment_id" value="" /><br>
 <button type="submit">Submit</button>
 </form>
 
+<form id="form-upload" method="post" enctype="multipart/form-data" action="/tvn/tfreport/upload">
+File 1 <input type="file" name="file[]" multiple="multiple" /><br>
+File 2 <input type="file" name="file[]" multiple="multiple" /><br>
+<button type="submit">Submit</button>
+</form>
+
 <script>
 $("#form-sign-up").submit(function(e) {
 	$.ajax({
@@ -68,6 +74,19 @@ $("#tfreport-edit").submit(function(e) {
 		type: "POST",
 		url: '/tvn/tfreport/edit',
 		data: $("#tfreport-edit").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+
+$("#form-upload1").submit(function(e) {
+	$.ajax({
+		type: "POST",
+		url: '/tvn/tfreport/upload',
+		data: $("#form-upload").serialize(), // serializes the form's elements.
 		success: function(data) {
 			console.warn(data);
 		}
