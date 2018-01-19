@@ -17,6 +17,7 @@ class Tfreport extends JSON_Controller {
 	public function upload() {
 		$this->load->model(array('media_model'));
 		$this->load->library('upload');
+		$this->load->helper('number');
 
 		$folder = date_string(get_time(), '%Y%m');
 		$folder_path = FCPATH .F_FILE .$folder;
@@ -46,7 +47,7 @@ class Tfreport extends JSON_Controller {
 					'file_type' => $files['type'][$i],
 					'file_ext' => pathinfo($files['name'][$i], PATHINFO_EXTENSION),
 					'orig_name' => $files['name'][$i],
-					'file_size' => $files['size'][$i],
+					'file_size' => byte_format($files['size'][$i]),
 					'error' => strip_tags($this->upload->display_errors())
 				);
 

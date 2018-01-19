@@ -34,6 +34,7 @@
 			submit: 'save'
 		},
 		allow : '*.(<?=implode("|", $allowed_types)?>)',
+		'responseType': 'json',
 		'data-type': 'json',
 		'msg-invalid-mime': '<?=$lang->line("invalid_mime")?>',
 		'msg-invalid-name': '<?=$lang->line("invalid_name")?>',
@@ -53,12 +54,13 @@
 			uploadSuccess = false;
 		},
 		complete: function (response) {
-			console.warn('complete', arguments);
+
+			var responseJSON = JSON.parse(response.responseText);
 
 			try {
-				if (response.responseJSON) {
-					var message = response.responseJSON.message;
-					var item = response.responseJSON.item;
+				if (responseJSON) {
+					var message = responseJSON.message;
+					var item = responseJSON.item;
 
 					msg = '<li>';
 
@@ -72,6 +74,7 @@
 					else {
 						msg += '<?=$lang->line("failed")?> - ';
 						msg += message.content;
+
 						uploadSuccess = false;
 					}
 					msg += '</li>';

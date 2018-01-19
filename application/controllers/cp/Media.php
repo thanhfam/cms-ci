@@ -31,7 +31,10 @@ class Media extends MY_Controller {
 
 			case 'save':
 				$folder = date_string(get_time(), '%Y%m');
+
 				$folder_path = FCPATH .F_FILE .$folder;
+
+				$result = 1;
 
 				if (!file_exists($folder_path)) {
 					mkdir($folder_path, 775, true);
@@ -39,7 +42,9 @@ class Media extends MY_Controller {
 
 				$this->upload->set_upload_path($folder_path);
 
-				if (!$this->upload->do_upload('files')) {
+				$file_upload_result = $this->upload->do_upload('files');
+
+				if (!$file_upload_result) {
 					$result = 0;
 
 					$message = array(
@@ -83,11 +88,10 @@ class Media extends MY_Controller {
 							'content' => $this->lang->line('upload_failed')
 						);
 					}
-
-					$data['item'] = $item;
 				}
 
 				$data = array(
+					'item' => $item,
 					'result' => $result,
 					'message' => $message
 				);
