@@ -42,14 +42,21 @@ class Media extends MY_Controller {
 
 				$this->upload->set_upload_path($folder_path);
 
-				$file_upload_result = $this->upload->do_upload('files');
+				if (!$this->upload->do_upload('files')) {
+					$item = array(
+						'file_name' => $files['name'][$i],
+						'file_type' => $files['type'][$i],
+						'file_ext' => pathinfo($files['name'][$i], PATHINFO_EXTENSION),
+						'orig_name' => $files['name'][$i],
+						'file_size' => byte_format($files['size'][$i]),
+						'error' => strip_tags($this->upload->display_errors())
+					);
 
-				if (!$file_upload_result) {
 					$result = 0;
 
 					$message = array(
 						'type' => 3,
-						'content' => $this->upload->display_errors()
+						'content' => strip_tags($this->upload->display_errors())
 					);
 				}
 				else {

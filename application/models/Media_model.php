@@ -135,7 +135,8 @@ class Media_model extends MY_Model {
 		$total_row = $this->db->count_all_results('', FALSE);
 		$pagy_config['total_rows'] = $total_row;
 
-		$per_page = ($pagy_config['per_page']) ? $pagy_config['per_page'] : $this->pagination->per_page;
+		$per_page = $pagy_config['per_page'] ? $pagy_config['per_page'] : $this->pagination->per_page;
+		$pagy_config['per_page'] = $per_page;
 		$page = ($pagy_config['page']) ? $pagy_config['page'] : 1;
 
 		$last_page = ceil($total_row / $per_page);

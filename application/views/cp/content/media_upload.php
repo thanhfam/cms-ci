@@ -34,7 +34,6 @@
 			submit: 'save'
 		},
 		allow : '*.(<?=implode("|", $allowed_types)?>)',
-		'responseType': 'json',
 		'data-type': 'json',
 		'msg-invalid-mime': '<?=$lang->line("invalid_mime")?>',
 		'msg-invalid-name': '<?=$lang->line("invalid_name")?>',
@@ -55,9 +54,9 @@
 		},
 		complete: function (response) {
 
-			var responseJSON = JSON.parse(response.responseText);
-
 			try {
+				var responseJSON = JSON.parse(response.responseText);
+
 				if (responseJSON) {
 					var message = responseJSON.message;
 					var item = responseJSON.item;
