@@ -16,6 +16,94 @@ class Tfreport extends JSON_Controller {
 
 	public function upload() {
 		$this->load->model(array('media_model'));
+		$this->load->library('upload');
+
+		$folder = date_string(get_time(), '%Y%m');
+		$folder_path = FCPATH .F_FILE .$folder;
+
+		if (!file_exists($folder_path)) {
+			mkdir($folder_path, 775, true);
+		}
+
+		$this->upload->set_upload_path($folder_path);
+
+		$files = $_FILES['files'];
+		$list = $list_error = [];
+		$result = true;
+
+		for($i = 0; $i < count($files['name']); $i++) {
+			$_FILES = array();
+
+			foreach ($files as $k => $v) {
+				$_FILES['files'][$k] = $v[$i];
+			}
+
+			if (!$this->upload->do_upload('files')) {
+				$result = false;
+
+				$item = array(
+					'file_name' => $files['name'][$i],
+					'file_type' => $files['type'][$i],
+					'file_ext' => pathinfo($files['name'][$i], PATHINFO_EXTENSION),
+					'orig_name' => $files['name'][$i],
+					'file_size' => $files['size'][$i],
+					'error' => strip_tags($this->upload->display_errors())
+				);
+
+				$list_error[] = $item;
+			}
+			else {
+				$file_data = $this->upload->data();
+
+				$item = array(
+					'folder' => $folder,
+					'file_name' => $file_data['file_name'],
+					'file_type' => $file_data['file_type'],
+					'file_ext' => trim($file_data['file_ext'], '.'),
+					'orig_name' => $file_data['orig_name'],
+					'file_size' => $file_data['file_size']
+				);
+
+				if ($file_data['is_image']) {
+					$item = array_merge($item, array(
+						'image_width' => $file_data['image_width'],
+						'image_height' => $file_data['image_height'],
+						'image_dir' => ($file_data['image_width'] >= $file_data['image_height']) ? ID_HORIZONTAL : ID_VERTICAL
+					));
+				}
+
+				if ($this->media_model->save($item)) {
+					$list[] = $item;
+				}
+				else {
+					$result = false;
+					$item['error'] = RS_DB_DANGER;
+					$list_error[] = $item;
+				}
+			}
+		}
+
+		if ($result) {
+			$state = RS_NICE;
+			$message = $this->lang->line('upload_successfully');
+		}
+		else {
+			$state = RS_DANGER;
+			$message = $this->lang->line('upload_failed');
+		}
+
+		$data = array(
+			'list' => $list,
+			'list_error' => $list_error,
+			'state' => $state,
+			'message' => $message
+		);
+
+		$this->render($data);
+	}
+
+	public function my_upload() {
+		$this->load->model(array('media_model'));
 
 		$folder = date_string(get_time(), '%Y%m');
 		$folder_path = FCPATH .F_FILE .$folder;
@@ -35,7 +123,6 @@ class Tfreport extends JSON_Controller {
 			if ($tmpFilePath != "") {
 				//Setup our new file path
 				$newFilePath = $folder_path .'/' .$files['name'][$i];
-
 
 				if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 					$item = array(
