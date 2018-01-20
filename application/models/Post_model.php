@@ -17,7 +17,8 @@ class Post_model extends MY_Model {
 			if (gettype($avatar_id) == 'array') {
 				$item['avatar_id'] = $avatar_id[0];
 			}
-			else {
+
+			if (empty($item['avatar_id'])) {
 				$item['avatar_id'] = 0;
 			}
 		}
