@@ -15,6 +15,7 @@ $lang = array(
 	'lead' => 'Lead',
 	'summary' => 'Summary',
 	'content' => 'Content',
+	'content_type' => 'Content Type',
 	'tags' => 'Tag(s)',
 	'avatar' => 'Avatar',
 	'attachment' => 'Attachment',
@@ -78,6 +79,10 @@ $lang = array(
 	'remember_me' => 'Remember me',
 	'invalid_username_password' => 'Invalid username or password!',
 	'account_locked' => 'Account is locked!',
+
+	'like' => 'Like',
+	'dislike' => 'Dislike',
+	'comment' => 'Comment',
 
 	'user' => 'User',
 	'admin' => 'Admin',

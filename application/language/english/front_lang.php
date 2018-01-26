@@ -9,11 +9,16 @@ $lang = array(
 	'password' => 'Password',
 	'time' => 'Time',
 	'content' => 'Content',
+	'content_type' => 'Content_type',
+	'comment' => 'Comment',
 	'make_an_appointment' => 'Make an appointment',
 	'appointment' => 'Appointment',
 
+	'content_not_liked' => 'Content is not liked before.',
+
 	'send' => 'Send',
 	'update_success' => 'Sent successfully, we will touch you as soon as possible.',
+	'input_duplicated' => 'Input duplicated',
 	'input_danger' => 'Input error, please check your information.',
 	'db_update_danger' => 'Sent not successfully, please try it again later.',
 	'captcha_required' => 'Captcha required!',

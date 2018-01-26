@@ -9,13 +9,18 @@ $lang = array(
 	'password' => 'Mật khẩu',
 	'time' => 'Thời gian',
 	'content' => 'Nội dung',
+	'content_type' => 'Loại nội dung',
+	'comment' => 'Bình luận',
 	'make_an_appointment' => 'Đặt lịch hẹn',
 	'appointment' => 'Cuộc hẹn',
 
+	'content_not_liked' => 'Nội dung chưa được thích.',
+
 	'send' => 'Gửi',
-	'update_success' => 'Gửi thành công, chúng tôi sẽ liên hệ lại với bạn trong thời gian sớm nhất.',
+	'update_success' => 'Cập nhật thành công.',
+	'input_duplicated' => 'Dữ liệu bị trùng, vui lòng kiểm tra lại thông tin của bạn.',
 	'input_danger' => 'Lỗi dữ liệu, vui lòng kiểm tra lại thông tin của bạn.',
-	'db_update_danger' => 'Gửi không thành công, vui lòng thử lại sau.',
+	'db_update_danger' => 'Lỗi cơ sở dữ liệu!!!',
 	'captcha_required' => 'Vui lòng bấm vào hộp chọn reCAPTCHA!',
 	'spam_attempt' => 'Nguy cơ spam!!!',
 

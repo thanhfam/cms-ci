@@ -15,6 +15,7 @@ $lang = array(
 	'lead' => 'Trích dẫn',
 	'summary' => 'Tóm tắt',
 	'content' => 'Nội dung',
+	'content_type' => 'Loại nội dung',
 	'tags' => 'Tag',
 	'avatar' => 'Hình đại diện',
 	'attachment' => 'Tập tin đính kèm',
@@ -78,6 +79,10 @@ $lang = array(
 	'remember_me' => 'Nhớ tôi',
 	'invalid_username_password' => 'Tài khoản hoặc mật khẩu không đúng!',
 	'account_locked' => 'Tài khoản bị khoá!',
+
+	'like' => 'Thích',
+	'dislike' => 'Không thích',
+	'comment' => 'Bình luận',
 
 	'user' => 'Người dùng',
 	'admin' => 'Quản trị',

@@ -95,6 +95,7 @@ defined('SECRET_KEY')      OR define('SECRET_KEY', '73da72cc2c67aa9cca56dd7946ca
 // content type
 defined('CT_POST')      OR define('CT_POST', 'post');
 defined('CT_CATEGORY')      OR define('CT_CATEGORY', 'category');
+defined('CT_COMMENT')      OR define('CT_COMMENT', 'comment');
 defined('CT_TF_REPORT')      OR define('CT_TF_REPORT', 'tf_report');
 
 // state type

@@ -11,7 +11,7 @@ class Tfreport_model extends Post_model {
 		$this->load->library('pagination');
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
+			->select('p.id, p.subtitle, p.title, p.avatar_id, p.total_like, p.total_comment, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
 			->from('post p')
 			->join('user u1', 'p.creator_id = u1.id')
 			->join('state s', 'p.state_weight = s.weight')
@@ -79,7 +79,7 @@ class Tfreport_model extends Post_model {
 		$this->load->library('pagination');
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
+			->select('p.id, p.subtitle, p.title, p.avatar_id, p.total_like, p.total_comment, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
 			->from('post p')
 			->join('user u1', 'p.creator_id = u1.id')
 			->join('state s', 'p.state_weight = s.weight')
