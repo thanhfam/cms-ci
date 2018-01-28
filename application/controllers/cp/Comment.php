@@ -163,7 +163,7 @@ class Comment extends MY_Controller {
 		switch ($type) {
 			case CT_POST:
 			case CT_TF_REPORT:
-				$title = $this->lang->line('list_of') . $this->lang->line('like') .' ' .$this->lang->line('post');
+				$title = $this->lang->line('list_of') . $this->lang->line('comment') .' ' .$this->lang->line('post');
 
 				$pagy_config = array(
 					'base_url' => base_url(F_CP .'comment/post')
@@ -173,7 +173,7 @@ class Comment extends MY_Controller {
 			break;
 
 			case CT_COMMENT:
-				$title = $this->lang->line('list_of') . $this->lang->line('like') .' ' .$this->lang->line('comment');
+				$title = $this->lang->line('list_of') . $this->lang->line('comment') .' ' .$this->lang->line('comment');
 
 				$pagy_config = array(
 					'base_url' => base_url(F_CP .'comment/comment')
