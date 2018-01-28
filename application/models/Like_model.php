@@ -144,38 +144,28 @@ class Like_model extends MY_Model {
 		}
 	}
 
-	public function list_all($page = 1, $filter = array(), &$pagy_config) {
+	public function list_all_post($page = 1, $filter = '', &$pagy_config) {
 		$this->load->library('pagination');
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, pg.uri, si.url site_url, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username, p.updater_id, u2.name updater_name, u2.username updater_username')
-			->from('post p')
-			->join('user u1', 'p.creator_id = u1.id')
-			->join('user u2', 'p.updater_id = u2.id')
-			->join('state s', 'p.state_weight = s.weight')
-			->join('category c', 'p.cate_id = c.id')
-			->join('site si', 'c.site_id = si.id')
-			->join('page pg', 'p.id = pg.content_id', 'left')
-			->where('pg.content_type', CT_POST)
-			->where('s.type', ST_CONTENT)
-			->order_by('p.id', 'DESC')
+			->select('l.id, p.title content_title, l.content_id, l.content_type, l.user_id, u.username, l.created, u.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
+			->from('like l')
+			->join('user u', 'l.user_id = u.id')
+			->join('media m', 'u.avatar_id = m.id', 'left')
+			->join('post p', 'l.content_id = p.id')
+			->order_by('l.id', 'DESC')
 		;
 
-		if (isset($filter['cate_id']) && ($filter['cate_id'] != '')) {
-			$this->db->where('p.cate_id', $filter['cate_id']);
-		}
-
-		if (isset($filter['state_weight']) && ($filter['state_weight'] != '')) {
-			$this->db->where('p.state_weight', $filter['state_weight']);
-		}
-
-		if (isset($filter['keyword']) && ($filter['keyword'] != '')) {
-			$keyword = $this->to_utf8($filter['keyword']);
+		if (isset($filter) && ($filter != '')) {
+			$filter = $this->to_utf8($filter);
 
 			$this->db->group_start()
-				->like('LOWER(p.id)', $keyword)
-				->or_like('LOWER(p.subtitle)', $keyword)
-				->or_like('LOWER(p.title)', $keyword)
+				->like('LOWER(l.id)', $filter)
+				->or_like('LOWER(title)', $filter)
+				->or_like('LOWER(content_type)', $filter)
+				->or_like('LOWER(content_id)', $filter)
+				->or_like('LOWER(username)', $filter)
+				->or_like('LOWER(user_id)', $filter)
 				->group_end()
 			;
 		}
@@ -199,8 +189,77 @@ class Like_model extends MY_Model {
 		$list = array();
 
 		while ($row = $query->unbuffered_row('array')) {
-			$row['updated'] = date_string($row['updated']);
 			$row['created'] = date_string($row['created']);
+
+			if ($row['file_name']) {
+				$row['avatar_url'] = base_url(F_FILE .$row['folder'] .'/' .$row['file_name']);
+			}
+			else {
+				$row['avatar_url'] = '';
+			}
+
+			$list[] = $row;
+		}
+
+		//echo $this->db->last_query();
+
+		return $list;
+	}
+
+	public function list_all_comment($page = 1, $filter = '', &$pagy_config) {
+		$this->load->library('pagination');
+
+		$this->db
+			->select('l.id, c.comment content_title, l.content_id, l.content_type, l.user_id, u.username, l.created, u.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
+			->from('like l')
+			->join('user u', 'l.user_id = u.id')
+			->join('media m', 'u.avatar_id = m.id', 'left')
+			->join('comment c', 'l.content_id = c.id')
+			->order_by('l.id', 'DESC')
+		;
+
+		if (isset($filter) && ($filter != '')) {
+			$filter = $this->to_utf8($filter);
+
+			$this->db->group_start()
+				->like('LOWER(l.id)', $filter)
+				->or_like('LOWER(comment)', $filter)
+				->or_like('LOWER(content_type)', $filter)
+				->or_like('LOWER(content_id)', $filter)
+				->or_like('LOWER(username)', $filter)
+				->or_like('LOWER(user_id)', $filter)
+				->group_end()
+			;
+		}
+
+		$total_row = $this->db->count_all_results('', FALSE);
+		$pagy_config['total_rows'] = $total_row;
+
+		$per_page = $this->pagination->per_page;
+		$last_page = ceil($total_row / $per_page);
+
+		if (! isset($page)  || (! is_numeric($page)) || ($page < 1) || ($page > $last_page)) {
+			$page = 1;
+		}
+
+		$from_row = ($page - 1) * $per_page;
+
+		$this->db->limit($per_page, $from_row);
+
+		$query = $this->db->query($this->db->get_compiled_select());
+
+		$list = array();
+
+		while ($row = $query->unbuffered_row('array')) {
+			$row['created'] = date_string($row['created']);
+
+			if ($row['file_name']) {
+				$row['avatar_url'] = base_url(F_FILE .$row['folder'] .'/' .$row['file_name']);
+			}
+			else {
+				$row['avatar_url'] = '';
+			}
+
 			$list[] = $row;
 		}
 

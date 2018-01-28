@@ -1,4 +1,8 @@
 <?php
+	$this->load->view(F_CP .'inc/modal_media');
+?>
+
+<?php
 if (isset($item) && !empty($item['created'])):
 ?>
 <div class="uk-margin-small time">
@@ -18,6 +22,18 @@ endif;
 
 <form method="post" accept-charset="utf-8" action="<?=current_url()?>" class="uk-form-stacked">
 
+<form method="post" accept-charset="utf-8" action="<?=current_url()?>" class="uk-form-stacked">
+<div class="uk-margin-small uk-width-large">
+	<label class="uk-form-label" for="avatar"><?=$lang->line('avatar')?></label>
+	<div class="uk-form-controls">
+		<ul id="avatar" class="uk-grid-small uk-child-width-1-2 media-container" data-type="post" data-select-mode="0" data-name="avatar" uk-grid>
+		</ul>
+		<?php
+			$this->load->view(F_CP .'inc/media', array('media' => 'avatar'));
+		?>
+	</div>
+</div>
+
 <div class="uk-margin-small uk-width-large" >
 	<label class="uk-form-label" for="name"><?=$lang->line('name')?> (*)</label>
 	<div class="uk-form-controls">
@@ -31,6 +47,14 @@ endif;
 	<div class="uk-form-controls">
 		<input type="text" name="email" id="name" value="<?=$item['email']?>" class="uk-input uk-form-small <?=(form_error('email') ? 'uk-form-danger' : '')?>" />
 		<?=form_error('email')?>
+	</div>
+</div>
+
+<div class="uk-margin-small uk-width-large" >
+	<label class="uk-form-label" for="phone"><?=$lang->line('phone')?> (*)</label>
+	<div class="uk-form-controls">
+		<input type="text" name="phone" id="name" value="<?=$item['phone']?>" class="uk-input uk-form-small <?=(form_error('phone') ? 'uk-form-danger' : '')?>" />
+		<?=form_error('phone')?>
 	</div>
 </div>
 

@@ -303,6 +303,11 @@ $config = array(
 			'field' => 'email',
 			'label' => 'lang:email',
 			'rules' => 'trim|required|valid_email|max_length[255]'
+		),
+		array(
+			'field' => 'phone',
+			'label' => 'lang:phone',
+			'rules' => 'trim|numeric|required|min_length[10]|max_length[11]'
 		)
 	),
 	'user_edit_profile' => array(
@@ -315,6 +320,11 @@ $config = array(
 			'field' => 'email',
 			'label' => 'lang:email',
 			'rules' => 'trim|required|valid_email|max_length[255]'
+		),
+		array(
+			'field' => 'phone',
+			'label' => 'lang:phone',
+			'rules' => 'trim|numeric|required|min_length[10]|max_length[11]'
 		)
 	),
 	'image_upload' => array(

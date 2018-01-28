@@ -50,7 +50,7 @@ class Comment extends JSON_Controller {
 		$this->render($data);
 	}
 
-	public function all() {
+	public function list_all() {
 		$this->load->library('pagination');
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
@@ -76,7 +76,7 @@ class Comment extends JSON_Controller {
 
 			$data = array(
 				'filter' => $filter,
-				'list' => $this->comment_model->list_all($page, $filter, $pagy_config),
+				'list' => $this->comment_model->list_all_activated($page, $filter, $pagy_config),
 				'pagy' => $this->pagination
 			);
 
@@ -101,7 +101,9 @@ class Comment extends JSON_Controller {
 				break;
 
 			case 'all':
+			case 'list':
 				$this->require_right('COMMENT_LIST');
+				$method = 'list_all';
 				break;
 
 			default:

@@ -36,6 +36,8 @@ $lang = array(
 	'pinterest' => 'Pinterest',
 	'gplus' => 'Google Plus',
 	'linkedin' => 'Linkedin',
+	'total' => 'Tổng cộng',
+	'social' => 'Xã hội',
 
 	'created' => 'Tạo',
 	'creator' => 'Người tạo',
@@ -104,6 +106,7 @@ $lang = array(
 	'add' => 'Thêm',
 	'save' => 'Lưu',
 	'save_back' => 'Lưu & Quay lại',
+	'activate_back' => 'Kích hoạt & Quay lại',
 	'remove' => 'Xoá',
 	'close' => 'Đóng',
 	'back' => 'Quay lại',

@@ -169,7 +169,11 @@ class User extends MY_Controller {
 						'email' => '',
 						'state_weight' => '',
 						'user_group_id' => '',
-						'created' => ''
+						'created' => '',
+						'avatar_id' => 0,
+						'avatar_url' => '',
+						'avatar_type' => '',
+						'avatar_file_ext' => ''
 					);
 				}
 				else {
@@ -184,8 +188,10 @@ class User extends MY_Controller {
 					'username' => $this->input->post('username'),
 					'name' => $this->input->post('name'),
 					'email' => $this->input->post('email'),
+					'phone' => $this->input->post('phone'),
 					'user_group_id' => $this->input->post('user_group_id'),
-					'state_weight' => $this->input->post('state_weight')
+					'state_weight' => $this->input->post('state_weight'),
+					'avatar_id' => $this->input->post('avatar_id')
 				);
 
 				if ($this->form_validation->run('user_edit')) {
@@ -214,6 +220,13 @@ class User extends MY_Controller {
 
 					$item['created'] = '';
 				}
+
+				$item = array_merge($item, array(
+					'avatar_id' => $this->input->post('avatar_id'),
+					'avatar_url' => $this->input->post('avatar_url'),
+					'avatar_type' => $this->input->post('avatar_type'),
+					'avatar_file_ext' => $this->input->post('avatar_file_ext')
+				));
 			break;
 		}
 
@@ -250,7 +263,9 @@ class User extends MY_Controller {
 					'name' => $this->input->post('name'),
 					'email' => $this->input->post('email'),
 					'timezone' => $this->input->post('timezone'),
-					'date_format' => $this->input->post('date_format')
+					'date_format' => $this->input->post('date_format'),
+					'phone' => $this->input->post('phone'),
+					'avatar_id' => $this->input->post('avatar_id')
 				);
 
 				if ($this->form_validation->run('user_edit_profile')) {
@@ -278,6 +293,13 @@ class User extends MY_Controller {
 
 					$item['created'] = '';
 				}
+
+				$item = array_merge($item, array(
+					'avatar_id' => $this->input->post('avatar_id'),
+					'avatar_url' => $this->input->post('avatar_url'),
+					'avatar_type' => $this->input->post('avatar_type'),
+					'avatar_file_ext' => $this->input->post('avatar_file_ext')
+				));
 			break;
 		}
 

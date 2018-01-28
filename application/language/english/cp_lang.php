@@ -36,6 +36,8 @@ $lang = array(
 	'pinterest' => 'Pinterest',
 	'gplus' => 'Google Plus',
 	'linkedin' => 'Linkedin',
+	'total' => 'Total',
+	'social' => 'Social',
 
 	'created' => 'Created',
 	'creator' => 'Creator',
@@ -104,6 +106,7 @@ $lang = array(
 	'add' => 'Add',
 	'save' => 'Save',
 	'save_back' => 'Save & Back',
+	'activate_back' => 'Activate & Back',
 	'remove' => 'Remove',
 	'close' => 'Close',
 	'back' => 'Back',

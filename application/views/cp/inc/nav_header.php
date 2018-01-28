@@ -11,7 +11,6 @@ $CI =& get_instance();
 		<ul class="uk-navbar-nav">
 			<?php if ($CI->has_right(array('CATE_LIST', 'POST_LIST', 'MEDIA_LIST'))): ?>
 			<li>
-				
 				<a href="#">
 					<?=$lang->line('content')?>
 				</a>
@@ -25,6 +24,28 @@ $CI =& get_instance();
 						<?php endif; ?>
 						<?php if ($CI->has_right('MEDIA_LIST')): ?>
 						<li><a href="<?=base_url(F_CP .'media')?>"><?=$lang->line('media')?></a></li>
+						<?php endif; ?>
+					</ul>
+				</div>
+			</li>
+			<?php endif; ?>
+			<?php if ($CI->has_right(array('LIKE_LIST', 'COMMENT_LIST'))): ?>
+			<li>
+				<a href="#">
+					<?=$lang->line('social')?>
+				</a>
+				<div class="uk-navbar-dropdown" uk-dropdown="offset: 1">
+					<ul class="uk-nav uk-navbar-dropdown-nav">
+						<?php if ($CI->has_right('COMMENT_LIST')): ?>
+						<li class="uk-nav-header"><?=$lang->line('comment')?></li>
+						<li><a href="<?=base_url(F_CP .'comment/post')?>"><?=$lang->line('post')?></a></li>
+						<li><a href="<?=base_url(F_CP .'comment/comment')?>"><?=$lang->line('comment')?></a></li>
+						<?php endif; ?>
+						<?php if ($CI->has_right('LIKE_LIST')): ?>
+						<li class="uk-nav-divider"></li>
+						<li class="uk-nav-header"><?=$lang->line('like')?></li>
+						<li><a href="<?=base_url(F_CP .'like/post')?>"><?=$lang->line('post')?></a></li>
+						<li><a href="<?=base_url(F_CP .'like/comment')?>"><?=$lang->line('comment')?></a></li>
 						<?php endif; ?>
 					</ul>
 				</div>

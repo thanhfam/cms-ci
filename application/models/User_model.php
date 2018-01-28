@@ -73,6 +73,18 @@ class User_model extends MY_Model {
 	}
 
 	public function save(&$item) {
+		if (isset($item['avatar_id'])) {
+			$avatar_id = $item['avatar_id'];
+
+			if (gettype($avatar_id) == 'array') {
+				$item['avatar_id'] = $avatar_id[0];
+			}
+
+			if (empty($item['avatar_id'])) {
+				$item['avatar_id'] = 0;
+			}
+		}
+
 		if (empty($item['id'])) {
 			$item['created'] = $item['updated'] = get_time();
 			$result = $this->db->insert('user', $item);
@@ -166,8 +178,9 @@ class User_model extends MY_Model {
 		$id = intval($id);
 
 		$this->db
-			->select('u.id, u.username, u.name, u.email, u.timezone, u.date_format, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated')
+			->select('u.id, u.username, u.name, u.email, u.phone, u.timezone, u.date_format, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated, u.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
 			->from('user u')
+			->join('media m', 'u.avatar_id = m.id', 'left')
 			->where('u.id', $id)
 		;
 
@@ -180,6 +193,17 @@ class User_model extends MY_Model {
 
 			$item['created'] = date_string($item['created']);
 			$item['updated'] = date_string($item['updated']);
+
+			if ($item['file_name']) {
+				$item['avatar_id'] = [$item['avatar_id']];
+				$item['avatar_type'] = [$item['avatar_type']];
+				$item['avatar_file_ext'] = [$item['avatar_file_ext']];
+				$item['avatar_url'] = [base_url(F_FILE .$item['folder'] .'/' .$item['file_name'])];
+			}
+			else {
+				$item['avatar_url'] = '';
+			}
+
 		}
 
 		return $item;
