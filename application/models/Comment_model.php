@@ -352,7 +352,7 @@ class Comment_model extends MY_Model {
 			->join('media m', 'u.avatar_id = m.id', 'left')
 			->join('state s', 'c.state_weight = s.weight')
 			->where('s.type', ST_CONTENT)
-			->where('c.state_weight', S_INACTIVATED)
+			->where('c.state_weight', S_ACTIVATED)
 			->order_by('c.id', 'ASC')
 		;
 
