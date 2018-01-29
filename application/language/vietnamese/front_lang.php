@@ -16,6 +16,12 @@ $lang = array(
 
 	'content_not_liked' => 'Nội dung chưa được thích.',
 
+	'password' => 'Mật khẩu',
+	'password_new_confirm' => 'Xác nhận mật khẩu mới',
+	'password_new' => 'Mật khẩu mới',
+
+	'password_incorrect' => 'Mật khẩu không đúng!',
+
 	'send' => 'Gửi',
 	'update_success' => 'Cập nhật thành công.',
 	'input_duplicated' => 'Dữ liệu bị trùng, vui lòng kiểm tra lại thông tin của bạn.',

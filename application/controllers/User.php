@@ -8,67 +8,37 @@ class User extends JSON_Controller {
 	}
 
 	public function change_password() {
-		$id = $this->session->user['id'];
-
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
-		$submit = $this->input->post('submit');
+		$id = $this->session->user['id'];
+		$data = array();
 
-		$data = array(
-			'title' => $this->lang->line('change_password'),
-			'link_back' => base_url(F_CP .'user/list')
-		);
+		if ($this->form_validation->run('user_change_password')) {
+			$item = array(
+				'id' => $id,
+				'password' => $this->input->post('password'),
+				'password_new' => $this->input->post('password_new'),
+				'password_new_confirm' => $this->input->post('password_new_confirm')
+			);
 
-		switch ($submit) {
-			case NULL:
-				$item = $this->user_model->get($id);
+			$message = $this->user_model->change_password($item);
+			$this->set_message($message);
 
-				$item = array_merge($item, array(
-					'password' => '',
-					'password_new' => '',
-					'password_new_confirm' => ''
-				));
-			break;
-
-			case 'save':
-				$item = array(
-					'id' => $id,
-					'password' => $this->input->post('password'),
-					'password_new' => $this->input->post('password_new'),
-					'password_new_confirm' => $this->input->post('password_new_confirm'),
-					'created' => $this->input->post('created'),
-					'updated' => $this->input->post('updated')
-				);
-
-				if ($this->form_validation->run('user_change_password')) {
-					$message = $this->user_model->change_password($item);
-					$this->set_message($message);
-
-					if ($message['type'] == 1) {
-						$item = array_merge($item, array(
-							'password' => '',
-							'password_new' => '',
-							'password_new_confirm' => ''
-						));
-					}
-				}
-				else {
-					$this->set_message(array(
-						'type' => 3,
-						'content' => $this->lang->line('input_danger')
-					));
-				}
-			break;
+			if ($message['type'] == 1) {
+				$data['state'] = RS_NICE;
+				$data['message'] = $message['content'];
+			}
+			else {
+				$data['state'] = RS_DANGER;
+				$data['message'] = $message['content'];
+			}
 		}
-
-		$data = array_merge($data, array(
-			'item' => $item
-		));
-
-		$this->set_body(
-			'system/user_change_password'
-		);
+		else {
+			$data['state'] = RS_INPUT_DANGER;
+			$data['message'] = $this->lang->line('input_danger');
+			$data['input_error'] = $this->form_validation->error_array();
+		}
 
 		$this->render($data);
 	}
@@ -87,8 +57,11 @@ class User extends JSON_Controller {
 
 	public function sign_in() {
 		if ($this->is_logged_in()) {
-			$this->get_session();
-			return;
+			unset($this->session->user);
+			$this->session->sess_destroy();
+
+			//$this->get_session();
+			//return;
 		}
 
 		$this->load->helper('form');
@@ -135,12 +108,14 @@ class User extends JSON_Controller {
 		$this->form_validation->set_rules('name', 'lang:name', 'trim|required|max_length[255]');
 		$this->form_validation->set_rules('email', 'lang:email', 'trim|required|valid_email|max_length[255]|is_unique[user.email]');
 		$this->form_validation->set_rules('password', 'lang:password', 'trim|required|min_length[8]|max_length[255]');
+		$this->form_validation->set_rules('phone', 'lang:phone', 'trim|numeric|required|min_length[10]|max_length[11]|is_unique[user.phone]');
 
 		if ($this->form_validation->run()) {
 			$item = array(
 				'name' => $this->input->post('name', TRUE),
 				'username' => $this->input->post('email', TRUE),
 				'email' => $this->input->post('email', TRUE),
+				'phone' => $this->input->post('phone', TRUE),
 				'password_plain' => $this->input->post('password', TRUE),
 				'password' => $this->user_model->hash_password($this->input->post('password', TRUE)),
 				'user_group_id' => 3,
@@ -178,61 +153,32 @@ class User extends JSON_Controller {
 		$this->load->helper(array('form', 'date'));
 		$this->load->library('form_validation');
 
-		$submit = $this->input->post('submit');
+		$data = array();
 
-		$data = array(
-			'title' => $this->lang->line('profile')
-		);
+		$this->form_validation->set_rules('name', 'lang:name', 'trim|required|max_length[255]');
+		$this->form_validation->set_rules('phone', 'lang:phone', 'trim|numeric|required|min_length[10]|max_length[11]');
 
-		switch ($submit) {
-			case NULL:
-				$item = $this->user_model->get($id);
-			break;
+		if ($this->form_validation->run('user_edit_profile')) {
+			$item = array(
+				'id' => $id,
+				'name' => $this->input->post('name'),
+				'phone' => $this->input->post('phone')
+			);
 
-			case 'save':
-				$item = array(
-					'id' => $id,
-					'name' => $this->input->post('name'),
-					'email' => $this->input->post('email'),
-					'timezone' => $this->input->post('timezone'),
-					'date_format' => $this->input->post('date_format')
-				);
-
-				if ($this->form_validation->run('user_edit_profile')) {
-					if (!$this->user_model->save($item)) {
-						$this->set_message(array(
-							'type' => 3,
-							'content' => $this->lang->line('db_update_danger')
-						));
-					}
-					else {
-						$this->set_message(array(
-							'type' => 1,
-							'content' => $this->lang->line('update_success')
-						));
-
-						$this->session->date_format = $item['date_format'];
-						$this->session->timezone = $item['timezone'];
-					}
-				}
-				else {
-					$this->set_message(array(
-						'type' => 3,
-						'content' => $this->lang->line('input_danger')
-					));
-
-					$item['created'] = '';
-				}
-			break;
+			if (!$this->user_model->save($item)) {
+				$data['state'] = RS_DB_DANGER;
+				$data['message'] = $this->lang->line('db_update_danger');
+			}
+			else {
+				$data['state'] = RS_NICE;
+				$data['message'] = $this->lang->line('update_success');
+			}
 		}
-
-		$data = array_merge($data, array(
-			'item' => $item
-		));
-
-		$this->set_body(
-			'system/user_edit_profile'
-		);
+		else {
+			$data['state'] = RS_INPUT_DANGER;
+			$data['message'] = $this->lang->line('input_danger');
+			$data['input_error'] = $this->form_validation->error_array();
+		}
 
 		$this->render($data);
 	}
@@ -256,11 +202,13 @@ class User extends JSON_Controller {
 		switch ($method) {
 			case 'sign_up':
 			case 'sign_in':
+				break;
+
 			case 'sign_out':
 			case 'get_session':
 			case 'edit_profile':
-			case 'reset_password':
-
+			case 'change_password':
+				$this->require_right('TF_REPORT_USER');
 			break;
 
 			default:

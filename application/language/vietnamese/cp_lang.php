@@ -52,7 +52,7 @@ $lang = array(
 	'nation' => 'Quốc gia',
 
 	'password' => 'Mật khẩu',
-	'password_new_confirm' => 'Xác nhận mật khẩu mới',
+	'password_new_confirm' => 'Xác nhận mật khẩu',
 	'password_new' => 'Mật khẩu mới',
 	'change_password' => 'Đổi mật khẩu',
 	'reset_password' => 'Thiết lập mật khẩu',

@@ -16,6 +16,11 @@ $lang = array(
 
 	'content_not_liked' => 'Content is not liked before.',
 
+	'password' => 'Password',
+	'password_new_confirm' => 'Confirm new password',
+	'password_new' => 'New password',
+	'password_incorrect' => 'The password is not correct!',
+
 	'send' => 'Send',
 	'update_success' => 'Sent successfully, we will touch you as soon as possible.',
 	'input_duplicated' => 'Input duplicated',
