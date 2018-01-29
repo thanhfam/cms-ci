@@ -85,11 +85,10 @@ class Post_model extends MY_Model {
 
 	public function load_attachment(&$item, $fm = '') {
 		if ($item['attachment_id'] == '') {
-			if ($fm = '') {
-				$item['attachment_type'] = '';
-				$item['attachment_file_ext'] = '';
-				$item['attachment_url'] = '';
-			}
+			$item['attachment_type'] = '';
+			$item['attachment_file_ext'] = '';
+			$item['attachment_url'] = '';
+
 			return;
 		}
 
@@ -182,10 +181,7 @@ class Post_model extends MY_Model {
 			$item['updated'] = date_string($item['updated']);
 
 			if ($item['file_name']) {
-				$item['avatar_id'] = [$item['avatar_id']];
-				$item['avatar_type'] = [$item['avatar_type']];
-				$item['avatar_file_ext'] = [$item['avatar_file_ext']];
-				$item['avatar_url'] = [base_url(F_FILE .$item['folder'] .'/' .$item['file_name'])];
+				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
 			}
 			else {
 				$item['avatar_url'] = '';

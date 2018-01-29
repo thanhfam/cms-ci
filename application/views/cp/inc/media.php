@@ -1,3 +1,12 @@
+<?php
+	if (!empty(($item[$media .'_id'])) && gettype($item[$media .'_id']) == 'string') {
+		$item[$media .'_id'] = [$item[$media .'_id']];
+		$item[$media .'_url'] = [$item[$media .'_url']];
+		$item[$media .'_type'] = [$item[$media .'_type']];
+		$item[$media .'_file_ext'] = [$item[$media .'_file_ext']];
+	}
+?>
+
 <script>
 var media_id = <?=json_encode($item[$media .'_id']) ?>;
 var media_url = <?=json_encode($item[$media .'_url']) ?>;
