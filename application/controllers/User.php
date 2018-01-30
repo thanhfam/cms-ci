@@ -17,9 +17,9 @@ class User extends JSON_Controller {
 		if ($this->form_validation->run('user_change_password')) {
 			$item = array(
 				'id' => $id,
-				'password' => $this->input->post('password'),
-				'password_new' => $this->input->post('password_new'),
-				'password_new_confirm' => $this->input->post('password_new_confirm')
+				'password' => $this->input->post('password', TRUE),
+				'password_new' => $this->input->post('password_new', TRUE),
+				'password_new_confirm' => $this->input->post('password_new_confirm', TRUE)
 			);
 
 			$message = $this->user_model->change_password($item);
@@ -161,8 +161,8 @@ class User extends JSON_Controller {
 		if ($this->form_validation->run('user_edit_profile')) {
 			$item = array(
 				'id' => $id,
-				'name' => $this->input->post('name'),
-				'phone' => $this->input->post('phone')
+				'name' => $this->input->post('name', TRUE),
+				'phone' => $this->input->post('phone', TRUE)
 			);
 
 			if (!$this->user_model->save($item)) {
