@@ -30,8 +30,9 @@ $lang = array(
 	'captcha_required' => 'Vui lòng bấm vào hộp chọn reCAPTCHA!',
 	'spam_attempt' => 'Nguy cơ spam!!!',
 
-	'sign_up_successfully' => 'Bạn đã đăng ký thành công.',
-	'sign_in_successfully' => 'Bạn đã đăng nhập thành công.',
+	'sign_up_successfully' => 'Bạn đã đăng ký thành công!',
+	'sign_in_successfully' => 'Bạn đã đăng nhập thành công!',
+	'sign_in_already' => 'Bạn đã đang đăng nhập!',
 	'incorrect_username_password' => 'Tên đăng nhập hoặc mật khẩu không đúng.',
 
 	'upload_successfully' => 'Tải lên thành công!!!',

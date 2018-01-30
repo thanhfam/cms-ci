@@ -47,6 +47,7 @@ class User extends JSON_Controller {
 		if ($this->is_logged_in()) {
 			$data['state'] = RS_NICE;
 			$data['user'] = $this->session->user;
+			$data['message'] = $this->lang->line('sign_in_already');
 		}
 		else {
 			$data['state'] = RS_AUTH_DANGER;
@@ -57,11 +58,11 @@ class User extends JSON_Controller {
 
 	public function sign_in() {
 		if ($this->is_logged_in()) {
-			unset($this->session->user);
-			$this->session->sess_destroy();
+			//unset($this->session->user);
+			//$this->session->sess_destroy();
 
-			//$this->get_session();
-			//return;
+			$this->get_session();
+			return;
 		}
 
 		$this->load->helper('form');

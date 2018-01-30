@@ -29,8 +29,9 @@ $lang = array(
 	'captcha_required' => 'Captcha required!',
 	'spam_attempt' => 'Spam attempt!!!',
 
-	'sign_up_successfully' => 'You have signed up successfully.',
-	'sign_in_successfully' => 'You have signed in successfully.',
+	'sign_up_successfully' => 'You have signed up successfully!',
+	'sign_in_successfully' => 'You have signed in successfully!',
+	'sign_in_already' => 'You have signed in already!',
 	'incorrect_username_password' => 'Username/password is not corrected.',
 
 	'upload_successfully' => 'Upload successfully!!!',
