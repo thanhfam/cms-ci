@@ -59,7 +59,6 @@ class Comment extends JSON_Controller {
 
 		$this->form_validation->set_rules('content_id', 'lang:content', 'trim|required|max_length[255]');
 		$this->form_validation->set_rules('content_type', 'lang:content_type', 'trim|required|max_length[255]');
-		$this->form_validation->set_rules('comment', 'lang:comment', 'trim|required|max_length[1024]');
 
 		$filter = array(
 			'content_id' => $this->input->post('content_id'),
