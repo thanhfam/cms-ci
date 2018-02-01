@@ -167,6 +167,7 @@ class User extends MY_Controller {
 						'username' => '',
 						'name' => '',
 						'email' => '',
+						'phone' => '',
 						'state_weight' => '',
 						'user_group_id' => '',
 						'created' => '',
