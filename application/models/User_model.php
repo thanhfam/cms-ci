@@ -232,6 +232,7 @@ class User_model extends MY_Model {
 			->from('user u')
 			->join('state s', 'u.state_weight = s.weight')
 			->join('user_group ug', 'u.user_group_id = ug.id')
+			->where('s.type', ST_USER)
 			->order_by('u.state_weight', 'DESC')
 			->order_by('u.username', 'ASC')
 		;
