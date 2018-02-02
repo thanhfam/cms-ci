@@ -109,6 +109,7 @@ class User extends JSON_Controller {
 	}
 
 	public function sign_up($type = "email") {
+
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
@@ -124,7 +125,7 @@ class User extends JSON_Controller {
 
 			$username = $this->input->post('email', TRUE);
 		}
-		else if ($type == "google") {
+		else {
 			$this->form_validation->set_rules('username', 'lang:username', 'trim|required|min_length[3]|max_length[255]');
 		}
 
@@ -222,7 +223,7 @@ class User extends JSON_Controller {
 			case 'sign_up':
 			case 'sign_in':
 			case 'sign_up_google':
-			case 'sign_in_facebook':
+			case 'sign_up_facebook':
 				break;
 
 			case 'sign_out':
