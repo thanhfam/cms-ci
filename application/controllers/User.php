@@ -70,8 +70,8 @@ class User extends JSON_Controller {
 
 		$data = array();
 
-		$this->form_validation->set_rules('username', 'lang:username', 'trim|required|valid_email|max_length[255]');
-		$this->form_validation->set_rules('password', 'lang:password', 'trim|required|min_length[8]|max_length[255]');
+		$this->form_validation->set_rules('username', 'lang:username', 'trim|required|max_length[255]');
+		$this->form_validation->set_rules('password', 'lang:password', 'trim|required|min_length[8]|max_length[3000]');
 
 		if ($this->form_validation->run()) {
 			$item = array(
@@ -100,27 +100,45 @@ class User extends JSON_Controller {
 		$this->render($data);
 	}
 
-	public function sign_up() {
+	public function sign_up_google() {
+		$this->sign_up("google");
+	}
+
+	public function sign_up_facebook() {
+		$this->sign_up("facebook");
+	}
+
+	public function sign_up($type = "email") {
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
 		$data = array();
+		$username = $this->input->post('username', TRUE);
 
 		$this->form_validation->set_rules('name', 'lang:name', 'trim|required|max_length[255]');
-		$this->form_validation->set_rules('email', 'lang:email', 'trim|required|valid_email|max_length[255]|is_unique[user.email]');
-		$this->form_validation->set_rules('password', 'lang:password', 'trim|required|min_length[8]|max_length[255]');
-		$this->form_validation->set_rules('phone', 'lang:phone', 'trim|numeric|required|min_length[10]|max_length[11]|is_unique[user.phone]');
+		$this->form_validation->set_rules('password', 'lang:password', 'trim|required|min_length[8]|max_length[3000]');
+
+		if ($type == "email") {
+			$this->form_validation->set_rules('email', 'lang:email', 'trim|required|valid_email|max_length[255]|is_unique[user.email]');
+			$this->form_validation->set_rules('phone', 'lang:phone', 'trim|numeric|required|min_length[10]|max_length[11]|is_unique[user.phone]');
+
+			$username = $this->input->post('email', TRUE);
+		}
+		else if ($type == "google") {
+			$this->form_validation->set_rules('username', 'lang:username', 'trim|required|min_length[3]|max_length[255]');
+		}
 
 		if ($this->form_validation->run()) {
 			$item = array(
 				'name' => $this->input->post('name', TRUE),
-				'username' => $this->input->post('email', TRUE),
+				'username' => $username,
 				'email' => $this->input->post('email', TRUE),
 				'phone' => $this->input->post('phone', TRUE),
 				'password_plain' => $this->input->post('password', TRUE),
 				'password' => $this->user_model->hash_password($this->input->post('password', TRUE)),
 				'user_group_id' => 3,
-				'state_weight' => S_ACTIVATED
+				'state_weight' => S_ACTIVATED,
+				'type' => $type
 			);
 
 			if (!$this->user_model->save($item)) {
@@ -203,6 +221,8 @@ class User extends JSON_Controller {
 		switch ($method) {
 			case 'sign_up':
 			case 'sign_in':
+			case 'sign_up_google':
+			case 'sign_in_facebook':
 				break;
 
 			case 'sign_out':
