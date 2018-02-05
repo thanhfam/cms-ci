@@ -146,4 +146,27 @@ class Tfreport_model extends Post_model {
 
 		return $list;
 	}
+
+	public function update($item, $user_update = FALSE) {
+		$this->db->where('id', $item['id']);
+
+		if ($user_update) {
+			$this->db->where('creator_id', $this->session->user['id']);
+		}
+
+		$this->db->update('post', $item);
+
+		$result = $this->db->affected_rows();
+
+		if ($this->db->affected_rows() > 0) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+
+	public function user_update($item) {
+		return $this->update($item, TRUE);
+	}
 }

@@ -225,6 +225,44 @@ class Tfreport extends JSON_Controller {
 		$this->render($data);
 	}
 
+	public function user_remove() {
+		$this->load->model(array('tfreport_model'));
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+
+		$data = array();
+
+		$this->form_validation->set_rules('id', 'lang:id', 'trim|required');
+
+		$item = array(
+			'id' => $this->input->post('id'),
+			'state_weight' => S_USER_REMOVED
+		);
+
+		if ($this->form_validation->run()) {
+			if ($this->tfreport_model->user_update($item)) {
+				$state = RS_NICE;
+				$message = $this->lang->line('remove_successfully');
+			}
+			else {
+				$state = RS_DB_DANGER;
+				$message = $this->lang->line('db_update_danger');
+			}
+		}
+		else {
+			$state = RS_INPUT_DANGER;
+			$message = $this->lang->line('input_danger');
+			$data['input_error'] = $this->form_validation->error_array();
+		}
+
+		$data = array_merge($data, array(
+			'state' => $state,
+			'message' => $message
+		));
+
+		$this->render($data);
+	}
+
 	public function edit($id = '') {
 		$this->load->model(array('tfreport_model'));
 		$this->load->helper(array('form', 'url', 'text'));
@@ -319,11 +357,13 @@ class Tfreport extends JSON_Controller {
 				break;
 
 			case 'create':
+			case 'edit':
 				$this->require_right('TF_REPORT_EDIT');
 				break;
 
-			case 'edit':
+			case 'remove':
 				$this->require_right('TF_REPORT_EDIT');
+				$method = 'user_remove';
 				break;
 
 			case 'all':

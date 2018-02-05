@@ -7,6 +7,43 @@ class Like extends JSON_Controller {
 		$this->load->model('like_model');
 	}
 
+	public function check() {
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+
+		$data = array();
+
+		$this->form_validation->set_rules('content_id', 'lang:content', 'trim|required');
+		$this->form_validation->set_rules('content_type', 'lang:content_type', 'trim|required');
+
+		$item = array(
+			'content_id' => $this->input->post('content_id'),
+			'content_type' => $this->input->post('content_type'),
+			'user_id' => $this->session->user['id']
+		);
+
+		if ($this->form_validation->run()) {
+			if ($this->like_model->is_liked($item)) {
+				$state = RS_NICE;
+			}
+			else {
+				$state = RS_DANGER;
+			}
+		}
+		else {
+			$state = RS_INPUT_DANGER;
+			$message = $this->lang->line('input_danger');
+			$data['input_error'] = $this->form_validation->error_array();
+		}
+
+		$data = array_merge($data, array(
+			'item' => $item,
+			'state' => $state,
+		));
+
+		$this->render($data);
+	}
+
 	public function add() {
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
@@ -104,6 +141,7 @@ class Like extends JSON_Controller {
 		$method = str_replace('-', '_', $method);
 
 		switch ($method) {
+			case 'check':
 			case 'add':
 				$this->require_right('LIKE_ADD');
 			break;

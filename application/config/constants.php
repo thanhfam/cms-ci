@@ -120,6 +120,7 @@ defined('ID_HORIZONTAL')      OR define('ID_HORIZONTAL', 'horizontal');
 defined('ID_VERTICAL')      OR define('ID_VERTICAL', 'vertical');
 
 // state
+defined('S_USER_REMOVED')      OR define('S_USER_REMOVED', -2);
 defined('S_REMOVED')      OR define('S_REMOVED', -1);
 defined('S_INACTIVATED')      OR define('S_INACTIVATED', 0);
 defined('S_ACTIVATED')      OR define('S_ACTIVATED', 9);

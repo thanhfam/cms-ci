@@ -36,5 +36,6 @@ $lang = array(
 	'incorrect_username_password' => 'Tên đăng nhập hoặc mật khẩu không đúng.',
 
 	'upload_successfully' => 'Tải lên thành công!!!',
+	'remove_successfully' => 'Xoá thành công!!!',
 	'upload_failed' => 'Tải lên KHÔNG thành công!!!'
 );

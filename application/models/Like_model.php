@@ -50,12 +50,12 @@ class Like_model extends MY_Model {
 		$result =  FALSE;
 
 		switch ($item['content_type']) {
-			case 'tfreport':
-			case 'post':
+			case CT_TF_REPORT:
+			case CT_POST:
 				$result = $this->db->update('post');
 				break;
 
-			case 'comment':
+			case CT_COMMENT:
 				$result = $this->db->update('comment');
 				break;
 			
@@ -73,12 +73,12 @@ class Like_model extends MY_Model {
 		$result =  FALSE;
 
 		switch ($item['content_type']) {
-			case 'tfreport':
-			case 'post':
+			case CT_TF_REPORT:
+			case CT_POST:
 				$result = $this->db->update('post');
 				break;
 
-			case 'comment':
+			case CT_COMMENT:
 				$result = $this->db->update('comment');
 				break;
 			
@@ -106,12 +106,12 @@ class Like_model extends MY_Model {
 		$result =  FALSE;
 
 		switch ($item['content_type']) {
-			case 'tfreport':
-			case 'post':
+			case CT_TF_REPORT:
+			case CT_POST:
 				$result = $this->db->update('post');
 				break;
 
-			case 'comment':
+			case CT_COMMENT:
 				$result = $this->db->update('comment');
 				break;
 			

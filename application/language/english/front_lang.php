@@ -35,5 +35,6 @@ $lang = array(
 	'incorrect_username_password' => 'Username/password is not corrected.',
 
 	'upload_successfully' => 'Upload successfully!!!',
+	'remove_successfully' => 'Remove successfully!!!',
 	'upload_failed' => 'Upload failed!!!'
 );
