@@ -26,7 +26,7 @@ $lang = array(
 	'update_success' => 'Cập nhật thành công.',
 	'input_duplicated' => 'Dữ liệu bị trùng, vui lòng kiểm tra lại thông tin của bạn.',
 	'input_danger' => 'Lỗi dữ liệu, vui lòng kiểm tra lại thông tin của bạn.',
-	'db_update_danger' => 'Lỗi cơ sở dữ liệu!!!',
+	'db_update_danger' => 'Cập nhật không thành công, hãy thử lại sau!!!',
 	'captcha_required' => 'Vui lòng bấm vào hộp chọn reCAPTCHA!',
 	'spam_attempt' => 'Nguy cơ spam!!!',
 

@@ -22,7 +22,7 @@ endif;
 			case MT_VIDEO:
 		?>
 			<video controls>
-				<source src="<?=$item['url']?>" type="video/mp4">
+				<source src="<?=$item['url_ori']?>" type="video/mp4">
 				Your browser does not support the video tag.
 			</video>
 		<?php
@@ -90,7 +90,9 @@ endif;
 	<ul class="uk-list media-meta">
 		<li class="uk-text-small">#<?=$item['id']?></li>
 		<?php if ($item['orig_name']): ?>
-		<li class="uk-text-small"><a href="<?=$item['url']?>" title="<?=$item['content']?>"><?=$item['orig_name']?></a></li>
+		<li class="uk-text-small">
+			<a href="<?=$item['url_ori']?>" title="<?=$item['content']?>"><?=$item['orig_name']?></a>
+		</li>
 		<?php endif; ?>
 		<?php if ($item['file_size']): ?>
 		<li class="uk-text-small"><?=$item['file_size']?> KB</li>

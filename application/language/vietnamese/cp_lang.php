@@ -7,6 +7,12 @@ $lang = array(
 	'subtitle' => 'Tiêu đề phụ',
 	'code' => 'Mã',
 	'name' => 'Tên',
+	'last_name' => 'Họ',
+	'middle_name' => 'Tên/họ đệm',
+	'first_name' => 'Tên',
+	'birthday' => 'Ngày sinh',
+	'date_format_description' => 'Định dạng: ngày/tháng/năm. Ví dụ: 30/11/1983',
+	'note' => 'Ghi chú',
 	'size' => 'Kích thước',
 	'uri' => 'URI',
 	'type' => 'Loại',
@@ -38,6 +44,20 @@ $lang = array(
 	'linkedin' => 'Linkedin',
 	'total' => 'Tổng cộng',
 	'social' => 'Xã hội',
+	'enum' => 'Enum',
+	'service' => 'Dịch vụ',
+	'service_name' => 'Tên dịch vụ',
+	'date_consult' => 'Ngày tư vấn',
+	'date_exam' => 'Ngày khám',
+	'hospital' => 'Bệnh viện',
+	'step' => 'Bước',
+	'price' => 'Giá',
+	'contact' => 'Liên hệ',
+	'customer' => 'Khách hàng',
+	'agency' => 'Đại lý',
+	'staff' => 'Nhân viên',
+	'treatment' => 'Phiếu dịch vụ',
+	'statistic' => 'Thống kê',
 
 	'created' => 'Tạo',
 	'creator' => 'Người tạo',
@@ -147,6 +167,9 @@ $lang = array(
 	'menu' => 'Trình đơn',
 	'menu_item' => 'Mục trình đơn',
 	'parent' => 'Cha',
+	'dad' => 'Cha',
+	'mom' => 'Mẹ',
+	'wife_husband' => 'Vợ / chồng',
 
 	'client' => 'Khách hàng',
 	'appointment' => 'Cuộc hẹn',
@@ -185,5 +208,8 @@ $lang = array(
 	'item_not_found' => 'Không tìm thấy đối tượng.',
 
 	'sure_to_remove' => 'Bạn có chắc chắn muốn xoá đối tượng này ?',
-	'no_row' => 'Không có dữ liệu !!!'
+	'no_row' => 'Không có dữ liệu !!!',
+
+	'tvn' => 'TVN',
+	'traffic_zoom' => 'Zoom Giao Thông'
 );

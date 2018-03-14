@@ -8,45 +8,181 @@
 		<meta name="description" content="">
 	<meta name="keywords" content="">
 	
-	<link rel="stylesheet" href="http://[::1]/tvn/pub/front/css/front.css" media="screen, projection" />
-	<script src="http://[::1]/tvn/pub/front/jquery/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" href="pub/front/css/front.css" media="screen, projection" />
+	<script src="pub/front/jquery/jquery-3.2.1.min.js"></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
+<h4>Sign up</h4>
 <form id="form-sign-up">
 Name <input type="text" name="name" value="Thanh" />
+Username <input type="text" name="username" value="thanhfam@ymail.com" />
 Email <input type="text" name="email" value="thanhfam@ymail.com" />
+Phone <input type="text" name="phone" value="0904488440" />
 Password <input type="text" name="password" value="12341234" />
 <button type="submit">Submit</button>
 </form>
+<h4>Edit profile</h4>
+<form id="form-edit-profile">
+Name <input type="text" name="name" value="Thanh" />
+Email <input type="text" name="email" value="thanhfam@ymail.com" />
+Phone <input type="text" name="phone" value="0904488440" />
+<button type="submit">Submit</button>
+</form>
+<script>
+$("#form-edit-profile").submit(function(e) {
+	$.ajax({
+		type: "POST",
+		url: 'user/edit-profile',
+		data: $("#form-edit-profile").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
 
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+</script>
+<h4>Sign in</h4>
 <form id="form-sign-in">
-Email <input type="text" name="username" value="thanhfam@ymail.com" />
+Email <input type="text" name="username" value="thanhfam99@ymail.com" />
 Password <input type="text" name="password" value="12341234" />
 <button type="submit">Submit</button>
 </form>
+<h4>Change password</h4>
+<form id="form-change-password">
+Old <input type="text" name="password" value="12341234" />
+New <input type="text" name="password_new" value="12341234" />
+Confirm <input type="text" name="password_new_confirm" value="12341234" />
+<button type="submit">Submit</button>
+</form>
+<script>
+$("#form-change-password").submit(function(e) {
+	$.ajax({
+		type: "POST",
+		url: 'user/change_password',
+		data: $("#form-change-password").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
 
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+</script>
+
+<h4>TF Report Edit</h4>
 <form id="tfreport-edit">
-Lead <input type="text" name="lead" value="tfreport location" /><br>
-Title <input type="text" name="title" value="tfreport comment" /><br>
-Category <input type="text" name="cate_id" value="33" /><br>
-Avatar <input type="text" name="avatar_id" value="" /><br>
-Attachment <input type="text" name="attachment_id" value="" /><br>
+Lead <input type="text" name="lead" value="tfreport location" />
+Title <input type="text" name="title" value="tfreport comment" />
+Category <input type="text" name="cate_id" value="33" />
+Avatar <input type="text" name="avatar_id" value="" />
+Attachment <input type="text" name="attachment_id" value="" />
 <button type="submit">Submit</button>
 </form>
 
-<form id="form-upload" method="post" enctype="multipart/form-data" action="/tvn/tfreport/upload">
-File 1 <input type="file" name="files[]" multiple="multiple" /><br>
-File 2 <input type="file" name="files[]" multiple="multiple" /><br>
+<h4>TF Report User Remove</h4>
+<form id="tfreport-remove">
+Id <input type="text" name="id" value="50" />
+<button type="submit">Remove</button>
+</form>
+
+<h4>Upload</h4>
+<form id="form-upload" method="post" enctype="multipart/form-data" action="tfreport/upload">
+File<input type="file" name="files[]" multiple="multiple" />
 <button type="submit" name="submit" value="save">Submit</button>
 </form>
+
+<h4>Like</h4>
+<form id="tfreport-like">
+content_id <input type="text" name="content_id" value="47" />
+content_type <input type="text" name="content_type" value="tfreport" />
+<button type="submit" value="like">like</button>
+<button type="submit" value="check">check</button>
+<button type="submit" value="dislike">dislike</button>
+</form>
+
+<script>
+$("#tfreport-like button[value=like]").click(function(e) {
+	$.ajax({
+		type: "POST",
+		url: 'like/add',
+		data: $("#tfreport-like").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+$("#tfreport-like button[value=check]").click(function(e) {
+	$.ajax({
+		type: "POST",
+		url: 'like/check',
+		data: $("#tfreport-like").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+$("#tfreport-like button[value=dislike]").click(function(e) {
+	$.ajax({
+		type: "POST",
+		url: 'like/remove',
+		data: $("#tfreport-like").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+</script>
+
+<h4>Comment</h4>
+<form id="tfreport-comment">
+content_id <input type="text" name="content_id" value="47" />
+content_type <input type="text" name="content_type" value="tf_report" />
+comment <input type="text" name="comment" value="comment for tfreport" />
+<button type="submit" value="save">save</button>
+<button type="submit" value="list">list</button>
+</form>
+
+<script>
+$("#tfreport-comment button[value=save]").click(function(e) {
+	$.ajax({
+		type: "POST",
+		url: 'comment/add',
+		data: $("#tfreport-comment").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+$("#tfreport-comment button[value=list]").click(function(e) {
+	$.ajax({
+		type: "POST",
+		url: 'comment/list',
+		data: $("#tfreport-comment").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+</script>
 
 <script>
 $("#form-sign-up").submit(function(e) {
 	$.ajax({
 		type: "POST",
-		url: '/tvn/user/sign_up',
+		url: 'user/sign_up_facebook',
 		data: $("#form-sign-up").serialize(), // serializes the form's elements.
 		success: function(data) {
 			console.warn(data);
@@ -59,7 +195,7 @@ $("#form-sign-up").submit(function(e) {
 $("#form-sign-in").submit(function(e) {
 	$.ajax({
 		type: "POST",
-		url: '/tvn/user/sign_in',
+		url: 'user/sign_in',
 		data: $("#form-sign-in").serialize(), // serializes the form's elements.
 		success: function(data) {
 			console.warn(data);
@@ -72,8 +208,21 @@ $("#form-sign-in").submit(function(e) {
 $("#tfreport-edit").submit(function(e) {
 	$.ajax({
 		type: "POST",
-		url: '/tvn/tfreport/edit',
+		url: 'tfreport/edit',
 		data: $("#tfreport-edit").serialize(), // serializes the form's elements.
+		success: function(data) {
+			console.warn(data);
+		}
+	});
+
+	e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+
+$("#tfreport-remove").submit(function(e) {
+	$.ajax({
+		type: "POST",
+		url: 'tfreport/remove',
+		data: $("#tfreport-remove").serialize(), // serializes the form's elements.
 		success: function(data) {
 			console.warn(data);
 		}
@@ -85,7 +234,7 @@ $("#tfreport-edit").submit(function(e) {
 $("#form-upload1").submit(function(e) {
 	$.ajax({
 		type: "POST",
-		url: '/tvn/tfreport/upload',
+		url: 'tfreport/upload',
 		data: $("#form-upload").serialize(), // serializes the form's elements.
 		success: function(data) {
 			console.warn(data);

@@ -1,3 +1,7 @@
+<?php
+	$this->load->view(F_CP .'inc/modal_media');
+?>
+
 <link href="<?=base_url(F_PUB .F_CP .'alloy-editor/assets/alloy-editor-ocean-min.css')?>" rel="stylesheet">
 <script src="<?=base_url(F_PUB .F_CP .'alloy-editor/alloy-editor-all-min.js')?>"></script>
 
@@ -110,9 +114,11 @@ endif;
 	<div class="uk-margin-small">
 		<label class="uk-form-label" for="avatar"><?=$lang->line('avatar')?></label>
 		<div class="uk-form-controls">
-		<?php
-			$this->load->view(F_CP .'inc/avatar');
-		?>
+			<ul id="avatar" class="uk-grid-small uk-child-width-1-2 media-container" data-type="post" data-select-mode="0" data-name="avatar" uk-grid>
+			</ul>
+			<?php
+				$this->load->view(F_CP .'inc/media', array('media' => 'avatar'));
+			?>
 		</div>
 	</div>
 
@@ -170,6 +176,3 @@ endif;
 
 </div>
 </form>
-
-<?php
-	$this->load->view(F_CP .'inc/modal_media_old');

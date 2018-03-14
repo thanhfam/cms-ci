@@ -11,6 +11,18 @@ class Category_model extends MY_Model {
 		$uri = empty($item['uri']) ? $this->page_model->generate_uri($item['title']) : $item['uri'];
 		unset($item['uri']);
 
+		if (isset($item['avatar_id'])) {
+			$avatar_id = $item['avatar_id'];
+
+			if (gettype($avatar_id) == 'array') {
+				$item['avatar_id'] = $avatar_id[0];
+			}
+
+			if (empty($item['avatar_id'])) {
+				$item['avatar_id'] = 0;
+			}
+		}
+
 		$this->db->trans_begin();
 
 		if (empty($item['id'])) {
@@ -110,10 +122,12 @@ class Category_model extends MY_Model {
 			return FALSE;
 		}
 
+		$this->load->model(array('media_model'));
+
 		$id = intval($id);
 
 		$this->db
-			->select('c.id, c.subtitle, c.title, c.name, p.uri, c.description, c.keywords, c.lead, c.content, c.type, c.site_id, c.cate_id, c.cate_layout_id, c.post_layout_id, c.state_weight, c.created, c.updated, c.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
+			->select('c.id, c.subtitle, c.title, c.name, p.uri, c.description, c.keywords, c.lead, c.content, c.type, c.site_id, c.cate_id, c.cate_layout_id, c.post_layout_id, c.state_weight, c.created, c.updated, c.avatar_id, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
 			->from('category c')
 			->join('page p', 'c.id = p.content_id')
 			->join('media m', 'c.avatar_id = m.id', 'left')
@@ -127,11 +141,20 @@ class Category_model extends MY_Model {
 			$item['created'] = date_string($item['created']);
 			$item['updated'] = date_string($item['updated']);
 
-			if ($item['file_name']) {
-				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			if ($item['avatar_file_name']) {
+				$url = $this->media_model->get_url(array(
+					'file_ext' => $item['avatar_file_ext'],
+					'type' => $item['avatar_type'],
+					'folder' => $item['avatar_folder'],
+					'file_name' => $item['avatar_file_name']
+				));
+
+				$item['avatar_url'] = $url['tmb'];
+				$item['avatar_url_opt'] = $url['opt'];
+				$item['avatar_url_ori'] = $url['ori'];
 			}
 			else {
-				$item['avatar_url'] = '';
+				$item['avatar_url'] = $item['avatar_url_opt'] = $item['avatar_url_ori'] = '';
 			}
 		}
 
@@ -186,8 +209,10 @@ class Category_model extends MY_Model {
 	}
 
 	public function list_activated_by_type($type = '') {
+		$this->load->model(array('media_model'));
+
 		$this->db
-			->select('c.id, c.title, c.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
+			->select('c.id, c.title, c.avatar_id, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
 			->from('category c')
 			->where('c.state_weight', S_ACTIVATED)
 			->where('c.type', $type)
@@ -200,15 +225,24 @@ class Category_model extends MY_Model {
 
 		$list = array();
 
-		while ($row = $query->unbuffered_row('array')) {
-			if ($row['file_name']) {
-				$row['avatar_url'] = base_url(F_FILE .$row['folder'] .'/' .$row['file_name']);
+		while ($item = $query->unbuffered_row('array')) {
+			if ($item['avatar_file_name']) {
+				$url = $this->media_model->get_url(array(
+					'file_ext' => $item['avatar_file_ext'],
+					'type' => $item['avatar_type'],
+					'folder' => $item['avatar_folder'],
+					'file_name' => $item['avatar_file_name']
+				));
+
+				$item['avatar_url'] = $url['tmb'];
+				$item['avatar_url_opt'] = $url['opt'];
+				$item['avatar_url_ori'] = $url['ori'];
 			}
 			else {
-				$row['avatar_url'] = '';
+				$item['avatar_url'] = $item['avatar_url_opt'] = $item['avatar_url_ori'] = '';
 			}
 
-			$list[] = $row;
+			$list[] = $item;
 		}
 
 		return $list;

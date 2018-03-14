@@ -54,12 +54,24 @@ $CI =& get_instance();
 			<?php if ($CI->has_right(array('APPOINTMENT_LIST'))): ?>
 			<li>
 				<a href="#">
-					<?=$lang->line('client')?>
+					<?=$lang->line('tvn')?>
 				</a>
 				<div class="uk-navbar-dropdown" uk-dropdown="offset: 1">
 					<ul class="uk-nav uk-navbar-dropdown-nav">
-						<?php if ($CI->has_right('APPOINTMENT_LIST')): ?>
+						<?php if ($CI->has_right(array('APPOINTMENT_LIST', 'TREATMENT_LIST'))): ?>
 						<li><a href="<?=base_url(F_CP .'appointment')?>"><?=$lang->line('appointment')?></a></li>
+						<li><a href="<?=base_url(F_CP .'treatment')?>"><?=$lang->line('treatment')?></a></li>
+						<?php endif; ?>
+						<?php if ($CI->has_right('CONTACT_LIST')): ?>
+						<li class="uk-nav-divider"></li>
+						<li><a href="<?=base_url(F_CP .'contact/list?group=customer')?>"><?=$lang->line('customer')?></a></li>
+						<li><a href="<?=base_url(F_CP .'contact/list?group=agency')?>"><?=$lang->line('agency')?></a></li>
+						<li><a href="<?=base_url(F_CP .'contact/list?group=staff')?>"><?=$lang->line('staff')?></a></li>
+						<?php endif; ?>
+						<?php if ($CI->has_right('ENUM_LIST')): ?>
+						<li class="uk-nav-divider"></li>
+						<li><a href="<?=base_url(F_CP .'enum/list?type=tvn_service')?>"><?=$lang->line('service')?></a></li>
+						<li><a href="<?=base_url(F_CP .'enum/list?type=hospital')?>"><?=$lang->line('hospital')?></a></li>
 						<?php endif; ?>
 					</ul>
 				</div>
@@ -72,6 +84,9 @@ $CI =& get_instance();
 				</a>
 				<div class="uk-navbar-dropdown" uk-dropdown="offset: 1">
 					<ul class="uk-nav uk-navbar-dropdown-nav">
+						<?php if ($CI->has_right('ENUM_LIST')): ?>
+						<li><a href="<?=base_url(F_CP .'enum')?>"><?=$lang->line('enum')?></a></li>
+						<?php endif; ?>
 						<?php if ($CI->has_right('MENU_LIST')): ?>
 						<li><a href="<?=base_url(F_CP .'menu')?>"><?=$lang->line('menu')?></a></li>
 						<?php endif; ?>

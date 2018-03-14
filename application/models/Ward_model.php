@@ -51,14 +51,18 @@ class Ward_model extends MY_Model {
 	public function list_simple($district_id = 0) {
 		$this->db
 			->select('id, title')
+			->where('district_id', $district_id)
 			->order_by('id', 'ASC')
 		;
 
-		if ($district_id) {
-			$this->db->where('district_id', $district_id);
-		}
+		$result = $this->db->get('ward')->result_array();
 
-		return $this->db->get('ward')->result_array();
+		array_unshift($result, array(
+			'id' => '0',
+			'title' => '-'
+		));
+
+		return $result;
 	}
 
 	public function remove($id) {

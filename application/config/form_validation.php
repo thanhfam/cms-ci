@@ -288,6 +288,87 @@ $config = array(
 			'rules' => 'trim|max_length[255]'
 		)
 	),
+	'enum_edit' => array(
+		array(
+			'field' => 'title',
+			'label' => 'lang:title',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'name',
+			'label' => 'lang:name',
+			'rules' => 'trim|max_length[255]'
+		)
+	),
+	'contact_edit' => array(
+		array(
+			'field' => 'title',
+			'label' => 'lang:title',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'first_name',
+			'label' => 'lang:first_name',
+			'rules' => 'trim|required|max_length[255]'
+		),
+		array(
+			'field' => 'middle_name',
+			'label' => 'lang:middle_name',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'last_name',
+			'label' => 'lang:last_name',
+			'rules' => 'trim|max_length[255]'
+		),
+		array(
+			'field' => 'email',
+			'label' => 'lang:email',
+			'rules' => 'trim|valid_email|max_length[255]'
+		),
+		array(
+			'field' => 'phone',
+			'label' => 'lang:phone',
+			'rules' => 'trim|numeric|min_length[10]|max_length[11]'
+		),
+		array(
+			'field' => 'note',
+			'label' => 'lang:note',
+			'rules' => 'trim|max_length[2048]'
+		)
+	),
+	'treatment_edit' => array(
+		array(
+			'field' => 'customer_1_id',
+			'label' => 'lang:customer',
+			'rules' => 'trim|required|numeric|min_length[1]|max_length[11]'
+		),
+		array(
+			'field' => 'customer_2_id',
+			'label' => 'lang:customer',
+			'rules' => 'trim|numeric|min_length[1]|max_length[11]'
+		),
+		array(
+			'field' => 'service_id',
+			'label' => 'lang:service',
+			'rules' => 'trim|required|numeric|min_length[1]|max_length[11]'
+		),
+		array(
+			'field' => 'agency_id',
+			'label' => 'lang:agency',
+			'rules' => 'trim|required|numeric|min_length[1]|max_length[11]'
+		),
+		array(
+			'field' => 'staff_id',
+			'label' => 'lang:staff',
+			'rules' => 'trim|required|numeric|min_length[1]|max_length[11]'
+		),
+		array(
+			'field' => 'service_price',
+			'label' => 'lang:price',
+			'rules' => 'trim|numeric|min_length[1]|max_length[11]'
+		)
+	),
 	'user_edit' => array(
 		array(
 			'field' => 'username',

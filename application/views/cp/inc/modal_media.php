@@ -30,6 +30,8 @@
 	<input type="hidden" name="{{name}}_type[]" value="{{type}}" />
 	<input type="hidden" name="{{name}}_file_ext[]" value="{{file_ext}}" />
 	<input type="hidden" name="{{name}}_url[]" value="{{url}}" />
+	<input type="hidden" name="{{name}}_url_opt[]" value="{{url}}" />
+	<input type="hidden" name="{{name}}_url_ori[]" value="{{url}}" />
 	</li>
 {{/list}}
 </script>

@@ -62,7 +62,7 @@ var get_district = function(e) {
 	}
 
 	$.ajax({
-		url: base_url + 'district/select/',
+		url: base_url + 'cp/district/select/',
 		dataType: 'json',
 		data: {
 			id: c_id
@@ -83,7 +83,7 @@ var get_district = function(e) {
 					items.push('<option value="' + data[i].id + '">' + data[i].title + '</option>');
 				}
 
-				d_selector.append(items.join('')).material_select();
+				d_selector.append(items.join(''));
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
@@ -100,7 +100,7 @@ var get_ward = function(e) {
 	}
 
 	$.ajax({
-		url: base_url + 'ward/select/',
+		url: base_url + 'cp/ward/select/',
 		dataType: 'json',
 		data: {
 			id: d_id
@@ -121,7 +121,7 @@ var get_ward = function(e) {
 					items.push('<option value="' + data[i].id + '">' + data[i].title + '</option>');
 				}
 
-				w_selector.append(items.join('')).material_select();
+				w_selector.append(items.join(''));
 			}
 		},
 		error: function(jqXHR, textStatus, errorThrown) {

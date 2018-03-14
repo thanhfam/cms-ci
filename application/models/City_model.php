@@ -57,7 +57,14 @@ class City_model extends MY_Model {
 			$this->db->where('nation_id', $nation_id);
 		}
 
-		return $this->db->get('city')->result_array();
+		$result = $this->db->get('city')->result_array();
+
+		array_unshift($result, array(
+			'id' => '0',
+			'title' => '-'
+		));
+
+		return $result;
 	}
 
 	public function list_all($page = 1, $filter = '', &$pagy_config) {

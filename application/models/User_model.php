@@ -175,10 +175,12 @@ class User_model extends MY_Model {
 			return FALSE;
 		}
 
+		$this->load->model(array('media_model'));
+
 		$id = intval($id);
 
 		$this->db
-			->select('u.id, u.username, u.name, u.email, u.phone, u.timezone, u.date_format, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated, u.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
+			->select('u.id, u.username, u.name, u.email, u.phone, u.timezone, u.date_format, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated, u.avatar_id, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
 			->from('user u')
 			->join('media m', 'u.avatar_id = m.id', 'left')
 			->where('u.id', $id)
@@ -194,16 +196,21 @@ class User_model extends MY_Model {
 			$item['created'] = date_string($item['created']);
 			$item['updated'] = date_string($item['updated']);
 
-			if ($item['file_name']) {
-				$item['avatar_id'] = $item['avatar_id'];
-				$item['avatar_type'] = $item['avatar_type'];
-				$item['avatar_file_ext'] = $item['avatar_file_ext'];
-				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			if ($item['avatar_file_name']) {
+				$url = $this->media_model->get_url(array(
+					'file_ext' => $item['avatar_file_ext'],
+					'type' => $item['avatar_type'],
+					'folder' => $item['avatar_folder'],
+					'file_name' => $item['avatar_file_name']
+				));
+
+				$item['avatar_url'] = $url['tmb'];
+				$item['avatar_url_opt'] = $url['opt'];
+				$item['avatar_url_ori'] = $url['ori'];
 			}
 			else {
-				$item['avatar_url'] = '';
+				$item['avatar_url'] = $item['avatar_url_opt'] = $item['avatar_url_ori'] = '';
 			}
-
 		}
 
 		return $item;

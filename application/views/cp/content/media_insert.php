@@ -289,7 +289,7 @@ var list_items = {
 				media = '<img src="' + this.url + '" alt="' + this.content  + '">';
 			break;
 			case '<?=MT_VIDEO?>':
-				media = '<video controls><source src="' + this.url + '" type="video/mp4">Your browser does not support the video tag.</video>';
+				media = '<video controls><source src="' + this.url_ori + '" type="video/mp4">Your browser does not support the video tag.</video>';
 			break;
 			case '<?=MT_AUDIO?>':
 				media = '<audio controls><source src="' + this.url + '" type="audio/mpeg">Your browser does not support the audio tag.</audio>';

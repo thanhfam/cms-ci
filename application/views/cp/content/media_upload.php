@@ -34,7 +34,6 @@
 			submit: 'save'
 		},
 		allow : '*.(<?=implode("|", $allowed_types)?>)',
-		'data-type': 'json',
 		'msg-invalid-mime': '<?=$lang->line("invalid_mime")?>',
 		'msg-invalid-name': '<?=$lang->line("invalid_name")?>',
 
@@ -44,6 +43,9 @@
 		},
 		beforeAll: function () {
 			//console.log('beforeAll', arguments);
+			msgBox.attr('hidden', 'hidden');
+			msgTitle.empty();
+			msgBody.empty();
 		},
 		load: function () {
 			//console.log('load', arguments);
@@ -59,6 +61,7 @@
 
 				if (responseJSON) {
 					var message = responseJSON.message;
+					var result = responseJSON.result;
 					var item = responseJSON.item;
 
 					msg = '<li>';
@@ -67,12 +70,12 @@
 						msg += '[' + item.orig_name + '] - ';
 					}
 
-					if (message.type == 1) {
+					if (result == 1) {
 						msg += '<?=$lang->line("successfully")?>';
 					}
 					else {
 						msg += '<?=$lang->line("failed")?> - ';
-						msg += message.content;
+						msg += message;
 
 						uploadSuccess = false;
 					}

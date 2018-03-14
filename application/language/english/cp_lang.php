@@ -7,6 +7,12 @@ $lang = array(
 	'subtitle' => 'Subtitle',
 	'code' => 'Code',
 	'name' => 'Name',
+	'last_name' => 'Last name',
+	'middle_name' => 'Middle name',
+	'first_name' => 'First name',
+	'birthday' => 'Birthday',
+	'date_format_description' => 'Format: dd/mm/yyyy. Ex: 30/11/1983',
+	'note' => 'Note',
 	'size' => 'Size',
 	'uri' => 'URI',
 	'type' => 'Type',
@@ -38,6 +44,20 @@ $lang = array(
 	'linkedin' => 'Linkedin',
 	'total' => 'Total',
 	'social' => 'Social',
+	'enum' => 'Enum',
+	'service' => 'Service',
+	'service_name' => 'Service name',
+	'date_consult' => 'Date of consultant',
+	'date_exam' => 'Date of examination',
+	'hospital' => 'Hospital',
+	'step' => 'Step',
+	'price' => 'Price',
+	'contact' => 'Contact',
+	'customer' => 'Customer',
+	'agency' => 'Agency',
+	'staff' => 'Staff',
+	'treatment' => 'Treatment',
+	'statistic' => 'Statistic',
 
 	'created' => 'Created',
 	'creator' => 'Creator',
@@ -147,6 +167,9 @@ $lang = array(
 	'menu' => 'Menu',
 	'menu_item' => 'Menu Item',
 	'parent' => 'Parent',
+	'dad' => 'Father',
+	'mom' => 'Mother',
+	'wife_husband' => 'Wife / husband',
 
 	'client' => 'Client',
 	'appointment' => 'Appointment',
@@ -185,5 +208,8 @@ $lang = array(
 	'item_not_found' => 'Item not found.',
 
 	'sure_to_remove' => 'Are your sure to remove this item ?',
-	'no_row' => "There is no row here !!!'
+	'no_row' => 'There is no row here !!!',
+
+	'tvn' => 'TVN',
+	'traffic_zoom' => 'Traffic Zoom'
 );

@@ -86,6 +86,9 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 // folder
 defined('F_FILE')      OR define('F_FILE', 'file/');
+defined('F_FILE_ORIGINAL')      OR define('F_FILE_ORIGINAL', 'ori/');
+defined('F_FILE_OPTIMIZED')      OR define('F_FILE_OPTIMIZED', 'opt/');
+defined('F_FILE_THUMB')      OR define('F_FILE_THUMB', 'tmb/');
 defined('F_CP')      OR define('F_CP', 'cp/');
 defined('F_FRONT')      OR define('F_FRONT', 'front/');
 defined('F_PUB')      OR define('F_PUB', 'pub/');
@@ -102,6 +105,14 @@ defined('CT_TF_REPORT')      OR define('CT_TF_REPORT', 'tf_report');
 defined('ST_CONTENT')      OR define('ST_CONTENT', 'content');
 defined('ST_APPOINTMENT')      OR define('ST_APPOINTMENT', 'appointment');
 defined('ST_USER')      OR define('ST_USER', 'user');
+
+// image type
+defined('IT_JPG')      OR define('IT_JPG', 'jpg');
+defined('IT_PNG')      OR define('IT_PNG', 'png');
+
+// video type
+defined('VT_MP4')      OR define('VT_MP4', 'mp4');
+defined('VT_MOV')      OR define('VT_MOV', 'mov');
 
 // media type
 defined('MT_IMAGE')      OR define('MT_IMAGE', 'image');
@@ -132,3 +143,14 @@ defined('RS_INPUT_DANGER')      OR define('RS_INPUT_DANGER', 1);
 defined('RS_AUTH_DANGER')      OR define('RS_AUTH_DANGER', 2);
 defined('RS_RIGHT_DANGER')      OR define('RS_RIGHT_DANGER', 3);
 defined('RS_DB_DANGER')      OR define('RS_DB_DANGER', 9);
+
+// enum type
+defined('ET_CONTACT_GROUP')      OR define('ET_CONTACT_GROUP', 'contact_group');
+defined('ET_TVN_SERVICE')      OR define('ET_TVN_SERVICE', 'tvn_service');
+defined('ET_PERSON_TITLE')      OR define('ET_PERSON_TITLE', 'person_title');
+defined('ET_HOSPITAL')      OR define('ET_HOSPITAL', 'hospital');
+
+// contact type
+defined('CONTACT_T_CUSTOMER')      OR define('CONTACT_T_CUSTOMER', 'customer');
+defined('CONTACT_T_AGENCY')      OR define('CONTACT_T_AGENCY', 'agency');
+defined('CONTACT_T_STAFF')      OR define('CONTACT_T_STAFF', 'staff');

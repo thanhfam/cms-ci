@@ -87,7 +87,7 @@ class Post_model extends MY_Model {
 		if ($item['attachment_id'] == '') {
 			$item['attachment_type'] = '';
 			$item['attachment_file_ext'] = '';
-			$item['attachment_url'] = '';
+			$item['attachment_url'] = $item['attachment_url_opt'] = $item['attachment_url_ori'] = '';
 
 			return;
 		}
@@ -106,24 +106,32 @@ class Post_model extends MY_Model {
 			$item['attachment'] = array();
 
 			while ($row = $query->unbuffered_row('array')) {
+				$url = $this->media_model->get_url($row);
+
 				$attachment = array(
 					'id' => $row['id'],
 					'type' => $row['type'],
 					'file_ext' => $row['file_ext'],
-					'url' => base_url(F_FILE .$row['folder'] .'/' .$row['file_name'])
+					'url' => $url['tmb'],
+					'url_opt' => $url['opt'],
+					'url_ori' => $url['ori']
 				);
 
 				$item['attachment'][] = $attachment;
 			}
 		}
 		else {
-			$item['attachment_id'] = $item['attachment_type'] = $item['attachment_url'] = $item['attachment_file_ext'] = array();
+			$item['attachment_id'] = $item['attachment_type'] = $item['attachment_url'] = $item['attachment_url_opt'] = $item['attachment_url_ori'] = $item['attachment_file_ext'] = array();
 
 			while ($row = $query->unbuffered_row('array')) {
+				$url = $this->media_model->get_url($row);
+
 				$item['attachment_id'][] = $row['id'];
 				$item['attachment_type'][] = $row['type'];
 				$item['attachment_file_ext'][] = $row['file_ext'];
-				$item['attachment_url'][] = base_url(F_FILE .$row['folder'] .'/' .$row['file_name']);
+				$item['attachment_url'][] = $url['tmb'];
+				$item['attachment_url_opt'][] = $url['opt'];
+				$item['attachment_url_ori'][] = $url['ori'];
 			}
 		}
 	}
@@ -163,10 +171,12 @@ class Post_model extends MY_Model {
 			return FALSE;
 		}
 
+		$this->load->model(array('media_model'));
+
 		$id = intval($id);
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, pg.uri, p.lead, p.content, p.tags, p.cate_id, p.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, p.state_weight, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, pg.uri, p.lead, p.content, p.tags, p.cate_id, p.avatar_id, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, p.state_weight, p.created, p.updated')
 			->from('post p')
 			->join('media m', 'p.avatar_id = m.id', 'left')
 			->join('page pg', 'p.id = pg.content_id', 'left')
@@ -180,11 +190,20 @@ class Post_model extends MY_Model {
 			$item['created'] = date_string($item['created']);
 			$item['updated'] = date_string($item['updated']);
 
-			if ($item['file_name']) {
-				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			if ($item['avatar_file_name']) {
+				$url = $this->media_model->get_url(array(
+					'file_ext' => $item['avatar_file_ext'],
+					'type' => $item['avatar_type'],
+					'folder' => $item['avatar_folder'],
+					'file_name' => $item['avatar_file_name']
+				));
+
+				$item['avatar_url'] = $url['tmb'];
+				$item['avatar_url_opt'] = $url['opt'];
+				$item['avatar_url_ori'] = $url['ori'];
 			}
 			else {
-				$item['avatar_url'] = '';
+				$item['avatar_url'] = $item['avatar_url_opt'] = $item['avatar_url_ori'] = '';
 			}
 
 			$this->load_attachment($item);
@@ -279,7 +298,7 @@ class Post_model extends MY_Model {
 
 	public function get_top_activated($cate_id, $limit, $get_content = FALSE) {
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.lead, p.content, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.created, p.updated')
+			->select('p.id, p.subtitle, p.title, p.lead, p.content, p.tags, pg.uri, p.state_weight, p.cate_id, c.title cate_title, m.avatar_file_name, m.avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.created, p.updated')
 			->from('post p')
 			->where('p.state_weight', S_ACTIVATED)
 			->join('page pg', 'pg.content_id = p.id')
@@ -307,8 +326,8 @@ class Post_model extends MY_Model {
 			$item['updated'] = date_string($item['updated']);
 			$item['created'] = date_string($item['created']);
 
-			if ($item['file_name']) {
-				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			if ($item['avatar_file_name']) {
+				$item['avatar_url'] = base_url(F_FILE .$item['avatar_folder'] .'/' .$item['avatar_file_name']);
 			}
 			else {
 				$item['avatar_url'] = '';

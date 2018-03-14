@@ -6,6 +6,18 @@ class Site_model extends MY_Model {
 	}
 
 	public function save(&$item) {
+		if (isset($item['avatar_id'])) {
+			$avatar_id = $item['avatar_id'];
+
+			if (gettype($avatar_id) == 'array') {
+				$item['avatar_id'] = $avatar_id[0];
+			}
+
+			if (empty($item['avatar_id'])) {
+				$item['avatar_id'] = 0;
+			}
+		}
+
 		if ($item['id'] == '') {
 			unset($item['id']);
 			$item['created'] = $item['updated'] = get_time();
@@ -31,10 +43,12 @@ class Site_model extends MY_Model {
 			return FALSE;
 		}
 
+		$this->load->model(array('media_model'));
+
 		$id = intval($id);
 
 		$this->db
-			->select('s.id, s.title, s.subtitle, s.name, s.url, s.language, s.facebook, s.twitter, s.pinterest, s.gplus, s.linkedin, s.avatar_id, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, s.created, s.updated')
+			->select('s.id, s.title, s.subtitle, s.name, s.url, s.language, s.facebook, s.twitter, s.pinterest, s.gplus, s.linkedin, s.avatar_id, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, s.created, s.updated')
 			->from('site s')
 			->where('s.id', $id)
 			->join('media m', 's.avatar_id = m.id', 'left')
@@ -46,11 +60,20 @@ class Site_model extends MY_Model {
 			$item['created'] = date_string($item['created']);
 			$item['updated'] = date_string($item['updated']);
 
-			if ($item['file_name']) {
-				$item['avatar_url'] = base_url(F_FILE .$item['folder'] .'/' .$item['file_name']);
+			if ($item['avatar_file_name']) {
+				$url = $this->media_model->get_url(array(
+					'file_ext' => $item['avatar_file_ext'],
+					'type' => $item['avatar_type'],
+					'folder' => $item['avatar_folder'],
+					'file_name' => $item['avatar_file_name']
+				));
+
+				$item['avatar_url'] = $url['tmb'];
+				$item['avatar_url_opt'] = $url['opt'];
+				$item['avatar_url_ori'] = $url['ori'];
 			}
 			else {
-				$item['avatar_url'] = '';
+				$item['avatar_url'] = $item['avatar_url_opt'] = $item['avatar_url_ori'] = '';
 			}
 		}
 

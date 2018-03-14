@@ -11,7 +11,7 @@ class Tfreport_model extends Post_model {
 		$this->load->library('pagination');
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.lead, p.avatar_id, p.total_like, p.total_comment, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
+			->select('p.id, p.subtitle, p.title, p.lead, p.avatar_id, p.total_like, p.total_comment, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
 			->from('post p')
 			->join('user u1', 'p.creator_id = u1.id')
 			->join('state s', 'p.state_weight = s.weight')
@@ -56,20 +56,29 @@ class Tfreport_model extends Post_model {
 
 		$list = array();
 
-		while ($row = $query->unbuffered_row('array')) {
-			$row['updated'] = date_string($row['updated']);
-			$row['created'] = date_string($row['created']);
+		while ($item = $query->unbuffered_row('array')) {
+			$item['updated'] = date_string($item['updated']);
+			$item['created'] = date_string($item['created']);
 
-			if ($row['file_name']) {
-				$row['avatar_url'] = base_url(F_FILE .$row['folder'] .'/' .$row['file_name']);
+			if ($item['avatar_file_name']) {
+				$url = $this->media_model->get_url(array(
+					'file_ext' => $item['avatar_file_ext'],
+					'type' => $item['avatar_type'],
+					'folder' => $item['avatar_folder'],
+					'file_name' => $item['avatar_file_name']
+				));
+
+				$item['avatar_url'] = $url['tmb'];
+				$item['avatar_url_opt'] = $url['opt'];
+				$item['avatar_url_ori'] = $url['ori'];
 			}
 			else {
-				$row['avatar_url'] = '';
+				$item['avatar_url'] = $item['avatar_url_opt'] = $item['avatar_url_ori'] = '';
 			}
 
-			$this->load_attachment_json($row);
+			$this->load_attachment_json($item);
 
-			$list[] = $row;
+			$list[] = $item;
 		}
 
 		return $list;
@@ -79,7 +88,7 @@ class Tfreport_model extends Post_model {
 		$this->load->library('pagination');
 
 		$this->db
-			->select('p.id, p.subtitle, p.title, p.lead, p.avatar_id, p.total_like, p.total_comment, m.file_name, m.folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
+			->select('p.id, p.subtitle, p.title, p.lead, p.avatar_id, p.total_like, p.total_comment, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
 			->from('post p')
 			->join('user u1', 'p.creator_id = u1.id')
 			->join('state s', 'p.state_weight = s.weight')
@@ -128,20 +137,30 @@ class Tfreport_model extends Post_model {
 
 		$list = array();
 
-		while ($row = $query->unbuffered_row('array')) {
-			$row['updated'] = date_string($row['updated']);
-			$row['created'] = date_string($row['created']);
+		while ($item = $query->unbuffered_row('array')) {
+			$item['updated'] = date_string($item['updated']);
+			$item['created'] = date_string($item['created']);
 
-			if ($row['file_name']) {
-				$row['avatar_url'] = base_url(F_FILE .$row['folder'] .'/' .$row['file_name']);
+			if ($item['avatar_file_name']) {
+				$url = $this->media_model->get_url(array(
+					'file_ext' => $item['avatar_file_ext'],
+					'type' => $item['avatar_type'],
+					'folder' => $item['avatar_folder'],
+					'file_name' => $item['avatar_file_name']
+				));
+
+				$item['avatar_url'] = $url['tmb'];
+				$item['avatar_url_opt'] = $url['opt'];
+				$item['avatar_url_ori'] = $url['ori'];
 			}
 			else {
-				$row['avatar_url'] = '';
+				$item['avatar_url'] = $item['avatar_url_opt'] = $item['avatar_url_ori'] = '';
 			}
 
-			$this->load_attachment_json($row);
 
-			$list[] = $row;
+			$this->load_attachment_json($item);
+
+			$list[] = $item;
 		}
 
 		return $list;

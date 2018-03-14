@@ -30,40 +30,16 @@ class Media extends MY_Controller {
 			break;
 
 			case 'save':
-				$folder = date_string(get_time(), '%Y%m');
-
-				$folder_path = FCPATH .F_FILE .$folder;
-
+				$folder = $this->media_model->get_current_folder();
 				$result = 1;
 
-				if (!file_exists($folder_path)) {
-					mkdir($folder_path, 775, true);
-				}
+				$this->upload->set_upload_path($folder['original_path']);
 
-				$this->upload->set_upload_path($folder_path);
-
-				if (!$this->upload->do_upload('files')) {
-					$item = array(
-						'file_name' => $files['name'][$i],
-						'file_type' => $files['type'][$i],
-						'file_ext' => pathinfo($files['name'][$i], PATHINFO_EXTENSION),
-						'orig_name' => $files['name'][$i],
-						'file_size' => byte_format($files['size'][$i]),
-						'error' => strip_tags($this->upload->display_errors())
-					);
-
-					$result = 0;
-
-					$message = array(
-						'type' => 3,
-						'content' => strip_tags($this->upload->display_errors())
-					);
-				}
-				else {
+				if ($this->upload->do_upload('files')) {
 					$file_data = $this->upload->data();
 
 					$item = array(
-						'folder' => $folder,
+						'folder' => $folder['month'],
 						'file_name' => $file_data['file_name'],
 						'file_type' => $file_data['file_type'],
 						'file_ext' => trim($file_data['file_ext'], '.'),
@@ -79,22 +55,35 @@ class Media extends MY_Controller {
 						));
 					}
 
-					if ($this->media_model->save($item)) {
-						$result = 1;
+					$save_result = $this->media_model->save($item);
 
-						$message = array(
-							'type' => 1,
-							'content' => $this->lang->line('upload_successfully')
-						);
+					if ($save_result === TRUE) {
+						$result = 1;
+						$message = $this->lang->line('upload_successfully');
 					}
 					else {
-						$result = 0;
+						if ($save_result === FALSE) {
+							$message = $this->lang->line('upload_failed');
+						}
+						else {
+							$message = $save_result;
+						}
 
-						$message = array(
-							'type' => 3,
-							'content' => $this->lang->line('upload_failed')
-						);
+						$result = 0;
 					}
+				}
+				else {
+					$item = array(
+						'file_name' => $files['name'][$i],
+						'file_type' => $files['type'][$i],
+						'file_ext' => pathinfo($files['name'][$i], PATHINFO_EXTENSION),
+						'orig_name' => $files['name'][$i],
+						'file_size' => byte_format($files['size'][$i]),
+						'error' => strip_tags($this->upload->display_errors())
+					);
+
+					$result = 0;
+					$message = strip_tags($this->upload->display_errors());
 				}
 
 				$data = array(
@@ -139,7 +128,8 @@ class Media extends MY_Controller {
 
 	public function download($id = '') {
 		if ($item = $this->media_model->get($id)) {
-			$item_path = FCPATH .F_FILE .$item['folder'] .'/' .$item['file_name'];
+			$file = $this->media_model->get_file($item);
+			$item_path = $file[F_FILE_ORIGINAL];
 
 			if (file_exists($item_path)) {
 				header('Content-Description: File Transfer');
@@ -150,7 +140,7 @@ class Media extends MY_Controller {
 				header('Expires: 0');
 				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 				header('Pragma: public');
-				header('Content-Length: ' . $item['file_size'] * 1024);
+				header('Content-Length: ' .$item['file_size'] * 1024);
 				readfile($item_path);
 				exit(0);
 			}

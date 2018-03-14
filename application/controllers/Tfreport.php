@@ -19,45 +19,33 @@ class Tfreport extends JSON_Controller {
 		$this->load->library('upload');
 		$this->load->helper('number');
 
-		$folder = date_string(get_time(), '%Y%m');
-		$folder_path = FCPATH .F_FILE .$folder;
+		$folder = $this->media_model->get_current_folder();
 
-		if (!file_exists($folder_path)) {
-			mkdir($folder_path, 775, true);
+		$this->upload->set_upload_path($folder['original_path']);
+
+		if (!isset($_FILES['files'])) {
+			$this->render(array(
+				'state' => RS_DANGER
+			));
+			return;
 		}
-
-		$this->upload->set_upload_path($folder_path);
 
 		$files = $_FILES['files'];
 		$list = $list_error = [];
-		$result = true;
+		$result = 0;
 
-		for($i = 0; $i < count($files['name']); $i++) {
+		for ($i = 0; $i < count($files['name']); $i++) {
 			$_FILES = array();
 
 			foreach ($files as $k => $v) {
 				$_FILES['files'][$k] = $v[$i];
 			}
 
-			if (!$this->upload->do_upload('files')) {
-				$result = false;
-
-				$item = array(
-					'file_name' => $files['name'][$i],
-					'file_type' => $files['type'][$i],
-					'file_ext' => pathinfo($files['name'][$i], PATHINFO_EXTENSION),
-					'orig_name' => $files['name'][$i],
-					'file_size' => byte_format($files['size'][$i]),
-					'error' => strip_tags($this->upload->display_errors())
-				);
-
-				$list_error[] = $item;
-			}
-			else {
+			if ($this->upload->do_upload('files')) {
 				$file_data = $this->upload->data();
 
 				$item = array(
-					'folder' => $folder,
+					'folder' => $folder['month'],
 					'file_name' => $file_data['file_name'],
 					'file_type' => $file_data['file_type'],
 					'file_ext' => trim($file_data['file_ext'], '.'),
@@ -73,14 +61,39 @@ class Tfreport extends JSON_Controller {
 					));
 				}
 
-				if ($this->media_model->save($item)) {
+				$save_result = $this->media_model->save($item);
+
+				if ($save_result === TRUE) {
+					$result = 1;
+					$message = $this->lang->line('upload_successfully');
 					$list[] = $item;
 				}
 				else {
-					$result = false;
-					$item['error'] = RS_DB_DANGER;
+					$result = 0;
+
+					if ($save_result === FALSE) {
+						$item['error'] = $this->lang->line('db_update_danger');
+					}
+					else {
+						$item['error'] = $save_result;
+					}
+
 					$list_error[] = $item;
 				}
+			}
+			else {
+				$result = 0;
+
+				$item = array(
+					'file_name' => $files['name'][$i],
+					'file_type' => $files['type'][$i],
+					'file_ext' => pathinfo($files['name'][$i], PATHINFO_EXTENSION),
+					'orig_name' => $files['name'][$i],
+					'file_size' => byte_format($files['size'][$i]),
+					'error' => strip_tags($this->upload->display_errors())
+				);
+
+				$list_error[] = $item;
 			}
 		}
 
@@ -314,7 +327,7 @@ class Tfreport extends JSON_Controller {
 	}
 
 	public function all($mine = FALSE) {
-		$this->load->model(array('tfreport_model', 'category_model', 'state_model'));
+		$this->load->model(array('tfreport_model', 'media_model'));
 		$this->load->library('pagination');
 
 		$filter = array(

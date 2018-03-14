@@ -173,6 +173,8 @@ class User extends MY_Controller {
 						'created' => '',
 						'avatar_id' => 0,
 						'avatar_url' => '',
+						'avatar_url_opt' => '',
+						'avatar_url_ori' => '',
 						'avatar_type' => '',
 						'avatar_file_ext' => ''
 					);
@@ -225,9 +227,12 @@ class User extends MY_Controller {
 				$item = array_merge($item, array(
 					'avatar_id' => $this->input->post('avatar_id'),
 					'avatar_url' => $this->input->post('avatar_url'),
+					'avatar_url_opt' => $this->input->post('avatar_url_opt'),
+					'avatar_url_ori' => $this->input->post('avatar_url_ori'),
 					'avatar_type' => $this->input->post('avatar_type'),
 					'avatar_file_ext' => $this->input->post('avatar_file_ext')
 				));
+
 			break;
 		}
 
@@ -298,9 +303,12 @@ class User extends MY_Controller {
 				$item = array_merge($item, array(
 					'avatar_id' => $this->input->post('avatar_id'),
 					'avatar_url' => $this->input->post('avatar_url'),
+					'avatar_url_opt' => $this->input->post('avatar_url_opt'),
+					'avatar_url_ori' => $this->input->post('avatar_url_ori'),
 					'avatar_type' => $this->input->post('avatar_type'),
 					'avatar_file_ext' => $this->input->post('avatar_file_ext')
 				));
+
 			break;
 		}
 

@@ -1,4 +1,8 @@
 <?php
+	$this->load->view(F_CP .'inc/modal_media');
+?>
+
+<?php
 if (isset($item) && !empty($item['created'])) {
 ?>
 <div class="uk-margin-small time">
@@ -46,8 +50,10 @@ if (isset($item) && !empty($item['created'])) {
 <div class="uk-margin-small uk-width-xlarge">
 	<label class="uk-form-label" for="avatar"><?=$lang->line('avatar')?></label>
 	<div class="uk-form-controls">
+		<ul id="avatar" class="uk-grid-small uk-child-width-1-2 media-container" data-type="post" data-select-mode="0" data-name="avatar" uk-grid>
+		</ul>
 		<?php
-			$this->load->view(F_CP .'inc/avatar');
+			$this->load->view(F_CP .'inc/media', array('media' => 'avatar'));
 		?>
 	</div>
 </div>
@@ -108,6 +114,3 @@ if (isset($item) && !empty($item['created'])) {
 </div>
 
 </form>
-
-<?php
-	$this->load->view(F_CP .'inc/modal_media_old');

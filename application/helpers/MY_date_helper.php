@@ -1,7 +1,6 @@
 <?php
 
 if ( ! function_exists('date_format_menu')) {
-
 	function date_format_menu($default = '%d/%m/%Y %H:%i', $class = '', $name = 'date_format', $attributes = '', $timezone = 'UP7') {
 		$CI =& get_instance();
 		$CI->lang->load('date');
@@ -47,7 +46,7 @@ if ( ! function_exists('get_date_format')) {
 		}
 		
 		if (!isset($date_format) || empty($date_format)) {
-			$date_format = config_item('date_format');
+			$date_format = config_item('date_format') .' ' .config_item('time_format');
 		}
 
 		return $date_format;
@@ -94,3 +93,34 @@ if ( ! function_exists('date_string')) {
 	}
 }
 
+if ( ! function_exists('date_only_string')) {
+	function date_only_string($ts = '', $df = '') {
+		$CI = & get_instance();
+
+		if ($df == '') {
+			$df = config_item('date_format');
+		}
+
+		if ($ts == '') {
+			$ts = get_time();
+		}
+
+		return mdate($df, gmt_to_local($ts));
+	}
+}
+
+if ( ! function_exists('get_date')) {
+	function get_date($date_string) {
+		$ts = NULL;
+
+		if (isset($date_string)) {
+			$date = DateTime::createFromFormat('d/m/Y', $date_string);
+
+			if ($date) {
+				$ts = $date->getTimestamp();
+			}
+		}
+
+		return $ts;
+	}
+}

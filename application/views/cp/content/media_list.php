@@ -42,20 +42,13 @@ foreach ($list as $item):
 <div class="media-list uk-width-1-4@m uk-width-1-2@s">
 <div class="media uk-card uk-card-small uk-card-default uk-card-body uk-padding-small">
 	<div class="media-head media-head-max-height">
-		
 		<?php switch($item['type']):
-			case MT_IMAGE: ?>
-			<a href="<?=$item['url']?>" title="<?=$item['content']?>">
-				<img src="<?=$item['url']?>">
-			</a>
-		<?php
-			break;
+			case MT_IMAGE:
 			case MT_VIDEO:
 		?>
-			<video controls>
-				<source src="<?=$item['url']?>" type="video/mp4">
-				Your browser does not support the video tag.
-			</video>
+			<a href="<?=$item['url_ori']?>" title="<?=$item['content']?>">
+				<img src="<?=$item['url']?>">
+			</a>
 		<?php
 			break;
 			case MT_AUDIO:
@@ -121,7 +114,7 @@ foreach ($list as $item):
 	<ul class="uk-list media-meta">
 		<li class="uk-text-small">#<?=$item['id']?></li>
 		<?php if ($item['orig_name']): ?>
-		<li class="uk-text-small"><a href="<?=$item['url']?>" title="<?=$item['content']?>"><?=$item['orig_name']?></a></li>
+		<li class="uk-text-small"><a href="<?=$item['url_ori']?>" title="<?=$item['content']?>"><?=$item['orig_name']?></a></li>
 		<?php endif; ?>
 		<?php if ($item['file_size']): ?>
 		<li class="uk-text-small"><?=$item['file_size']?> KB</li>

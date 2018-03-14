@@ -115,16 +115,16 @@ class Ward extends MY_Controller {
 	public function list_select() {
 		$this->load->model('ward_model');
 
-		$district = $this->input->get('district');
+		$district_id = $this->input->get('id');
 		$callback = $this->input->get('callback');
 
-		$list = $this->ward_model->list_simple($district);
+		$list = $this->ward_model->list_simple($district_id);
 
 		if ($callback) {
-			$result = $callback . '(' . json_encode($list->result_array()) . ');';
+			$result = $callback . '(' . json_encode($list) . ');';
 		}
 		else {
-			$result = json_encode($list->result_array());
+			$result = json_encode($list);
 		}
 
 		//json_encode($list->result_array(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
@@ -150,7 +150,7 @@ class Ward extends MY_Controller {
 
 			case 'select':
 				$this->auth_model->require_right('WARD_LIST');
-				$method = 'select_all';
+				$method = 'list_select';
 			break;
 
 			default:
