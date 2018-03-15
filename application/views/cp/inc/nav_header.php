@@ -51,15 +51,17 @@ $CI =& get_instance();
 				</div>
 			</li>
 			<?php endif; ?>
-			<?php if ($CI->has_right(array('APPOINTMENT_LIST'))): ?>
+			<?php if ($CI->has_right(array('APPOINTMENT_LIST', 'TREATMENT_LIST', 'CONTACT_LIST', 'CONTACT_LIST'))): ?>
 			<li>
 				<a href="#">
 					<?=$lang->line('tvn')?>
 				</a>
 				<div class="uk-navbar-dropdown" uk-dropdown="offset: 1">
 					<ul class="uk-nav uk-navbar-dropdown-nav">
-						<?php if ($CI->has_right(array('APPOINTMENT_LIST', 'TREATMENT_LIST'))): ?>
+						<?php if ($CI->has_right('APPOINTMENT_LIST')): ?>
 						<li><a href="<?=base_url(F_CP .'appointment')?>"><?=$lang->line('appointment')?></a></li>
+						<?php endif; ?>
+						<?php if ($CI->has_right('TREATMENT_LIST')): ?>
 						<li><a href="<?=base_url(F_CP .'treatment')?>"><?=$lang->line('treatment')?></a></li>
 						<?php endif; ?>
 						<?php if ($CI->has_right('CONTACT_LIST')): ?>

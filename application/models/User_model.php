@@ -73,16 +73,15 @@ class User_model extends MY_Model {
 	}
 
 	public function save(&$item) {
-		if (isset($item['avatar_id'])) {
+		if (isset($item['avatar_id']) && !empty($item['avatar_id'])) {
 			$avatar_id = $item['avatar_id'];
 
 			if (gettype($avatar_id) == 'array') {
 				$item['avatar_id'] = $avatar_id[0];
 			}
-
-			if (empty($item['avatar_id'])) {
-				$item['avatar_id'] = 0;
-			}
+		}
+		else {
+			$item['avatar_id'] = 0;
 		}
 
 		if (empty($item['id'])) {
@@ -235,7 +234,7 @@ class User_model extends MY_Model {
 		$filter = strtolower($filter);
 
 		$this->db
-			->select('u.id, u.username, u.email, u.state_weight, s.name state_name, u.last_login, u.user_group_id, ug.title user_group_title, u.created, u.updated')
+			->select('u.id, u.username, u.email, u.phone, u.state_weight, s.name state_name, u.last_login, u.user_group_id, ug.title user_group_title, u.created, u.updated')
 			->from('user u')
 			->join('state s', 'u.state_weight = s.weight')
 			->join('user_group ug', 'u.user_group_id = ug.id')

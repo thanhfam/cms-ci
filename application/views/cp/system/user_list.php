@@ -5,6 +5,7 @@
 	<th><?=$lang->line('id');?></th>
 	<th><?=$lang->line('username');?></th>
 	<th><?=$lang->line('email');?></th>
+	<th><?=$lang->line('phone');?></th>
 	<th><?=$lang->line('group');?></th>
 	<th><?=$lang->line('state');?></th>
 	<th><?=$lang->line('last_login');?></th>
@@ -22,6 +23,7 @@ foreach ($list as $row) {
 		<a href="<?=base_url(F_CP .'user/edit/' . $row['id']);?>"><?=$row['username']?></a>
 	</td>
 	<td class="uk-text-small"><?=mailto($row['email'])?></td>
+	<td class="uk-text-small"><?=mailto($row['phone'])?></td>
 	<td class="uk-text-small">
 		<a href="<?=base_url(F_CP .'user/list/?filter=' . $row['user_group_title']);?>"><?=$row['user_group_title']?></a>
 	</td>

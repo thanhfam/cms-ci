@@ -84,7 +84,7 @@ endforeach;
 else:
 ?>
 <tr>
-	<td class="uk-text-small" colspan="8"><?=$lang->line('no_row')?></td>
+	<td class="uk-text-small" colspan="9"><?=$lang->line('no_row')?></td>
 </tr>
 <?php
 endif;

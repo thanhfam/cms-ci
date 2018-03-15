@@ -14,7 +14,7 @@
 					case MT_VIDEO:
 				?>
 					<video class="card-img img-fluid" controls>
-						<source src="<?=$row['avatar_url']?>" type="video/mp4">
+						<source src="<?=$row['avatar_url_ori']?>" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>
 				<?php
@@ -22,7 +22,7 @@
 					case MT_AUDIO:
 				?>
 					<audio class="card-img img-fluid" controls>
-						<source src="<?=$row['avatar_url']?>" type="audio/mpeg">
+						<source src="<?=$row['avatar_url_ori']?>" type="audio/mpeg">
 						Your browser does not support the audio tag.
 					</audio>
 				<?php
@@ -74,7 +74,7 @@
 							case MT_VIDEO:
 						?>
 							<video class="card-img img-fluid" controls>
-								<source src="<?=$row['avatar_url']?>" type="video/mp4">
+								<source src="<?=$row['avatar_url_ori']?>" type="video/mp4">
 								Your browser does not support the video tag.
 							</video>
 						<?php
@@ -82,7 +82,7 @@
 							case MT_AUDIO:
 						?>
 							<audio class="card-img img-fluid" controls>
-								<source src="<?=$row['avatar_url']?>" type="audio/mpeg">
+								<source src="<?=$row['avatar_url_ori']?>" type="audio/mpeg">
 								Your browser does not support the audio tag.
 							</audio>
 						<?php
@@ -116,7 +116,7 @@
 						case MT_VIDEO:
 					?>
 						<video class="card-img img-fluid" controls>
-							<source src="<?=$list_about[0]['avatar_url']?>" type="video/mp4">
+							<source src="<?=$list_about[0]['avatar_url_ori']?>" type="video/mp4">
 							Your browser does not support the video tag.
 						</video>
 					<?php
@@ -124,7 +124,7 @@
 						case MT_AUDIO:
 					?>
 						<audio class="card-img img-fluid" controls>
-							<source src="<?=$list_about[0]['avatar_url']?>" type="audio/mpeg">
+							<source src="<?=$list_about[0]['avatar_url_ori']?>" type="audio/mpeg">
 							Your browser does not support the audio tag.
 						</audio>
 					<?php
@@ -167,7 +167,7 @@
 							case MT_VIDEO:
 						?>
 							<video class="card-img img-fluid" controls>
-								<source src="<?=$row['avatar_url']?>" type="video/mp4">
+								<source src="<?=$row['avatar_url_ori']?>" type="video/mp4">
 								Your browser does not support the video tag.
 							</video>
 						<?php
@@ -175,7 +175,7 @@
 							case MT_AUDIO:
 						?>
 							<audio class="card-img img-fluid" controls>
-								<source src="<?=$row['avatar_url']?>" type="audio/mpeg">
+								<source src="<?=$row['avatar_url_ori']?>" type="audio/mpeg">
 								Your browser does not support the audio tag.
 							</audio>
 						<?php
@@ -209,7 +209,7 @@
 									case MT_VIDEO:
 								?>
 									<video class="card-img img-fluid" controls>
-										<source src="<?=$row['avatar_url']?>" type="video/mp4">
+										<source src="<?=$row['avatar_url_ori']?>" type="video/mp4">
 										Your browser does not support the video tag.
 									</video>
 								<?php
@@ -217,7 +217,7 @@
 									case MT_AUDIO:
 								?>
 									<audio class="card-img img-fluid" controls>
-										<source src="<?=$row['avatar_url']?>" type="audio/mpeg">
+										<source src="<?=$row['avatar_url_ori']?>" type="audio/mpeg">
 										Your browser does not support the audio tag.
 									</audio>
 								<?php
