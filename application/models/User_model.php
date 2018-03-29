@@ -73,15 +73,20 @@ class User_model extends MY_Model {
 	}
 
 	public function save(&$item) {
-		if (isset($item['avatar_id']) && !empty($item['avatar_id'])) {
-			$avatar_id = $item['avatar_id'];
+		$avatar_id = $item['avatar_id'];
 
-			if (gettype($avatar_id) == 'array') {
-				$item['avatar_id'] = $avatar_id[0];
-			}
+		if (!isset($avatar_id)) {
+			unset($item['avatar_id']);
 		}
 		else {
-			$item['avatar_id'] = 0;
+			if (empty($avatar_id)) {
+				$item['avatar_id'] = 0;
+			}
+			else {
+				if (gettype($avatar_id) == 'array') {
+					$item['avatar_id'] = $avatar_id[0];
+				}
+			}
 		}
 
 		if (empty($item['id'])) {
@@ -179,7 +184,7 @@ class User_model extends MY_Model {
 		$id = intval($id);
 
 		$this->db
-			->select('u.id, u.username, u.name, u.email, u.phone, u.timezone, u.date_format, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated, u.avatar_id, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content')
+			->select('u.id, u.username, u.name, u.email, u.phone, u.timezone, u.date_format, u.user_group_id, u.state_weight, u.site_id, u.last_login, u.created, u.updated, u.avatar_id, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, u.type')
 			->from('user u')
 			->join('media m', 'u.avatar_id = m.id', 'left')
 			->where('u.id', $id)

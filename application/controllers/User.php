@@ -176,13 +176,16 @@ class User extends JSON_Controller {
 		$data = array();
 
 		$this->form_validation->set_rules('name', 'lang:name', 'trim|required|max_length[255]');
+		$this->form_validation->set_rules('email', 'lang:email', 'trim|valid_email|max_length[255]');
 		$this->form_validation->set_rules('phone', 'lang:phone', 'trim|numeric|required|min_length[10]|max_length[11]');
 
-		if ($this->form_validation->run('user_edit_profile')) {
+		if ($this->form_validation->run()) {
 			$item = array(
 				'id' => $id,
 				'name' => $this->input->post('name', TRUE),
-				'phone' => $this->input->post('phone', TRUE)
+				'email' => $this->input->post('email', TRUE),
+				'phone' => $this->input->post('phone', TRUE),
+				'avatar_id' => $this->input->post('avatar_id', TRUE)
 			);
 
 			if (!$this->user_model->save($item)) {
@@ -192,6 +195,7 @@ class User extends JSON_Controller {
 			else {
 				$data['state'] = RS_NICE;
 				$data['message'] = $this->lang->line('update_success');
+				$data['user'] = $this->user_model->get($id);
 			}
 		}
 		else {
