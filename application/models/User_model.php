@@ -75,6 +75,7 @@ class User_model extends MY_Model {
 	public function save(&$item) {
 		$avatar_id = $item['avatar_id'];
 
+		// don't change avatar if omitted
 		if (!isset($avatar_id)) {
 			unset($item['avatar_id']);
 		}
@@ -87,6 +88,11 @@ class User_model extends MY_Model {
 					$item['avatar_id'] = $avatar_id[0];
 				}
 			}
+		}
+
+		// don't change email if omitted
+		if (!isset($item['email'])) {
+			unset($item['email']);
 		}
 
 		if (empty($item['id'])) {
