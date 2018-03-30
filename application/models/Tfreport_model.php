@@ -7,21 +7,30 @@ class Tfreport_model extends Post_model {
 		parent::__construct();
 	}
 
-	public function list_all($page = 1, $filter = array(), &$pagy_config) {
+	public function all($filter = array(), $mine = FALSE) {
 		$this->load->library('pagination');
 
 		$this->db
 			->select('p.id, p.subtitle, p.title, p.lead, p.avatar_id, p.total_like, p.total_comment, m.file_name avatar_file_name, m.folder avatar_folder, m.type avatar_type, m.file_ext avatar_file_ext, m.content avatar_content, p.attachment_id, s.name state_name, s.weight state_weight, p.cate_id, c.title cate_title, p.created, p.updated, p.creator_id, u1.name creator_name, u1.username creator_username')
 			->from('post p')
 			->join('user u1', 'p.creator_id = u1.id')
-			->join('state s', 'p.state_weight = s.weight')
+			->join('state s', 'p.state_weight = s.weight AND s.type = "' .ST_CONTENT .'"')
 			->join('category c', 'p.cate_id = c.id')
 			->join('media m', 'p.avatar_id = m.id', 'left')
-			->where('s.type', ST_CONTENT)
-			->where('s.weight', S_ACTIVATED)
 			->where('p.type', CT_TF_REPORT)
 			->order_by('p.id', 'DESC')
 		;
+
+		if ($mine) {
+			$this->db->where('p.creator_id', $this->session->user['id']);
+		}
+		else {
+			$this->db->where('s.weight', S_ACTIVATED);
+		}
+
+		if (isset($filter['last_id']) && ($filter['last_id'] != '')) {
+			$this->db->where('p.id <', $filter['last_id']);
+		}
 
 		if (isset($filter['cate_id']) && ($filter['cate_id'] != '')) {
 			$this->db->where('p.cate_id', $filter['cate_id']);
@@ -38,19 +47,13 @@ class Tfreport_model extends Post_model {
 			;
 		}
 
-		$total_row = $this->db->count_all_results('', FALSE);
-		$pagy_config['total_rows'] = $total_row;
+		$per_page = $filter['per_page'];
 
-		$per_page = $this->pagination->per_page;
-		$last_page = ceil($total_row / $per_page);
-
-		if (! isset($page)  || (! is_numeric($page)) || ($page < 1) || ($page > $last_page)) {
-			$page = 1;
+		if (!isset($per_page) || empty($per_page) || !is_numeric($per_page) || $per_page < 1) {
+			$per_page = 15;
 		}
 
-		$from_row = ($page - 1) * $per_page;
-
-		$this->db->limit($per_page, $from_row);
+		$this->db->limit($per_page);
 
 		$query = $this->db->query($this->db->get_compiled_select());
 

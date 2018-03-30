@@ -328,27 +328,20 @@ class Tfreport extends JSON_Controller {
 
 	public function all($mine = FALSE) {
 		$this->load->model(array('tfreport_model', 'media_model'));
-		$this->load->library('pagination');
 
 		$filter = array(
 			'keyword' => $this->input->get('keyword', TRUE),
 			'cate_id' => $this->input->get('cate_id'),
-			'state_weight' => $this->input->get('state_weight')
-		);
-
-		$page = $this->input->get('page');
-
-		$pagy_config = array(
-			'base_url' => base_url('tfreport/all')
+			'state_weight' => $this->input->get('state_weight'),
+			'last_id' => $this->input->get('last_id'),
+			'per_page' => $this->input->get('per_page')
 		);
 
 		$data = array(
 			'filter' => $filter,
-			'list' => ($mine) ? $this->tfreport_model->list_mine($page, $filter, $pagy_config) : $this->tfreport_model->list_all($page, $filter, $pagy_config),
-			'pagy' => $this->pagination
+			'list' => $this->tfreport_model->all($filter, $mine)
 		);
 
-		$this->pagination->initialize($pagy_config);
 		$this->render($data);
 	}
 
